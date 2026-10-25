@@ -1,0 +1,1458 @@
+fileFormatVersion: 2
+guid: b3cc01de8ff88b9429692668d74edd31
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6811004592603026178
+    second: GojoCast_0
+  - first:
+      213: -1402821079341799519
+    second: GojoCast_1
+  - first:
+      213: 5602555386902315039
+    second: GojoCast_2
+  - first:
+      213: 1005214803649841502
+    second: GojoCast_3
+  - first:
+      213: -6769117720652207646
+    second: GojoCast_4
+  - first:
+      213: -1345515188979988965
+    second: GojoCast_5
+  - first:
+      213: -7986902594625378984
+    second: GojoCast_6
+  - first:
+      213: 8071517086800532729
+    second: GojoCast_7
+  - first:
+      213: -4114364191936935474
+    second: GojoCast_8
+  - first:
+      213: 8754089433405916931
+    second: GojoCast_9
+  - first:
+      213: -5388476003599228814
+    second: GojoCast_10
+  - first:
+      213: 2530100113367602451
+    second: GojoCast_11
+  - first:
+      213: 9135679621407862146
+    second: GojoCast_12
+  - first:
+      213: 3853598423006618392
+    second: GojoCast_13
+  - first:
+      213: 7729494828040150043
+    second: GojoCast_14
+  - first:
+      213: -5767911591979332054
+    second: GojoCast_15
+  - first:
+      213: -3603826729332488206
+    second: GojoCast_16
+  - first:
+      213: 667263089916244884
+    second: GojoCast_17
+  - first:
+      213: -6356582056586529323
+    second: GojoCast_18
+  - first:
+      213: 7594709805253152394
+    second: GojoCast_19
+  - first:
+      213: -6735718032199344981
+    second: GojoCast_20
+  - first:
+      213: -4561872351500982850
+    second: GojoCast_21
+  - first:
+      213: -8775886109617557300
+    second: GojoCast_22
+  - first:
+      213: 6505113075832692989
+    second: GojoCast_23
+  - first:
+      213: 1036949695065080474
+    second: GojoCast_24
+  - first:
+      213: -2739962912819038413
+    second: GojoCast_25
+  - first:
+      213: 6859086139438579710
+    second: GojoCast_26
+  - first:
+      213: 8190271406567886050
+    second: GojoCast_27
+  - first:
+      213: -3797311747978560903
+    second: GojoCast_28
+  - first:
+      213: -8739939596332639442
+    second: GojoCast_29
+  - first:
+      213: 1279377512075131961
+    second: GojoCast_30
+  - first:
+      213: 2204594475156919756
+    second: GojoCast_31
+  - first:
+      213: -9058979859845246036
+    second: GojoCast_32
+  - first:
+      213: 6655810178576571244
+    second: GojoCast_33
+  - first:
+      213: -8111802848918882450
+    second: GojoCast_34
+  - first:
+      213: -6769938928120762409
+    second: GojoCast_35
+  - first:
+      213: -7298182079954052749
+    second: GojoCast_36
+  - first:
+      213: 6527641112703202438
+    second: GojoCast_37
+  - first:
+      213: 3740860668835301591
+    second: GojoCast_38
+  - first:
+      213: -5222312886780016574
+    second: GojoCast_39
+  - first:
+      213: -8233473262707491171
+    second: GojoCast_40
+  - first:
+      213: -9105118100106186871
+    second: GojoCast_41
+  - first:
+      213: 4638304957114797630
+    second: GojoCast_42
+  - first:
+      213: -7189508698862275918
+    second: GojoCast_43
+  - first:
+      213: -6372685492248232727
+    second: GojoCast_44
+  - first:
+      213: -116665475176139252
+    second: GojoCast_45
+  - first:
+      213: 1340598795983920584
+    second: GojoCast_46
+  - first:
+      213: -1525582550841853031
+    second: GojoCast_47
+  - first:
+      213: -4317328181575976693
+    second: GojoCast_48
+  - first:
+      213: 6473126663010564200
+    second: GojoCast_49
+  - first:
+      213: -1683244989789456326
+    second: GojoCast_50
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GojoCast_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 923
+        width: 258
+        height: 301
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20358a9379c858e50800000000000000
+      internalID: 6811004592603026178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_1
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 839
+        width: 355
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a7e66a29ad288ce0800000000000000
+      internalID: -1402821079341799519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_2
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 928
+        width: 214
+        height: 296
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1083c6d07640cd40800000000000000
+      internalID: 5602555386902315039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_3
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1002
+        width: 60
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e59438eb98d33fd00800000000000000
+      internalID: 1005214803649841502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_4
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 1080
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e929b12c434f02a0800000000000000
+      internalID: -6769117720652207646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_5
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 913
+        width: 220
+        height: 315
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1684f08015c35de0800000000000000
+      internalID: -1345515188979988965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_6
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 1044
+        width: 39
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85565b71862d82190800000000000000
+      internalID: -7986902594625378984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_7
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 612
+        width: 271
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f4dd35960ac30070800000000000000
+      internalID: 8071517086800532729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_8
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 622
+        width: 270
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec90307f097d6e6c0800000000000000
+      internalID: -4114364191936935474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_9
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 13
+        width: 363
+        height: 908
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 307092265f5cc7970800000000000000
+      internalID: 8754089433405916931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_10
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 921
+        width: 14
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27060c4cf994835b0800000000000000
+      internalID: -5388476003599228814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_11
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 617
+        width: 293
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3159377e5a8bc1320800000000000000
+      internalID: 2530100113367602451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_12
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 922
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28d6ac7763478ce70800000000000000
+      internalID: 9135679621407862146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_13
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 897
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 813a056395bba7530800000000000000
+      internalID: 3853598423006618392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_14
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 889
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1c5d8ee79ea44b60800000000000000
+      internalID: 7729494828040150043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_15
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 884
+        width: 25
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2ec63087f244ffa0800000000000000
+      internalID: -5767911591979332054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_16
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 867
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f7441efea2acfdc0800000000000000
+      internalID: -3603826729332488206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_17
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 847
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 493ff26be38924900800000000000000
+      internalID: 667263089916244884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_18
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 801
+        width: 24
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d5b9835c42e8c7a0800000000000000
+      internalID: -6356582056586529323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_19
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 829
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8e4a425454d56960800000000000000
+      internalID: 7594709805253152394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_20
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 765
+        width: 9
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bac9097132ce582a0800000000000000
+      internalID: -6735718032199344981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_21
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 744
+        width: 38
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5ab122449f0b0c0800000000000000
+      internalID: -4561872351500982850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_22
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 773
+        width: 53
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc0f5f6741ac53680800000000000000
+      internalID: -8775886109617557300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_23
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 767
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df0a1cc70edc64a50800000000000000
+      internalID: 6505113075832692989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_24
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 678
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a92cd40f04cf36e00800000000000000
+      internalID: 1036949695065080474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_25
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 682
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3373dab6f32b9f9d0800000000000000
+      internalID: -2739962912819038413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_26
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 632
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: effba09b08e503f50800000000000000
+      internalID: 6859086139438579710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_27
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 631
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec848a4370b9a170800000000000000
+      internalID: 8190271406567886050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_28
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 626
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97af150951d3d4bc0800000000000000
+      internalID: -3797311747978560903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 297
+        height: 621
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2bd83a4e3f75b680800000000000000
+      internalID: -8739939596332639442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_30
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 614
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93c7cdc911341c110800000000000000
+      internalID: 1279377512075131961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_31
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 0
+        width: 285
+        height: 631
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc55485aefa489e10800000000000000
+      internalID: 2204594475156919756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_32
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 616
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca3918260d9084280800000000000000
+      internalID: -9058979859845246036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_33
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 610
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6b5c7ae7103e5c50800000000000000
+      internalID: 6655810178576571244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_34
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 616
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e67303e79461d6f80800000000000000
+      internalID: -8111802848918882450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_35
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 294
+        width: 293
+        height: 331
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dfe54ed9685c02a0800000000000000
+      internalID: -6769938928120762409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_36
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 583
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3799732d016a7ba90800000000000000
+      internalID: -7298182079954052749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_37
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 574
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 684f8efc107d69a50800000000000000
+      internalID: 6527641112703202438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_38
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 574
+        width: 40
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d8882855f43ae330800000000000000
+      internalID: 3740860668835301591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_39
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 582
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2484885391e9687b0800000000000000
+      internalID: -5222312886780016574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_40
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 560
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9eb4acb0b3dcbd80800000000000000
+      internalID: -8233473262707491171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_41
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 554
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98fe035345f14a180800000000000000
+      internalID: -9105118100106186871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_42
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 529
+        width: 53
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3ec2c0a8c19e5040800000000000000
+      internalID: 4638304957114797630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_43
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 376
+        width: 68
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b2bbb61eebb93c90800000000000000
+      internalID: -7189508698862275918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_44
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 385
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ec32490f4caf87a0800000000000000
+      internalID: -6372685492248232727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_45
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 290
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c06f2925e55816ef0800000000000000
+      internalID: -116665475176139252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_46
+      rect:
+        serializedVersion: 2
+        x: 979
+        y: 17
+        width: 254
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cd10fc8083ca9210800000000000000
+      internalID: 1340598795983920584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_47
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 252
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b798db0ca04dae0800000000000000
+      internalID: -1525582550841853031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_48
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 240
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b09716e94e4c514c0800000000000000
+      internalID: -4317328181575976693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_49
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 210
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 868bad6676a25d950800000000000000
+      internalID: 6473126663010564200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GojoCast_50
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 150
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a38b4a99999e3a8e0800000000000000
+      internalID: -1683244989789456326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GojoCast_0: 6811004592603026178
+      GojoCast_1: -1402821079341799519
+      GojoCast_10: -5388476003599228814
+      GojoCast_11: 2530100113367602451
+      GojoCast_12: 9135679621407862146
+      GojoCast_13: 3853598423006618392
+      GojoCast_14: 7729494828040150043
+      GojoCast_15: -5767911591979332054
+      GojoCast_16: -3603826729332488206
+      GojoCast_17: 667263089916244884
+      GojoCast_18: -6356582056586529323
+      GojoCast_19: 7594709805253152394
+      GojoCast_2: 5602555386902315039
+      GojoCast_20: -6735718032199344981
+      GojoCast_21: -4561872351500982850
+      GojoCast_22: -8775886109617557300
+      GojoCast_23: 6505113075832692989
+      GojoCast_24: 1036949695065080474
+      GojoCast_25: -2739962912819038413
+      GojoCast_26: 6859086139438579710
+      GojoCast_27: 8190271406567886050
+      GojoCast_28: -3797311747978560903
+      GojoCast_29: -8739939596332639442
+      GojoCast_3: 1005214803649841502
+      GojoCast_30: 1279377512075131961
+      GojoCast_31: 2204594475156919756
+      GojoCast_32: -9058979859845246036
+      GojoCast_33: 6655810178576571244
+      GojoCast_34: -8111802848918882450
+      GojoCast_35: -6769938928120762409
+      GojoCast_36: -7298182079954052749
+      GojoCast_37: 6527641112703202438
+      GojoCast_38: 3740860668835301591
+      GojoCast_39: -5222312886780016574
+      GojoCast_4: -6769117720652207646
+      GojoCast_40: -8233473262707491171
+      GojoCast_41: -9105118100106186871
+      GojoCast_42: 4638304957114797630
+      GojoCast_43: -7189508698862275918
+      GojoCast_44: -6372685492248232727
+      GojoCast_45: -116665475176139252
+      GojoCast_46: 1340598795983920584
+      GojoCast_47: -1525582550841853031
+      GojoCast_48: -4317328181575976693
+      GojoCast_49: 6473126663010564200
+      GojoCast_5: -1345515188979988965
+      GojoCast_50: -1683244989789456326
+      GojoCast_6: -7986902594625378984
+      GojoCast_7: 8071517086800532729
+      GojoCast_8: -4114364191936935474
+      GojoCast_9: 8754089433405916931
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

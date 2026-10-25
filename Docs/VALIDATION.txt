@@ -1,0 +1,13 @@
+DZ_QUALITY_PASS: 8068/8068 connected nodes, owned scene dependencies, staggered waves, boss balance, pause/input, blast wall, frames 1->265
+DZ_GOJO_CAST_POSES_PASS: 16 poses across four directions
+DZ_GOJO_PASS: charge, 420 damage, three pierced targets, 22 range, no repeated damage, no self recharge, wall and floor isolation, replica phase, unmirrored profiles
+DZ_REM_PASS: 40 seconds, no extension, cone/multiple targets, 110 damage once, rate limit, no ammo use/self charge, wall/floor isolation, expiry
+DZ_QUALITY_BUILD_PASS
+DZ_NET_HOST_TWO_PLAYERS: match started.
+DZ_NET_HOST_DISCONNECT_PASS: disconnected peer was removed from active count.
+DZ_NET_CLIENT_PASS: snapshots, two players, authoritative movement and shooting.
+DZ_REM_NETWORK: hornAndMace=True, swing=True, restoredGun=True
+DZ_PURPLE_NETWORK: charge=True, flight=True, impact=True
+DZ_NET_ANIMATIONS: clock=True, rem=True, gojo=True, shield=True
+DZ_NET_EFFECTS: mine=True, grenade=True, pulse=True, reload=True, floor=True
+DZ_CLEAN_CHECKOUT_PASS (2026-10-25): clean source, short path, Windows build Succeeded errors=0

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac667a8a1cc262478b5b04cc999ce26, type: 3}
+  m_Name: DeadZoneBalance
+  m_EditorClassIdentifier: Assembly-CSharp::DeadZone.ZoneBalance
+  enemiesBase: 12
+  enemiesPerWave: 8
+  maxAlive: 18
+  spawnInterval: 1.1
+  bossHealthBase: 600
+  bossHealthPerWave: 260
+  enemyHealthBase: 36
+  enemyHealthPerWave: 14
+  lootChance: 0.32
+  breakSeconds: 12

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c284d87c7ea23ca4e81f87f6cc42f7b1, type: 3}
+  m_Name: hero_gojo
+  m_EditorClassIdentifier: Assembly-CSharp::DeadZone.Data.HeroDefinition
+  id: gojo
+  displayName: "\u0413\u043E\u0434\u0436\u043E \u0421\u0430\u0442\u043E\u0440\u0443"
+  portrait: {fileID: 0}
+  visualPrefab: {fileID: 0}
+  maxHealth: 100
+  moveSpeed: 3.5
+  activeAbility: 2
+  passiveAbility: 2
+  damageToCharge: 1000

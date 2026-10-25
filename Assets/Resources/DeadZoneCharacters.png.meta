@@ -1,0 +1,600 @@
+fileFormatVersion: 2
+guid: 3a60aa75cf6372a4986cab4aac888f14
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 299130165467536041
+    second: DeadZoneCharacters_0
+  - first:
+      213: -4389461195167076365
+    second: DeadZoneCharacters_1
+  - first:
+      213: 2213220019301357198
+    second: DeadZoneCharacters_2
+  - first:
+      213: -5936341639183516640
+    second: DeadZoneCharacters_3
+  - first:
+      213: -6424143374548257695
+    second: DeadZoneCharacters_4
+  - first:
+      213: -1712290439617849580
+    second: DeadZoneCharacters_5
+  - first:
+      213: -7323197647075301797
+    second: DeadZoneCharacters_6
+  - first:
+      213: -3062475766674936491
+    second: DeadZoneCharacters_7
+  - first:
+      213: 8601285693100078401
+    second: DeadZoneCharacters_8
+  - first:
+      213: 2806206435343971984
+    second: DeadZoneCharacters_9
+  - first:
+      213: -8219405198630276150
+    second: DeadZoneCharacters_10
+  - first:
+      213: 5103376471953299872
+    second: DeadZoneCharacters_11
+  - first:
+      213: 93618959263430088
+    second: DeadZoneCharacters_12
+  - first:
+      213: -1230916095738668809
+    second: DeadZoneCharacters_13
+  - first:
+      213: 1651966611681958666
+    second: DeadZoneCharacters_14
+  - first:
+      213: 2513470601178892578
+    second: DeadZoneCharacters_15
+  - first:
+      213: -3814526834314325524
+    second: DeadZoneCharacters_16
+  - first:
+      213: -7949925483929496712
+    second: DeadZoneCharacters_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DeadZoneCharacters_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 712
+        width: 391
+        height: 363
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aadb46fc49b62400800000000000000
+      internalID: 299130165467536041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_1
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 443
+        width: 297
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ff64b2ac408513c0800000000000000
+      internalID: -4389461195167076365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_2
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 964
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e869d34a1efe6be10800000000000000
+      internalID: 2213220019301357198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_3
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 15
+        width: 407
+        height: 1047
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c3b133bb0ed9da0800000000000000
+      internalID: -5936341639183516640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_4
+      rect:
+        serializedVersion: 2
+        x: 1068
+        y: 0
+        width: 380
+        height: 1060
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1643fdd23abd8d6a0800000000000000
+      internalID: -6424143374548257695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_5
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 339
+        width: 289
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 417d742dae8bc38e0800000000000000
+      internalID: -1712290439617849580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_6
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 15
+        width: 299
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b56a91a3a86ce5a90800000000000000
+      internalID: -7323197647075301797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_7
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 0
+        width: 317
+        height: 703
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55d29121486ef75d0800000000000000
+      internalID: -3062475766674936491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_8
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 331
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14531ec24c7ed5770800000000000000
+      internalID: 8601285693100078401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_9
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 323
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096b71192e5a1f620800000000000000
+      internalID: 2806206435343971984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_10
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 344
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac3b4a6258eceed80800000000000000
+      internalID: -8219405198630276150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_11
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 347
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a9dcd5ccd5d2d640800000000000000
+      internalID: 5103376471953299872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_12
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 307
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c5732b82f99c4100800000000000000
+      internalID: 93618959263430088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_13
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 226
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f89f252558eaeee0800000000000000
+      internalID: -1230916095738668809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_14
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 72
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0bdb1e71e6fce610800000000000000
+      internalID: 1651966611681958666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_15
+      rect:
+        serializedVersion: 2
+        x: 1096
+        y: 60
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 229c7a0e134a1e220800000000000000
+      internalID: 2513470601178892578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_16
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 20
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce1df7eed04101bc0800000000000000
+      internalID: -3814526834314325524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneCharacters_17
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 25
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8739e8394e03ca190800000000000000
+      internalID: -7949925483929496712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DeadZoneCharacters_0: 299130165467536041
+      DeadZoneCharacters_1: -4389461195167076365
+      DeadZoneCharacters_10: -8219405198630276150
+      DeadZoneCharacters_11: 5103376471953299872
+      DeadZoneCharacters_12: 93618959263430088
+      DeadZoneCharacters_13: -1230916095738668809
+      DeadZoneCharacters_14: 1651966611681958666
+      DeadZoneCharacters_15: 2513470601178892578
+      DeadZoneCharacters_16: -3814526834314325524
+      DeadZoneCharacters_17: -7949925483929496712
+      DeadZoneCharacters_2: 2213220019301357198
+      DeadZoneCharacters_3: -5936341639183516640
+      DeadZoneCharacters_4: -6424143374548257695
+      DeadZoneCharacters_5: -1712290439617849580
+      DeadZoneCharacters_6: -7323197647075301797
+      DeadZoneCharacters_7: -3062475766674936491
+      DeadZoneCharacters_8: 8601285693100078401
+      DeadZoneCharacters_9: 2806206435343971984
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

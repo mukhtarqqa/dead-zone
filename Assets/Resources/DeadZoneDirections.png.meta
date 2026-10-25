@@ -1,0 +1,1198 @@
+fileFormatVersion: 2
+guid: 6d7b36c52c4c6d4429a42b82dd8b6fb9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6736772525572427908
+    second: DeadZoneDirections_0
+  - first:
+      213: -8923493423879708539
+    second: DeadZoneDirections_1
+  - first:
+      213: 3555106401707827003
+    second: DeadZoneDirections_2
+  - first:
+      213: -7485883792079708480
+    second: DeadZoneDirections_3
+  - first:
+      213: -636032133833240967
+    second: DeadZoneDirections_4
+  - first:
+      213: -1873203190033434483
+    second: DeadZoneDirections_5
+  - first:
+      213: -2435310378003467011
+    second: DeadZoneDirections_6
+  - first:
+      213: -4388616460255473127
+    second: DeadZoneDirections_7
+  - first:
+      213: -7215027636662723348
+    second: DeadZoneDirections_8
+  - first:
+      213: -3948969947308530247
+    second: DeadZoneDirections_9
+  - first:
+      213: 8218209284416759358
+    second: DeadZoneDirections_10
+  - first:
+      213: -678956753854470758
+    second: DeadZoneDirections_11
+  - first:
+      213: 252926808125631895
+    second: DeadZoneDirections_12
+  - first:
+      213: -8881284040981474932
+    second: DeadZoneDirections_13
+  - first:
+      213: 1322599772967870713
+    second: DeadZoneDirections_14
+  - first:
+      213: -8539864976418837659
+    second: DeadZoneDirections_15
+  - first:
+      213: 867638205310498377
+    second: DeadZoneDirections_16
+  - first:
+      213: -2212072480579397325
+    second: DeadZoneDirections_17
+  - first:
+      213: -643275397490974291
+    second: DeadZoneDirections_18
+  - first:
+      213: 4357377139303344749
+    second: DeadZoneDirections_19
+  - first:
+      213: 590363137710260870
+    second: DeadZoneDirections_20
+  - first:
+      213: -6855157201635261301
+    second: DeadZoneDirections_21
+  - first:
+      213: 823116416280840970
+    second: DeadZoneDirections_22
+  - first:
+      213: -246018409276764351
+    second: DeadZoneDirections_23
+  - first:
+      213: 5429725370486380805
+    second: DeadZoneDirections_24
+  - first:
+      213: 1504339828390457382
+    second: DeadZoneDirections_25
+  - first:
+      213: 7515966742379054169
+    second: DeadZoneDirections_26
+  - first:
+      213: -678949448424593570
+    second: DeadZoneDirections_27
+  - first:
+      213: 4410696374339466503
+    second: DeadZoneDirections_28
+  - first:
+      213: 3004247513875633336
+    second: DeadZoneDirections_29
+  - first:
+      213: 6148572418529316692
+    second: DeadZoneDirections_30
+  - first:
+      213: 9035415232849751255
+    second: DeadZoneDirections_31
+  - first:
+      213: 3540084414334699959
+    second: DeadZoneDirections_32
+  - first:
+      213: 1987137111467159581
+    second: DeadZoneDirections_33
+  - first:
+      213: 2941942179842979061
+    second: DeadZoneDirections_34
+  - first:
+      213: 6906848291579067150
+    second: DeadZoneDirections_35
+  - first:
+      213: 4020971595140463841
+    second: DeadZoneDirections_36
+  - first:
+      213: -7698012469671065375
+    second: DeadZoneDirections_37
+  - first:
+      213: 4208636989821711161
+    second: DeadZoneDirections_38
+  - first:
+      213: -2380186421478713210
+    second: DeadZoneDirections_39
+  - first:
+      213: -2057778059950180529
+    second: DeadZoneDirections_40
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DeadZoneDirections_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 12
+        width: 214
+        height: 1228
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4801b574be2dd7d50800000000000000
+      internalID: 6736772525572427908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_1
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 0
+        width: 235
+        height: 1240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 580ad1a7202692480800000000000000
+      internalID: -8923493423879708539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_2
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 1140
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3f1384cf66465130800000000000000
+      internalID: 3555106401707827003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_3
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 12
+        width: 172
+        height: 1226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ce1c3f5a5ccc1890800000000000000
+      internalID: -7485883792079708480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_4
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 10
+        width: 240
+        height: 1228
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97ec225e42c5c27f0800000000000000
+      internalID: -636032133833240967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_5
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 11
+        width: 208
+        height: 1227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d88bde19f9b0106e0800000000000000
+      internalID: -1873203190033434483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_6
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 11
+        width: 188
+        height: 1227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df4f7413d1a043ed0800000000000000
+      internalID: -2435310378003467011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_7
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 1000
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9125a0fc4908813c0800000000000000
+      internalID: -4388616460255473127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_8
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 1004
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cec971067921fdb90800000000000000
+      internalID: -7215027636662723348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_9
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 1018
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b56bf561c07239c0800000000000000
+      internalID: -3948969947308530247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_10
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 1012
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e366a7f5dc1fc0270800000000000000
+      internalID: 8218209284416759358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_11
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 996
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a95e6acfd6cd396f0800000000000000
+      internalID: -678956753854470758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_12
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 998
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79d60888793928300800000000000000
+      internalID: 252926808125631895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_13
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 927
+        width: 25
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8114f348375fb480800000000000000
+      internalID: -8881284040981474932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_14
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 602
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f023cf6c71da5210800000000000000
+      internalID: 1322599772967870713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_15
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 439
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b61c2dc0e4c7980800000000000000
+      internalID: -8539864976418837659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_16
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 443
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 946f61dc9587a0c00800000000000000
+      internalID: 867638205310498377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_17
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 413
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 339d5a98cc32d41e0800000000000000
+      internalID: -2212072480579397325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_18
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 415
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da16dc72f60a217f0800000000000000
+      internalID: -643275397490974291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_19
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 407
+        width: 11
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6a659cfb63887c30800000000000000
+      internalID: 4357377139303344749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_20
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 419
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68284b75524613800800000000000000
+      internalID: 590363137710260870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_21
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 387
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b84c11568d69dd0a0800000000000000
+      internalID: -6855157201635261301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_22
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 381
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0b4631050c4c6b00800000000000000
+      internalID: 823116416280840970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_23
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 369
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14f0ada6f87f59cf0800000000000000
+      internalID: -246018409276764351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_24
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 355
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50954cfd4724a5b40800000000000000
+      internalID: 5429725370486380805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_25
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 322
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6207fa48a1d70e410800000000000000
+      internalID: 1504339828390457382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_26
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 320
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 954472f4ee31e4860800000000000000
+      internalID: 7515966742379054169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_27
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 305
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e57643ae213e396f0800000000000000
+      internalID: -678949448424593570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_28
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 274
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7057b9ccbf0f53d30800000000000000
+      internalID: 4410696374339466503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_29
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 232
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b458e9523b31b920800000000000000
+      internalID: 3004247513875633336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_30
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 228
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45f4432c90e145550800000000000000
+      internalID: 6148572418529316692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_31
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 222
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dca928584e346d70800000000000000
+      internalID: 9035415232849751255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_32
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 220
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b90157c408e02130800000000000000
+      internalID: 3540084414334699959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_33
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 225
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d10fef0bcaab39b10800000000000000
+      internalID: 1987137111467159581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_34
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 196
+        width: 25
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f4774353d0e3d820800000000000000
+      internalID: 2941942179842979061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_35
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 196
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0b75195ded0adf50800000000000000
+      internalID: 6906848291579067150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_36
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 212
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ec784c9c5c5dc730800000000000000
+      internalID: 4020971595140463841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_37
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 152
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e88ab4d17a2b2590800000000000000
+      internalID: -7698012469671065375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_38
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 182
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93374ee3b05186a30800000000000000
+      internalID: 4208636989821711161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_39
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 128
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6889d887f01e7fed0800000000000000
+      internalID: -2380186421478713210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadZoneDirections_40
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 93
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f47b31ec1cd4173e0800000000000000
+      internalID: -2057778059950180529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DeadZoneDirections_0: 6736772525572427908
+      DeadZoneDirections_1: -8923493423879708539
+      DeadZoneDirections_10: 8218209284416759358
+      DeadZoneDirections_11: -678956753854470758
+      DeadZoneDirections_12: 252926808125631895
+      DeadZoneDirections_13: -8881284040981474932
+      DeadZoneDirections_14: 1322599772967870713
+      DeadZoneDirections_15: -8539864976418837659
+      DeadZoneDirections_16: 867638205310498377
+      DeadZoneDirections_17: -2212072480579397325
+      DeadZoneDirections_18: -643275397490974291
+      DeadZoneDirections_19: 4357377139303344749
+      DeadZoneDirections_2: 3555106401707827003
+      DeadZoneDirections_20: 590363137710260870
+      DeadZoneDirections_21: -6855157201635261301
+      DeadZoneDirections_22: 823116416280840970
+      DeadZoneDirections_23: -246018409276764351
+      DeadZoneDirections_24: 5429725370486380805
+      DeadZoneDirections_25: 1504339828390457382
+      DeadZoneDirections_26: 7515966742379054169
+      DeadZoneDirections_27: -678949448424593570
+      DeadZoneDirections_28: 4410696374339466503
+      DeadZoneDirections_29: 3004247513875633336
+      DeadZoneDirections_3: -7485883792079708480
+      DeadZoneDirections_30: 6148572418529316692
+      DeadZoneDirections_31: 9035415232849751255
+      DeadZoneDirections_32: 3540084414334699959
+      DeadZoneDirections_33: 1987137111467159581
+      DeadZoneDirections_34: 2941942179842979061
+      DeadZoneDirections_35: 6906848291579067150
+      DeadZoneDirections_36: 4020971595140463841
+      DeadZoneDirections_37: -7698012469671065375
+      DeadZoneDirections_38: 4208636989821711161
+      DeadZoneDirections_39: -2380186421478713210
+      DeadZoneDirections_4: -636032133833240967
+      DeadZoneDirections_40: -2057778059950180529
+      DeadZoneDirections_5: -1873203190033434483
+      DeadZoneDirections_6: -2435310378003467011
+      DeadZoneDirections_7: -4388616460255473127
+      DeadZoneDirections_8: -7215027636662723348
+      DeadZoneDirections_9: -3948969947308530247
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
