@@ -14,6 +14,7 @@ namespace DeadZone
     }
     public static class ZoneProfile
     {
+        public static bool SuppressRecording;
         public static ZoneHeroStatistics Read(int hero)
         {
             try{return JsonUtility.FromJson<ZoneHeroStatistics>(PlayerPrefs.GetString("dz.stats.v1."+hero,"{}"))??new ZoneHeroStatistics();}
@@ -21,6 +22,7 @@ namespace DeadZone
         }
         public static void Record(ZonePlayer actor,bool victory,float duration)
         {
+            if(SuppressRecording)return;
             var stats=Read(actor.CharacterIndex);stats.Add(victory,actor.PersonalKills,actor.PersonalDamage,actor.Revives,duration);
             PlayerPrefs.SetString("dz.stats.v1."+actor.CharacterIndex,JsonUtility.ToJson(stats));PlayerPrefs.Save();
         }

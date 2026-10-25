@@ -15,8 +15,8 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 1c08549942b1bb74dbc30d7a4582fe06
   m_SerializeEntries:
-  - m_GUID: 5f5e7ca30afc52e45a627e46346be0b8
-    m_Address: Assets/DeadZone/Localization/DeadZoneUI.asset
+  - m_GUID: 31189472e4c709a4ca431678c39b9979
+    m_Address: Assets/DeadZone/Localization/DeadZoneUIStatic.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

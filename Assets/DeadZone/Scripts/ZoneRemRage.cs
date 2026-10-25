@@ -101,11 +101,13 @@ namespace DeadZone
         {
             if(root==null||Form==null)return;
             root.gameObject.SetActive(Form.Active);if(!Form.Active)return;
-            var actor=Form.Actor;Vector2 look=actor.aimPoint-(Vector2)actor.transform.position;
+            var actor=Form.Actor;int depth=ZoneDepth.Order(actor.transform.position.y);
+            foreach(var renderer in root.GetComponentsInChildren<Renderer>())renderer.sortingOrder=depth+8;
+            Vector2 look=actor.aimPoint-(Vector2)actor.transform.position;
             int facing=ZoneActorArt.Facing(look);float side=facing==1?1:facing==3?-1:0;
             // The horn extends above the hair in every direction, with rear views drawn behind it.
             horn.localPosition=new Vector3(side*.12f+.025f,1.05f);horn.localRotation=Quaternion.Euler(0,0,-side*12);
-            horn.GetComponent<MeshRenderer>().sortingOrder=facing==2?29:40;
+            horn.GetComponent<MeshRenderer>().sortingOrder=depth+(facing==2?-1:10);
             Vector2 dir=Form.SwingRemaining>0?Form.SwingDirection:look.normalized;if(dir.sqrMagnitude<.1f)dir=Vector2.right;
             float phase=1-Form.SwingRemaining/ZoneRemRage.SwingDuration;
             float angle=Form.SwingRemaining>0?Mathf.Lerp(-95,85,Mathf.SmoothStep(0,1,phase)): -30;

@@ -10,6 +10,7 @@ namespace DeadZone
         public bool fire, reload, swap, dash, ability, interact, interactHeld, grenade, mine, drop;
         public static ZoneCommand Read(Camera camera)
         {
+            if(!Application.isFocused){var g=DeadZoneGame.Instance;return new ZoneCommand{aim=g!=null&&g.player!=null?g.player.aimPoint:Vector2.zero};}
             var k = ZoneKeyboard.Current;
             return new ZoneCommand
             {

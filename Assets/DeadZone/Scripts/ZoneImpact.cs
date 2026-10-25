@@ -19,7 +19,7 @@ namespace DeadZone
                 float angle=i*137.5f*Mathf.Deg2Rad;Vector2 d=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle));
                 effect.directions[i]=(d+normal*.6f).normalized*(.6f+i*.12f);
                 var spark=new GameObject("Spark");spark.transform.SetParent(obj.transform,false);var sr=spark.AddComponent<SpriteRenderer>();
-                sr.sprite=DeadZoneGame.Instance.marker;sr.sortingLayerID=ZoneMap.Sorting(floor);sr.sortingOrder=120;
+                sr.sprite=DeadZoneGame.Instance.marker;sr.sortingLayerID=ZoneMap.Sorting(floor);sr.sortingOrder=3010;
                 sr.color=flesh?new Color(1,.36f,.3f):new Color(1,.8f,.35f);spark.transform.localScale=new Vector3(.08f,.05f,1);effect.sparks[i]=sr;
             }
         }
@@ -38,7 +38,7 @@ namespace DeadZone
         {
             trail=gameObject.AddComponent<TrailRenderer>();trail.time=.055f;trail.minVertexDistance=.035f;trail.startWidth=.055f;trail.endWidth=0;
             trail.sharedMaterial=ZoneImpact.Material;trail.startColor=new Color(1,.86f,.45f,.7f);trail.endColor=new Color(1,.7f,.2f,0);
-            trail.sortingLayerID=ZoneMap.Sorting(gameObject.layer);trail.sortingOrder=95;
+            trail.sortingLayerID=ZoneMap.Sorting(gameObject.layer);trail.sortingOrder=2995;
         }
     }
 }

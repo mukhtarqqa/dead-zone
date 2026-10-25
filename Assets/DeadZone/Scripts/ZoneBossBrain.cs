@@ -6,6 +6,7 @@ namespace DeadZone
         public ZoneEnemy Enemy;
         float attackAt, summonAt, burstAt, dashAt, dashEnd,shootAt,initialHealth;Vector2 dashDirection,shootDirection;
         public bool Enraged {get;private set;}
+        public bool Attacking=>dashAt>Time.time||burstAt>Time.time||shootAt>Time.time||Time.time<dashEnd;
         public Vector2 Drive(Vector2 fallback)
         {
             if(dashAt>Time.time||burstAt>Time.time||shootAt>Time.time)return Vector2.zero;

@@ -59,10 +59,10 @@ namespace DeadZone
             if (born == 0) born = Time.time;
             if (material == null) material = new Material(Shader.Find("Sprites/Default"));
             line = gameObject.AddComponent<LineRenderer>(); line.sharedMaterial = material; line.useWorldSpace = false; line.loop = true; line.positionCount = 40; line.startWidth = line.endWidth = .055f;
-            line.sortingLayerID = ZoneMap.Sorting(Floor); line.sortingOrder = 50;
+            line.sortingLayerID = ZoneMap.Sorting(Floor); line.sortingOrder = 2600;
             var obj = new GameObject("Ability detail"); obj.transform.SetParent(transform,false);
             detail = obj.AddComponent<LineRenderer>(); detail.sharedMaterial = material; detail.useWorldSpace = false;
-            detail.sortingLayerID = line.sortingLayerID; detail.sortingOrder = 51; detail.startWidth = detail.endWidth = .035f;
+            detail.sortingLayerID = line.sortingLayerID; detail.sortingOrder = 2601; detail.startWidth = detail.endWidth = .035f;
             detail.positionCount = 0;
         }
         void Update()
@@ -113,7 +113,7 @@ namespace DeadZone
         public static void Spawn(Vector2 point, int floor, bool shell, int weapon = 0)
         {
             var obj = new GameObject(shell ? "Ejected casing" : "Dropped magazine"); obj.transform.position = point; obj.transform.localScale = Vector3.one * (shell ? .25f : .35f);
-            var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(shell ? 4 : weapon == 2 ? 2 : 3); sr.sortingLayerID = ZoneMap.Sorting(floor); sr.sortingOrder = 40;
+            var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(shell ? 4 : weapon == 2 ? 2 : 3); sr.sortingLayerID = ZoneMap.Sorting(floor); sr.sortingOrder = ZoneDepth.Order(point.y)-2;
             obj.AddComponent<ZoneDebris>().Velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(.5f, 1.2f));
         }
         void Update() { lifetime += Time.deltaTime; if (lifetime < .3f) { transform.position += (Vector3)Velocity * Time.deltaTime; transform.Rotate(0, 0, 360 * Time.deltaTime); } if (lifetime > 1) Destroy(gameObject); }
@@ -126,13 +126,13 @@ namespace DeadZone
         float age;
         void Start()
         {
-            var sr = gameObject.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(0); sr.sortingLayerID = ZoneMap.Sorting(gameObject.layer); sr.sortingOrder = 100;
+            var sr = gameObject.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(0); sr.sortingLayerID = ZoneMap.Sorting(gameObject.layer); sr.sortingOrder = 3000;
             transform.localScale = Vector3.one * .45f; transform.position = origin;
         }
         void Update()
         {
             var game = DeadZoneGame.Instance;
-            if (game == null || !game.running) { Destroy(gameObject); return; }
+            if (game == null || !game.running) { Destroy(gameObject); return; }if(game.paused)return;
             age += Time.deltaTime; float t = Mathf.Clamp01(age / .8f);
             transform.position = Vector2.Lerp(origin, destination, t) + Vector2.up * Mathf.Sin(t * Mathf.PI) * 1.2f;
             transform.Rotate(0, 0, 360 * Time.deltaTime);

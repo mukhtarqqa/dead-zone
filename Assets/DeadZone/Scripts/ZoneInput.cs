@@ -7,8 +7,8 @@ namespace DeadZone
     {
         readonly KeyCode code;
         public ZoneKey(KeyCode code) { this.code = code; }
-        public bool isPressed => Input.GetKey(code);
-        public bool wasPressedThisFrame => Input.GetKeyDown(code);
+        public bool isPressed => Application.isFocused&&Input.GetKey(code);
+        public bool wasPressedThisFrame => Application.isFocused&&Input.GetKeyDown(code);
     }
     public sealed class ZoneKeyboard
     {

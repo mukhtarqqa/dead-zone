@@ -46,8 +46,18 @@ namespace DeadZone.Editor
         [MenuItem("Dead Zone/Preview Sukuna Shrine")]
         public static void Preview()
         {
-            var g=DeadZoneGame.Instance;if(!g.running)g.Begin();g.enabled=false;g.selected=3;g.player.ResetHero(3);g.player.IsLocal=false;g.player.transform.position=new Vector2(-3,-5);g.player.SetCommand(new ZoneCommand{ability=true,aim=new Vector2(2,-5)});g.player.charge=100;
-            foreach(var enemy in g.enemies.ToArray())UnityEngine.Object.Destroy(enemy.gameObject);g.enemies.Clear();g.gameCamera.transform.position=new Vector3(-3,-5,-10);g.gameCamera.orthographicSize=7;
+            var g=DeadZoneGame.Instance;if(!EditorApplication.isPlaying||g==null)throw new Exception("Fresh Play Mode required");ZoneProfile.SuppressRecording=true;Time.timeScale=1;g.selected=3;if(!g.running)g.Begin();g.enabled=true;
+            System.Reflection.FieldInfo spawn=typeof(DeadZoneGame).GetField("nextSpawn",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic);spawn.SetValue(g,float.MaxValue);
+            g.player.ResetForMatch(3);g.player.IsLocal=false;g.player.transform.position=new Vector2(6,-6);g.player.GetComponent<Rigidbody2D>().position=g.player.transform.position;g.player.SetCommand(new ZoneCommand{ability=true,aim=new Vector2(11,-6)});g.player.charge=100;
+            foreach(var enemy in g.enemies.ToArray())UnityEngine.Object.Destroy(enemy.gameObject);g.enemies.Clear();g.gameCamera.transform.position=new Vector3(6,-6,-10);g.gameCamera.orthographicSize=7;
+            double deadline=EditorApplication.timeSinceStartup+12;
+            void Hold()
+            {
+                if(!EditorApplication.isPlaying||g==null){EditorApplication.update-=Hold;return;}
+                var shrine=UnityEngine.Object.FindAnyObjectByType<ZoneShrine>();if(shrine!=null&&shrine.Age>=1.5f){Time.timeScale=0;EditorApplication.update-=Hold;Debug.Log("DZ_SHRINE_PREVIEW_HELD: active cleave at "+shrine.Age.ToString("F2"));}
+                else if(EditorApplication.timeSinceStartup>deadline){EditorApplication.update-=Hold;Debug.LogError("Shrine preview did not start");}
+            }
+            EditorApplication.update+=Hold;
         }
     }
 }

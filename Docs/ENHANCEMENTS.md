@@ -1,3 +1,5 @@
+Последующее обновление карты и оформления: [REWORK.md](REWORK.md). Ниже — предыдущее состояние до переработки.
+
 # Gameplay and presentation update — 2026-10-26
 
 Implemented:

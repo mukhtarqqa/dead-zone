@@ -12,9 +12,10 @@ namespace DeadZone
             game=owner;root=parent.GetComponent<RectTransform>();
             for(int i=0;i<3;i++)
             {
-                names[i]=Text(parent,"Ally "+i,new Vector2(0,1),new Vector2(28,-88-i*70),new Vector2(380,45),font,20);
-                health[i]=Bar(names[i].transform,"Health",new Vector2(0,-7),new Vector2(300,4),new Color(.35f,.9f,.76f));
-                revive[i]=Bar(names[i].transform,"Revive",new Vector2(0,-14),new Vector2(300,4),new Color(1,.8f,.3f));
+                var panel=ZoneUi.Panel(parent,"Ally panel "+i,new Vector2(0,1),new Vector2(28,-88-i*72),new Vector2(330,64));
+                names[i]=Text(panel.transform,"Ally "+i,new Vector2(0,1),new Vector2(12,-8),new Vector2(306,30),font,18);
+                health[i]=Bar(names[i].transform,"Health",new Vector2(0,-4),new Vector2(306,4),ZonePalette.Sage);
+                revive[i]=Bar(names[i].transform,"Revive",new Vector2(0,-11),new Vector2(306,4),new Color(1,.8f,.3f));
                 arrows[i]=Text(parent,"Downed ally direction",new Vector2(.5f,.5f),Vector2.zero,new Vector2(240,55),font,20);arrows[i].alignment=TextAlignmentOptions.Center;
             }
         }
@@ -25,9 +26,9 @@ namespace DeadZone
             {
                 if(actor==game.player||index>=3)continue;
                 bool connected=game.IsAuthority?game.network.IsParticipantConnected(actor.OwnerId):actor.Connected;
-                var label=names[index];label.gameObject.SetActive(game.running);
+                var label=names[index];label.transform.parent.gameObject.SetActive(game.running);
                 string state=!connected?ZoneL.Get("НЕТ СВЯЗИ"):actor.Dead?ZoneL.Get("НАБЛЮДАЕТ"):actor.Downed?ZoneL.Format("ПОДНЯТЬ · {0} с",Mathf.CeilToInt(actor.DownRemaining)):$"HP {Mathf.CeilToInt(actor.health)}/{actor.maxHealth}";
-                label.text=game.HeroName(actor.CharacterIndex)+" · "+state;label.color=actor.Downed?new Color(1,.55f,.3f):Color.white;
+                label.text=game.HeroName(actor.CharacterIndex)+" · "+state;label.color=actor.Downed?new Color(1,.55f,.3f):ZonePalette.Text;
                 health[index].localScale=new Vector3(Mathf.Clamp01(actor.health/actor.maxHealth),1,1);
                 revive[index].gameObject.SetActive(actor.Downed);revive[index].localScale=new Vector3(actor.ReviveProgress,1,1);
                 var view=game.gameCamera.WorldToViewportPoint(actor.transform.position);bool off=view.x<.05f||view.x>.95f||view.y<.07f||view.y>.93f;
@@ -40,7 +41,7 @@ namespace DeadZone
                 }
                 index++;
             }
-            for(;index<3;index++){names[index].gameObject.SetActive(false);arrows[index].gameObject.SetActive(false);}
+            for(;index<3;index++){names[index].transform.parent.gameObject.SetActive(false);arrows[index].gameObject.SetActive(false);}
         }
         static RectTransform Bar(Transform parent,string name,Vector2 point,Vector2 size,Color color)
         {

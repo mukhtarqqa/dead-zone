@@ -77,7 +77,7 @@ namespace DeadZone
             foreach(var enemy in game.enemies.ToArray())
             {
                 if(enemy==null||enemy.health<=0||enemy.gameObject.layer!=Floor||struck.Contains(enemy)||Time.time<enemy.ReadyAt)continue;
-                Vector2 p=enemy.transform.position;
+                Vector2 p=enemy.DamageCenter;
                 float t=length>.00001f?Mathf.Clamp01(Vector2.Dot(p-from,segment)/length):0;
                 if(Vector2.Distance(p,from+segment*t)>radius+(enemy.boss?.4f:.22f))continue;
                 // Impact bursts cannot leak through a wall at the end of the flight.
@@ -130,14 +130,14 @@ namespace DeadZone
             }
             mesh.vertices=v;mesh.colors=c;mesh.triangles=tris;mesh.RecalculateBounds();
             obj.AddComponent<MeshFilter>().sharedMesh=mesh;
-            var sr=obj.AddComponent<MeshRenderer>();sr.sharedMaterial=material;sr.sortingLayerID=ZoneMap.Sorting(Spell.Floor);sr.sortingOrder=130;
+            var sr=obj.AddComponent<MeshRenderer>();sr.sharedMaterial=material;sr.sortingLayerID=ZoneMap.Sorting(Spell.Floor);sr.sortingOrder=3000;
             return obj.transform;
         }
         LineRenderer Line(string name,bool loop,int count)
         {
             var obj=new GameObject(name);obj.transform.SetParent(transform,false);
             var line=obj.AddComponent<LineRenderer>();line.sharedMaterial=material;line.useWorldSpace=false;line.loop=loop;line.positionCount=count;
-            line.sortingLayerID=ZoneMap.Sorting(Spell.Floor);line.sortingOrder=131;return line;
+            line.sortingLayerID=ZoneMap.Sorting(Spell.Floor);line.sortingOrder=3001;return line;
         }
         void LateUpdate()
         {

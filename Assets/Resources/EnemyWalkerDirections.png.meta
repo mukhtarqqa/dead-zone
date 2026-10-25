@@ -1,0 +1,522 @@
+fileFormatVersion: 2
+guid: da325bf079e0fdc4cb7a0386bf44a4a0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4957605674409833289
+    second: EnemyWalkerDirections_0
+  - first:
+      213: -8869798654143090025
+    second: EnemyWalkerDirections_1
+  - first:
+      213: -3733184875785813986
+    second: EnemyWalkerDirections_2
+  - first:
+      213: 6570071534037684341
+    second: EnemyWalkerDirections_3
+  - first:
+      213: -1687471723424686570
+    second: EnemyWalkerDirections_4
+  - first:
+      213: 8684410995016530065
+    second: EnemyWalkerDirections_5
+  - first:
+      213: -7837057942713455867
+    second: EnemyWalkerDirections_6
+  - first:
+      213: 8329369872654716945
+    second: EnemyWalkerDirections_7
+  - first:
+      213: 10699793421036333
+    second: EnemyWalkerDirections_8
+  - first:
+      213: 8267517718095567353
+    second: EnemyWalkerDirections_9
+  - first:
+      213: 1480251531636839462
+    second: EnemyWalkerDirections_10
+  - first:
+      213: 2117776085046497205
+    second: EnemyWalkerDirections_11
+  - first:
+      213: 9023764502968711598
+    second: EnemyWalkerDirections_12
+  - first:
+      213: 875063337852793062
+    second: EnemyWalkerDirections_13
+  - first:
+      213: -2541061017226657041
+    second: EnemyWalkerDirections_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 455
+        width: 271
+        height: 1059
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 943b8a72814fcc440800000000000000
+      internalID: 4957605674409833289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_1
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 405
+        width: 741
+        height: 1105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79230964e1528e480800000000000000
+      internalID: -8869798654143090025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_2
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 1209
+        width: 180
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e100ded7220113cc0800000000000000
+      internalID: -3733184875785813986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_3
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 241
+        width: 205
+        height: 203
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 570d83f10459d2b50800000000000000
+      internalID: 6570071534037684341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_4
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 303
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61e51cc7865e498e0800000000000000
+      internalID: -1687471723424686570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_5
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 197
+        width: 275
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 198f479b9c9358870800000000000000
+      internalID: 8684410995016530065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_6
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 209
+        width: 237
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50b2968d25d2d3390800000000000000
+      internalID: -7837057942713455867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_7
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 196
+        width: 195
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 110dc6ea4cdd79370800000000000000
+      internalID: 8329369872654716945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_8
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 65
+        width: 242
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2be70ac763062000800000000000000
+      internalID: 10699793421036333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_9
+      rect:
+        serializedVersion: 2
+        x: 814
+        y: 207
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f99559bf8f1cb270800000000000000
+      internalID: 8267517718095567353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_10
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 16
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6241171ece8ea8410800000000000000
+      internalID: 1480251531636839462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_11
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 41
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bf830ff02ad36d10800000000000000
+      internalID: 2117776085046497205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_12
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 257
+        height: 181
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea9ba38610ada3d70800000000000000
+      internalID: 9023764502968711598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_13
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 19
+        width: 487
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e0fea03879d42c00800000000000000
+      internalID: 875063337852793062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyWalkerDirections_14
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 21
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe2cc9bc7765cbcd0800000000000000
+      internalID: -2541061017226657041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      EnemyWalkerDirections_0: 4957605674409833289
+      EnemyWalkerDirections_1: -8869798654143090025
+      EnemyWalkerDirections_10: 1480251531636839462
+      EnemyWalkerDirections_11: 2117776085046497205
+      EnemyWalkerDirections_12: 9023764502968711598
+      EnemyWalkerDirections_13: 875063337852793062
+      EnemyWalkerDirections_14: -2541061017226657041
+      EnemyWalkerDirections_2: -3733184875785813986
+      EnemyWalkerDirections_3: 6570071534037684341
+      EnemyWalkerDirections_4: -1687471723424686570
+      EnemyWalkerDirections_5: 8684410995016530065
+      EnemyWalkerDirections_6: -7837057942713455867
+      EnemyWalkerDirections_7: 8329369872654716945
+      EnemyWalkerDirections_8: 10699793421036333
+      EnemyWalkerDirections_9: 8267517718095567353
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

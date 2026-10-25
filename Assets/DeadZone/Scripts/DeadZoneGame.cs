@@ -20,7 +20,7 @@ namespace DeadZone
         public readonly List<ZonePlayer> players = new();
         public ZoneNetwork network;
         public bool IsAuthority => network == null || !network.ClientOnly;
-        public int TeamSize => Mathf.Max(1, players.FindAll(p => network == null || network.IsParticipantConnected(p.OwnerId)).Count);
+        public int TeamSize {get{int count=0;foreach(var actor in players)if(network==null||(network.ClientOnly?actor.Connected:network.IsParticipantConnected(actor.OwnerId)))count++;return Mathf.Max(1,count);}}
         public bool BossPhase => bossPhase;
         public bool Victory { get; private set; }
         public float BreakRemaining => Mathf.Max(0, breakUntil - Time.time);
@@ -34,20 +34,36 @@ namespace DeadZone
         float breakUntil, startedAt, finishedElapsed;
         bool bossPhase,statisticsRecorded;
         public ZoneBalance Balance {get;private set;}
-        int pendingEnemies;float nextSpawn;
+        int pendingEnemies,groupRemaining;float nextSpawn;Vector2? spawnCluster;
         public int PendingEnemies => pendingEnemies;
         public int RemoteEnemyCount;
         public int RemainingEnemies => (IsAuthority?enemies.Count:RemoteEnemyCount)+pendingEnemies;
         public float CurrentBossHealth => IsAuthority?(enemies.Find(e=>e!=null&&e.boss)?.health??0):RemoteBossHealth;
         public bool OptionsVisible {get;set;}
-        public bool InputBlocked => paused||OptionsVisible||(network!=null&&network.PanelVisible);
-        CityArena arena;
+        public bool InputBlocked => paused||Restarting||OptionsVisible||(network!=null&&network.PanelVisible);
+        CityArena arena;ZonePlayer spectated;ZoneRunFlow runFlow;
+        public bool Restarting=>runFlow!=null&&runFlow.Restarting;
+        public ZonePlayer CameraActor
+        {
+            get
+            {
+                if(!running||player==null||!player.Dead)return player;
+                bool Eligible(ZonePlayer p)=>p!=null&&!p.Dead&&!p.Downed&&(network==null||(network.ClientOnly?p.Connected:network.IsParticipantConnected(p.OwnerId)));
+                if(!Eligible(spectated)){spectated=null;foreach(var actor in players)if(Eligible(actor)){spectated=actor;break;}}
+                return spectated!=null?spectated:player;
+            }
+        }
+        public void CycleSpectator(int step)
+        {
+            if(player==null||!player.Dead)return;int start=players.IndexOf(CameraActor);for(int i=1;i<=players.Count;i++){int index=(start+step*i+players.Count*2)%players.Count;var actor=players[index];if(!actor.Dead&&!actor.Downed&&(network.ClientOnly?actor.Connected:network.IsParticipantConnected(actor.OwnerId))){spectated=actor;return;}}
+        }
+        public void RestartRun()=>runFlow.Restart();public void ReturnToMenu()=>runFlow.Menu();
         TMPro.TextMeshProUGUI hud, center, help;
         TMP_FontAsset font;
         GameObject menuRoot, hudRoot, resultShade;
         UnityEngine.UI.Image[] heroCards;
-        RectTransform healthFill;
-        static readonly Color Accent = new(.35f, .9f, .76f);
+        RectTransform healthFill;UnityEngine.UI.Image healthPortrait;
+        static readonly Color Accent = ZonePalette.Accent;
         public Sprite marker;
         Sprite[] enemyFrames;
         public Sprite EnemyFrame(int kind, bool boss) => enemyFrames == null ? CharacterFrame(3, 0) : enemyFrames[boss ? Mathf.Clamp(kind + 1, 1, 5) : Mathf.Clamp(kind,0,2)];
@@ -93,27 +109,29 @@ namespace DeadZone
             gameObject.AddComponent<ZoneMap>();
             players.Add(player);
             gameCamera.orthographic = true;
-            gameCamera.orthographicSize = arena != null ? 7.5f : 5.625f;
-            BuildHud();
+            gameCamera.orthographicSize = arena != null ? (arena.Bounds.width>=100?6.8f:7.5f) : 5.625f;
+            runFlow=gameObject.AddComponent<ZoneRunFlow>();runFlow.Game=this;BuildHud();
             network = gameObject.AddComponent<ZoneNetwork>();
             network.Initialize(this, menuRoot.transform.parent, font);
             gameObject.AddComponent<ZoneOptions>().Initialize(this,menuRoot.transform.parent,font);
             gameObject.AddComponent<ZoneCombatHud>().Initialize(this,hudRoot.transform,font);
-            gameObject.AddComponent<ZoneAllyHud>().Initialize(this,hudRoot.transform,font);gameObject.AddComponent<ZoneMusic>();gameObject.AddComponent<ZoneLanguageStartup>();gameObject.AddComponent<ZoneStatisticsPanel>().Initialize(this,menuRoot.transform.parent,font);
+            gameObject.AddComponent<ZoneAllyHud>().Initialize(this,hudRoot.transform,font);gameObject.AddComponent<ZoneMusic>();gameObject.AddComponent<ZoneLanguageStartup>();gameObject.AddComponent<ZoneStatisticsPanel>().Initialize(this,menuRoot.transform.parent,font);gameObject.AddComponent<ZoneResultsPanel>().Initialize(this,menuRoot.transform.parent,font);gameObject.AddComponent<ZoneRecoveryHud>().Initialize(this,hudRoot.transform,font);
         }
 
         void Update()
         {
-            if(IsAuthority&&running&&!paused&&pendingEnemies>0&&Time.time>=nextSpawn&&enemies.Count<Balance.maxAlive+wave*2)
+            if(IsAuthority&&running&&!paused&&pendingEnemies>0&&Time.time>=nextSpawn&&enemies.Count<Balance.AliveCap(wave,TeamSize))
             {
-                int before=enemies.Count;SpawnEnemy((pendingEnemies+wave)%Mathf.Min(3,wave),false);
-                if(enemies.Count>before)pendingEnemies--;nextSpawn=Time.time+Balance.spawnInterval/Mathf.Sqrt(TeamSize);
+                if(groupRemaining<=0){groupRemaining=Mathf.Min(pendingEnemies,Balance.GroupSize(wave,TeamSize));spawnCluster=null;}
+                int before=enemies.Count;SpawnEnemy(Balance.EnemyRole(wave,pendingEnemies),false);bool spawned=enemies.Count>before;
+                if(spawned){pendingEnemies--;groupRemaining--;if(!spawnCluster.HasValue)spawnCluster=enemies[enemies.Count-1].transform.position;}
+                nextSpawn=Time.time+(spawned?(groupRemaining>0?Balance.groupMemberInterval:Balance.GroupRest(wave,TeamSize)):.5f);if(groupRemaining<=0)spawnCluster=null;
             }
             var keys = ZoneKeyboard.Current;
             if (keys == null) return;
             menuRoot.SetActive(!running && !ended);
-            hudRoot.SetActive(running || ended);if(ended){center.fontSize=26;center.text=ResultText(Victory);}else center.fontSize=32; resultShade.SetActive(ended);
-            healthFill.localScale = new Vector3(Mathf.Clamp01(player.health / player.maxHealth), 1, 1);
+            hudRoot.SetActive(running);center.fontSize=32;resultShade.SetActive(false);if(ended)center.text="";
+            healthFill.localScale = new Vector3(Mathf.Lerp(healthFill.localScale.x,Mathf.Clamp01(player.health/player.maxHealth),1-Mathf.Exp(-14*Time.unscaledDeltaTime)),1,1);
             if (!running && !ended)
             {
                 if (!network.Active && !network.PanelVisible && !OptionsVisible)
@@ -123,13 +141,13 @@ namespace DeadZone
                     if (keys.digit3Key.wasPressedThisFrame) selected = 2;
                     if (keys.digit4Key.wasPressedThisFrame && HeroCount > 3) selected = 3;
                 }
-                for (int i = 0; i < heroCards.Length; i++) heroCards[i].color = i == selected ? new Color(.12f, .29f, .3f) : new Color(.075f, .1f, .14f);
+                for(int i=0;i<heroCards.Length;i++){var card=heroCards[i].GetComponent<ZoneHeroCard>();if(card!=null)card.Selected=i==selected;}
                 center.text = "";
                 if (keys.enterKey.wasPressedThisFrame && !network.PanelVisible && !OptionsVisible) Begin();
             }
             else if (ended)
             {
-                if (keys.enterKey.wasPressedThisFrame && !OptionsVisible && !network.PanelVisible) { if (network.Active) network.Leave(); else { Time.timeScale = 1; SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); } }
+                if(keys.enterKey.wasPressedThisFrame&&!OptionsVisible&&!network.PanelVisible)RestartRun();
             }
             else
             {
@@ -148,21 +166,20 @@ namespace DeadZone
             }
             if (player != null)
             {
-                hud.text = $"<b>{HeroName(selected)}</b>   HP {Mathf.CeilToInt(player.health)}/{player.maxHealth}\n" +
-                    (player.Oni.Active ? ZoneL.Format("<color=#FF75BC>БУЛАВА ОНИ · {0} с</color>",Mathf.CeilToInt(player.Oni.Remaining)) : $"{ZoneL.Get(Weapons[player.weapon])}   {player.ammo} / {(player.weapon == 0 ? "∞" : player.reserve.ToString())}") +
-                    (player.Oni.Active ? ZoneL.Get("   ЛКМ — УДАР") : player.Reloading ? ZoneL.Get("   ПЕРЕЗАРЯДКА") : player.ammo == 0 ? ZoneL.Get("   НЕТ ПАТРОНОВ") : "") + ZoneL.Format("\nСпособность: {0}%   Гранаты: {1}   Мины: {2}",Mathf.FloorToInt(player.charge),player.grenades,player.mines) + "\n" + player.PickupHint();
-                help.text = ZoneL.Format("<color=#74E5D0>ВОЛНА {0:00} / 05</color>     УБИЙСТВА {1}\n",wave,kills) + (bossPhase ? ZoneL.Format("БОСС: {0}   HP {1}",ZoneL.Get(Bosses[Mathf.Max(0,wave-1)]),Mathf.CeilToInt(CurrentBossHealth)) : ZoneL.Get("Уничтожьте врагов зоны"));
-                if (running && !bossPhase && !paused) help.text += ZoneL.Format("\nОСТАЛОСЬ: {0}",RemainingEnemies);
-                if (running && player.Dead) center.text = ZoneL.Get("ВЫ ПОГИБЛИ\nВозвращение в начале следующей волны");
-                else if (running && player.Downed) center.text = ZoneL.Get("ВЫ РАНЕНЫ\nСоюзник может поднять вас клавишей E");
+                hud.text="<size=16><color=#CEC4B3>"+HeroName(player.CharacterIndex)+"</color></size>\n<b>"+Mathf.CeilToInt(player.health)+"</b><size=17> / "+player.maxHealth+" HP</size>";
+                if(healthPortrait!=null)healthPortrait.sprite=ZoneActorArt.Frame(this,player.CharacterIndex,Vector2.down,false);
+                healthFill.GetComponent<UnityEngine.UI.Image>().color=player.health<=player.maxHealth*.3f?new Color(1,.38f,.32f):ZoneUi.Mint;
+                help.text=ended?ZoneL.Get(Victory?"ЗОНА ЗАЧИЩЕНА":"ВЫЛАЗКА ЗАВЕРШЕНА"):bossPhase&&CurrentBossHealth>0?ZoneL.Get(Bosses[Mathf.Max(0,wave-1)]):bossPhase?ZoneL.Get("ПЕРЕДЫШКА"):ZoneL.Format("ВОЛНА {0:00} / 05",wave);
+                if(running&&!bossPhase)help.text+="\n<size=16>"+ZoneL.Format("ОСТАЛОСЬ {0} · УБИЙСТВА {1}",RemainingEnemies,kills)+"</size>";
+                if(running&&player.Dead&&Application.isFocused&&!OptionsVisible){if(Input.GetKeyDown(KeyCode.LeftArrow))CycleSpectator(-1);if(Input.GetKeyDown(KeyCode.RightArrow))CycleSpectator(1);}
             }
         }
 
         void LateUpdate()
         {
             if (player == null) return;
-            var offset = Vector2.ClampMagnitude(player.aimPoint - (Vector2)player.transform.position, 4) * .22f;
-            var target = player.transform.position + (Vector3)offset;
+            var tracked=CameraActor;var offset=Vector2.ClampMagnitude(tracked.aimPoint-(Vector2)tracked.transform.position,4)*.22f;
+            var target=tracked.transform.position+(Vector3)offset;
             target.z = -10;
             if (arena != null) target = arena.ClampCamera(target, gameCamera);
             gameCamera.transform.position = Vector3.Lerp(gameCamera.transform.position, target, 1 - Mathf.Exp(-8 * Time.unscaledDeltaTime)) + ZoneFeedback.CameraOffset();
@@ -173,11 +190,12 @@ namespace DeadZone
         {
             if (!IsAuthority || running) return;
             statisticsRecorded=false;running = true; ended=false; paused=false;OptionsVisible=false;Time.timeScale=1;wave = 1;kills=0;damageDealt=0; startedAt = Time.time;
-            foreach (var actor in players) actor.ResetHero(actor.IsLocal ? selected : actor.CharacterIndex);
-            center.text = ""; network?.MatchStarted();
+            for(int i=0;i<players.Count;i++){var actor=players[i];if(network!=null&&!network.IsParticipantConnected(actor.OwnerId))continue;actor.ResetForMatch(actor.IsLocal?selected:actor.CharacterIndex);if(arena!=null){actor.transform.position=arena.TeamSpawn(i);actor.GetComponent<Rigidbody2D>().position=actor.transform.position;}}
+            spectated=null;if(arena!=null)gameCamera.transform.position=arena.ClampCamera(new Vector3(player.transform.position.x,player.transform.position.y,-10),gameCamera);center.text = ""; network?.MatchStarted();
             foreach (var actor in players)
             {
-                // Guaranteed personal choices before relying on random enemy drops.
+                // Legacy arenas keep their original starting racks. The larger city uses exploration caches.
+                if(arena!=null&&arena.Bounds.width>=100)continue;
                 for (int kind = 1; kind <= 3; kind++)
                 {
                     Vector2 origin = actor.transform.position, point = origin;
@@ -192,13 +210,14 @@ namespace DeadZone
                     ZonePickup.Spawn(this, point, kind, actor.OwnerId);
                 }
             }
+            ZoneSupplyCache.Populate(arena);
             SpawnWave();
         }
 
         void SpawnWave()
         {
             foreach (var actor in players) if ((actor.Dead || actor.Downed) && (network == null || network.IsParticipantConnected(actor.OwnerId))) actor.Revive(true);
-            pendingEnemies=Balance.WaveSize(wave,TeamSize);nextSpawn=Time.time+.8f;
+            pendingEnemies=Balance.WaveSize(wave,TeamSize);groupRemaining=0;spawnCluster=null;nextSpawn=Time.time+.8f;
             message = "Волна " + wave;
             breakUntil = Time.time + 2;
         }
@@ -212,7 +231,7 @@ namespace DeadZone
 
         public void SpawnEnemy(int kind, bool boss)
         {
-            var position = FindSpawn();
+            var position = FindSpawn(boss);
             if (!position.HasValue) return;
             var obj = new GameObject(boss ? Bosses[wave - 1] : "Enemy");
             obj.layer = player.gameObject.layer;
@@ -225,29 +244,30 @@ namespace DeadZone
             obj.transform.localScale = Vector3.one * (boss ? 1.6f : 1);
             var body = obj.AddComponent<Rigidbody2D>(); body.gravityScale = 0; body.freezeRotation = true;
             body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            obj.AddComponent<CircleCollider2D>().radius = .22f;
+            var feet=obj.AddComponent<CircleCollider2D>();feet.radius=.22f;feet.offset=Vector2.zero;
             var enemy = obj.AddComponent<ZoneEnemy>();
             enemy.game = this; enemy.kind = kind; enemy.boss = boss; enemy.ReadyAt = Time.time + (boss ? 1.8f : .75f);
             ZonePulse.Spawn(position.Value, obj.layer, boss ? 1.3f : .5f, 1, boss ? 1.8f : .75f);
-            enemy.health = boss ? Balance.BossHealth(wave,TeamSize) : (Balance.enemyHealthBase+wave*Balance.enemyHealthPerWave)*(kind==2?1.6f:1);
+            enemy.health = boss ? Balance.BossHealth(wave,TeamSize) : Balance.EnemyHealth(wave,TeamSize,kind);
             enemies.Add(enemy);if(boss){var brain=obj.AddComponent<ZoneBossBrain>();brain.Enemy=enemy;}
         }
 
-        Vector2? FindSpawn()
+        Vector2? FindSpawn(bool boss)
         {
-            Vector2 origin = player.transform.position;
-            for (int i = 0; i < 80; i++)
+            if(ZoneMap.Current==null)return null;
+            var active=players.FindAll(p=>!p.Dead&&!p.Downed&&(network==null||network.IsParticipantConnected(p.OwnerId)));if(active.Count==0)return null;
+            float halfWidth=gameCamera.orthographicSize*Mathf.Max(gameCamera.aspect,16f/9)+2.1f,halfHeight=gameCamera.orthographicSize+2.1f;
+            bool Safe(Vector2 point)=>active.TrueForAll(p=>{Vector2 d=point-(Vector2)p.transform.position;return d.sqrMagnitude>100&&(Mathf.Abs(d.x)>halfWidth||Mathf.Abs(d.y)>halfHeight);});
+            bool Empty(Vector2 point){foreach(var e in enemies)if(e!=null&&((Vector2)e.transform.position-point).sqrMagnitude<.7f*.7f)return false;return true;}
+            for(int attempt=0;attempt<180;attempt++)
             {
-                Vector2 point = origin + Random.insideUnitCircle.normalized * Random.Range(6f, 12f);
-                if (ZoneMap.Current != null && ZoneMap.Current.Walkable(point, player.gameObject.layer) && ZoneMap.Current.Reachable(point, player.gameObject.layer, player) && players.TrueForAll(p=>p.Dead||Vector2.Distance(p.transform.position,point)>3.5f)) return point;
+                var anchor=active[Random.Range(0,active.Count)];Vector2 point=!boss&&spawnCluster.HasValue&&attempt<60?spawnCluster.Value+Random.insideUnitCircle*3.5f:(Vector2)anchor.transform.position+Random.insideUnitCircle.normalized*Random.Range(14f,boss?21f:24f);
+                if(Empty(point)&&Safe(point)&&ZoneMap.Current.Walkable(point,anchor.gameObject.layer)&&!ZoneMap.Obstacle(point,boss?.37f:.28f,anchor.gameObject.layer)&&ZoneMap.Current.Reachable(point,anchor.gameObject.layer,anchor))return point;
             }
-            if(ZoneMap.Current!=null)
+            for(int attempt=0;attempt<180;attempt++)
             {
-                foreach(var node in ZoneMap.Current.WalkableNodes)
-                {
-                    Vector2 point=ZoneMap.Current.WorldPoint(node);
-                    if(node.z==player.gameObject.layer&&players.TrueForAll(p=>p.Dead||Vector2.Distance(p.transform.position,point)>7)&&ZoneMap.Current.Reachable(point,node.z,player))return point;
-                }
+                Vector2 point=ZoneMap.Current.RandomPoint();var nearest=NearestTarget(point);
+                if(nearest!=null&&Empty(point)&&Safe(point)&&!ZoneMap.Obstacle(point,boss?.37f:.28f,nearest.gameObject.layer)&&ZoneMap.Current.Reachable(point,nearest.gameObject.layer,nearest))return point;
             }
             return null;
         }
@@ -266,21 +286,21 @@ namespace DeadZone
             {
                 foreach(var minion in enemies.ToArray())if(minion!=null&&!minion.boss){enemies.Remove(minion);Destroy(minion.gameObject);}
                 foreach (var actor in players) ZonePickup.Spawn(this, enemy.transform.position, Random.Range(1, 4), actor.OwnerId, floor: enemy.gameObject.layer);
-                breakUntil = Time.time + Balance.breakSeconds; message = "Волна пройдена · собери припасы";
+                if(wave==5){Finish(true);return;}breakUntil = Time.time + Balance.breakSeconds; message = "Волна пройдена · собери припасы";
             }
         }
 
         public void Finish(bool victory)
         {
-            finishedElapsed=Time.time-startedAt;running = false; ended = true;
+            finishedElapsed=Time.time-startedAt;running = false; ended = true;GetComponent<ZoneOptions>().Close();paused=false;Time.timeScale=1;
             Victory = victory;
             if(!statisticsRecorded&&player!=null){ZoneProfile.Record(player,victory,Elapsed);statisticsRecorded=true;}
-            center.text = ResultText(victory);
+            center.text = "";
         }
 
         public string ResultText(bool victory)
         {
-            string result=ZoneL.Get(victory?"<color=#74E5D0>ПОБЕДА</color>":"<color=#F16E7A>ПОРАЖЕНИЕ</color>")+"\n"+ZoneL.Format("Время: {0:00}:{1:00}",Mathf.FloorToInt(Elapsed/60),Mathf.FloorToInt(Elapsed%60))+"\n";
+            string result=ZoneL.Get(victory?"<color=#94A86B>ПОБЕДА</color>":"<color=#F16E7A>ПОРАЖЕНИЕ</color>")+"\n"+ZoneL.Format("Время: {0:00}:{1:00}",Mathf.FloorToInt(Elapsed/60),Mathf.FloorToInt(Elapsed%60))+"\n";
             foreach(var actor in players)result+="\n"+ZoneL.Format("{0} · Убийства {1} · Урон {2} · Поднято {3}",HeroName(actor.CharacterIndex),actor.PersonalKills,Mathf.RoundToInt(actor.PersonalDamage),actor.Revives);
             return result+"\n\n"+ZoneL.Get("Enter — заново");
         }
@@ -289,7 +309,7 @@ namespace DeadZone
         {
             var obj = new GameObject(hostile ? "EnemyBullet" : "Bullet"); obj.transform.position = origin;
             obj.layer = floor >= 20 ? floor : owner != null ? owner.gameObject.layer : player.gameObject.layer;
-            var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = marker; sr.color = hostile ? Color.red : new Color(1, .9f, .4f); sr.sortingOrder = 200; sr.sortingLayerID = ZoneMap.Sorting(obj.layer);
+            var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = marker; sr.color = hostile ? Color.red : new Color(1, .9f, .4f); sr.sortingOrder = 3000; sr.sortingLayerID = ZoneMap.Sorting(obj.layer);
             obj.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             obj.transform.localScale = new Vector3(.22f, .12f, 1);
             if(!hostile&&!Application.isBatchMode)obj.AddComponent<ZoneTracer>();
@@ -310,53 +330,52 @@ namespace DeadZone
             font = TMP_Settings.defaultFontAsset;
             var obj = new GameObject("DeadZoneHUD", typeof(Canvas), typeof(UnityEngine.UI.CanvasScaler), typeof(UnityEngine.UI.GraphicRaycaster));
             var canvas = obj.GetComponent<Canvas>(); canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            var scaler = obj.GetComponent<UnityEngine.UI.CanvasScaler>(); scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize; scaler.referenceResolution = new Vector2(1600, 900); scaler.matchWidthOrHeight = .5f;
+            var scaler = obj.GetComponent<UnityEngine.UI.CanvasScaler>(); scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize; scaler.referenceResolution = new Vector2(1600, 900); scaler.screenMatchMode=UnityEngine.UI.CanvasScaler.ScreenMatchMode.Expand;
             if (FindAnyObjectByType<UnityEngine.EventSystems.EventSystem>() == null)
                 new GameObject("EventSystem", typeof(UnityEngine.EventSystems.EventSystem), typeof(UnityEngine.EventSystems.StandaloneInputModule));
             hudRoot = new GameObject("GameHUD", typeof(RectTransform)); hudRoot.transform.SetParent(obj.transform, false); Stretch(hudRoot.GetComponent<RectTransform>());
             resultShade=Panel(hudRoot.transform,"Result shade",Vector2.zero,Vector2.zero,Vector2.zero,new Color(.015f,.025f,.04f,.88f));Stretch(resultShade.GetComponent<RectTransform>());resultShade.SetActive(false);
-            Panel(hudRoot.transform, "VitalsPanel", Vector2.zero, new Vector2(28, 56), new Vector2(550, 160), new Color(.025f, .04f, .065f, .9f));
-            hud = Label(hudRoot.transform, "Player", Vector2.zero, new Vector2(50, 70), new Vector2(510, 125), 23);
-            var track = Panel(hudRoot.transform, "HealthTrack", Vector2.zero, new Vector2(50, 194), new Vector2(500, 5), new Color(.2f, .25f, .3f));
-            var fill = Panel(track.transform, "Health", Vector2.zero, Vector2.zero, new Vector2(500, 5), Accent); healthFill = fill.GetComponent<RectTransform>();
-            Panel(hudRoot.transform, "WavePanel", Vector2.one, new Vector2(-28, -28), new Vector2(510, 100), new Color(.025f, .04f, .065f, .9f));
-            help = Label(hudRoot.transform, "Wave", Vector2.one, new Vector2(-50, -45), new Vector2(465, 75), 24); help.alignment = TextAlignmentOptions.TopRight;
+            var vitals=Panel(hudRoot.transform,"VitalsPanel",Vector2.zero,new Vector2(28,28),new Vector2(365,128),ZoneUi.PanelColor);
+            healthPortrait=Panel(vitals.transform,"Hero portrait",new Vector2(0,1),new Vector2(22,-12),new Vector2(62,80),Color.white).GetComponent<UnityEngine.UI.Image>();healthPortrait.preserveAspect=true;
+            hud=Label(vitals.transform,"Player",Vector2.zero,new Vector2(102,45),new Vector2(240,72),30);
+            var track=Panel(vitals.transform,"HealthTrack",Vector2.zero,new Vector2(22,20),new Vector2(320,7),new Color(.15f,.23f,.29f));healthFill=Panel(track.transform,"Health",Vector2.zero,Vector2.zero,new Vector2(320,7),Accent).GetComponent<RectTransform>();
+            var wavePanel=Panel(hudRoot.transform,"WavePanel",new Vector2(.5f,1),new Vector2(0,-28),new Vector2(460,78),ZoneUi.PanelColor);
+            help=Label(wavePanel.transform,"Wave",new Vector2(.5f,1),new Vector2(0,-12),new Vector2(430,58),22);help.alignment=TextAlignmentOptions.Center;
             center = Label(hudRoot.transform, "Message", new Vector2(.5f, .5f), Vector2.zero, new Vector2(1050, 500), 32); center.alignment = TextAlignmentOptions.Center;
-            Label(hudRoot.transform, "Controls", Vector2.zero, new Vector2(32, 12), new Vector2(1530, 32), 17).text = "WASD движение   ЛКМ огонь   R перезарядка   SHIFT рывок   Q способность   E подбор   TAB оружие   G граната   F мина" + (arena == null ? "   ПРОБЕЛ спрыгнуть" : "");
-            menuRoot = Panel(obj.transform, "CharacterSelect", Vector2.zero, Vector2.zero, Vector2.zero, new Color(.025f, .04f, .065f, .96f)); Stretch(menuRoot.GetComponent<RectTransform>());
+            menuRoot = Panel(obj.transform, "CharacterSelect", Vector2.zero, Vector2.zero, Vector2.zero, new Color(.02f, .035f, .055f, .985f)); Stretch(menuRoot.GetComponent<RectTransform>());
+            var backdrop=Panel(menuRoot.transform,"Quarantine checkpoint",Vector2.zero,Vector2.zero,Vector2.zero,Color.white);Stretch(backdrop.GetComponent<RectTransform>());var background=backdrop.GetComponent<UnityEngine.UI.Image>();background.sprite=Resources.Load<Sprite>("DeadZoneUiBackdrop");background.color=new Color(.8f,.86f,.76f,.7f);ZoneQuarantineFrame.Attach(menuRoot,Vector2.zero,true);
             if (arena != null)
             {
                 var credits = Label(menuRoot.transform, "Map credits", new Vector2(1,0), new Vector2(-30,20), new Vector2(700,28), 15);
                 credits.alignment = TextAlignmentOptions.BottomRight; credits.text = "DEAD ZONE · CITY DISTRICT";
             }
-            Label(menuRoot.transform, "Brand", new Vector2(0, 1), new Vector2(70, -45), new Vector2(1000, 100), 70).text = "<b>DEAD <color=#74E5D0>ZONE</color></b>";
-            Label(menuRoot.transform, "Subtitle", new Vector2(0, 1), new Vector2(75, -155), new Vector2(1100, 60), 22).text = "Пять волн. Пять боссов. Один шанс выбраться. ";
-            Label(menuRoot.transform, "Section", new Vector2(0, 1), new Vector2(75, -240), new Vector2(1000, 55), 20).text = "ВЫБЕРИ ПЕРСОНАЖА  /  " + HeroCount.ToString("00");
+            Label(menuRoot.transform, "Brand", new Vector2(0, 1), new Vector2(75, -40), new Vector2(1000, 100), 76).text = "<b>DEAD <color=#CB5546>ZONE</color></b>";
+            Label(menuRoot.transform, "Subtitle", new Vector2(0, 1), new Vector2(78, -145), new Vector2(1100, 38), 22).text = "Пять волн. Пять боссов. Один шанс выбраться. ";
+            Label(menuRoot.transform, "Section", new Vector2(0, 1), new Vector2(78, -195), new Vector2(1000, 34), 18).text = "ВЫБЕРИ ПЕРСОНАЖА  /  " + HeroCount.ToString("00");
+            var quarantine=Label(menuRoot.transform,"Quarantine stamp",new Vector2(1,1),new Vector2(-75,-92),new Vector2(280,42),19);quarantine.alignment=TextAlignmentOptions.Right;quarantine.color=ZonePalette.Rust;quarantine.text="КАРАНТИН · СЕКТОР 04";
             heroCards = new UnityEngine.UI.Image[HeroCount];
             string[] roles = { "ВЫЖИВАНИЕ", "БЛИЖНИЙ БОЙ", "КОНТРОЛЬ", "ПРОКЛЯТИЕ" };
             string[] descriptions = { "Упорство\nМеньше урона при низком HP\n\nВозвращение · Q\nСтраховка от смертельного удара", "Кровь они\nВыносливость при низком HP\n\nФорма они · Q\nРог и булава на 40 секунд", "Бесконечность\nПериодическая блокировка удара\n\nФиолетовый · Q\nДальний пробивающий снаряд", "Король проклятий\n+4 HP за своё убийство\n\nЗловещее святилище · Q\nРубящие атаки в области на 8 секунд" };
             for (int i = 0; i < HeroCount; i++)
             {
                 int index = i;
-                float width = HeroCount > 3 ? 335 : 450;
-                var card = Panel(menuRoot.transform, "Hero " + i, new Vector2(0, .5f), new Vector2(75 + i * (width + 25), -35), new Vector2(width, 340), new Color(.075f, .1f, .14f));
-                card.GetComponent<RectTransform>().pivot = new Vector2(0, .5f);
-                var image = card.GetComponent<UnityEngine.UI.Image>(); image.raycastTarget = true; heroCards[i] = image;
-                var button = card.AddComponent<UnityEngine.UI.Button>(); button.targetGraphic = image; button.onClick.AddListener(() => { if (network == null || !network.Active) selected = index; });
-                Label(card.transform, "Number", new Vector2(0, 1), new Vector2(24, -22), new Vector2(width-110, 40), HeroCount>3?16:18).text = "<color=#74E5D0>0" + (i + 1) + "  /  " + (i < 4 ? roles[i] : "НОВЫЙ ГЕРОЙ") + "</color>";
-                Label(card.transform, "Name", new Vector2(0, 1), new Vector2(24, HeroCount>3?-90:-78), new Vector2(width - 48, 60), HeroCount>3?28:34).text = "<b>" + HeroName(i) + "</b>";
-                Label(card.transform, "Abilities", new Vector2(0, 1), new Vector2(24, -155), new Vector2(width - (HeroCount>3?48:150), 175), HeroCount>3?18:20).text = i < 4 ? descriptions[i] : "Способности из каталога персонажей";
-                if (characterFrames != null && i < HeroCount)
-                {
-                    var portrait = Panel(card.transform, "Portrait", Vector2.one, new Vector2(-20, HeroCount>3?-15:-120), HeroCount>3?new Vector2(64,84):new Vector2(92,120), Color.white);
-                    var imageComponent = portrait.GetComponent<UnityEngine.UI.Image>(); imageComponent.sprite = ZoneActorArt.Frame(this,i,Vector2.down,false); imageComponent.preserveAspect = true;
-                }
+                float width=Mathf.Min(345,(1450-(HeroCount-1)*22f)/HeroCount),total=HeroCount*width+(HeroCount-1)*22;
+                var card=Panel(menuRoot.transform,"Hero "+i,new Vector2(.5f,.5f),new Vector2(-total*.5f+i*(width+22),-15),new Vector2(width,450),new Color(.045f,.075f,.115f));
+                card.GetComponent<RectTransform>().pivot=new Vector2(0,.5f);var image=card.GetComponent<UnityEngine.UI.Image>();image.raycastTarget=true;heroCards[i]=image;
+                Color accent=ZoneHeroCard.HeroColor(i);var focus=card.AddComponent<ZoneHeroCard>();focus.Accent=accent;focus.Selected=i==selected;
+                var button=card.AddComponent<UnityEngine.UI.Button>();button.targetGraphic=image;button.transition=UnityEngine.UI.Selectable.Transition.None;button.onClick.AddListener(()=>{if(network==null||!network.Active){selected=index;ZoneFeedback.Play(7);}});
+                Panel(card.transform,"Hero accent",new Vector2(0,1),Vector2.zero,new Vector2(width,4),accent);
+                var number=Label(card.transform,"Number",new Vector2(0,1),new Vector2(22,-22),new Vector2(width-44,30),14);number.color=accent;number.text="0"+(i+1)+"  /  "+(i<4?roles[i]:"НОВЫЙ ГЕРОЙ");
+                Panel(card.transform,"Portrait backdrop",new Vector2(.5f,1),new Vector2(0,-66),new Vector2(180,180),new Color(accent.r,accent.g,accent.b,.045f));
+                var portrait=Panel(card.transform,"Portrait",new Vector2(.5f,1),new Vector2(0,-62),new Vector2(136,184),Color.white);var picture=portrait.GetComponent<UnityEngine.UI.Image>();picture.sprite=ZoneActorArt.Frame(this,i,Vector2.down,false);picture.preserveAspect=true;
+                Label(card.transform,"Name",new Vector2(0,1),new Vector2(22,-265),new Vector2(width-44,42),25).text="<b>"+HeroName(i)+"</b>";
+                var abilities=Label(card.transform,"Abilities",new Vector2(0,1),new Vector2(22,-308),new Vector2(width-44,136),17);abilities.color=ZonePalette.Muted;abilities.text=i<4?descriptions[i]:"Способности из каталога персонажей";
             }
-            var start = Panel(menuRoot.transform, "Start", new Vector2(1, 0), new Vector2(-75, 65), new Vector2(450, 75), Accent);
+            var start = Panel(menuRoot.transform, "Start", new Vector2(1, 0), new Vector2(-75, 58), new Vector2(420, 72), Accent);
             var startButton = start.AddComponent<UnityEngine.UI.Button>(); start.GetComponent<UnityEngine.UI.Image>().raycastTarget = true; startButton.targetGraphic = start.GetComponent<UnityEngine.UI.Image>(); startButton.onClick.AddListener(Begin);
-            var startText = Label(start.transform, "Label", new Vector2(.5f, .5f), Vector2.zero, new Vector2(430, 65), 25); startText.alignment = TextAlignmentOptions.Center; startText.color = new Color(.025f, .08f, .09f); startText.text = "НАЧАТЬ ВЫЛАЗКУ   →";
-            Label(menuRoot.transform, "BuildInfo", Vector2.zero, new Vector2(75, 65), new Vector2(850, 70), 19).text = "ОДИНОЧНЫЙ РЕЖИМ\nВыбор: мышь или 1–4 · Старт: Enter";
-            var coop = Panel(menuRoot.transform, "Coop", new Vector2(1, 0), new Vector2(-550, 65), new Vector2(250, 75), new Color(.12f, .2f, .25f));
+            var startText = Label(start.transform, "Label", new Vector2(.5f, .5f), Vector2.zero, new Vector2(400, 65), 24); startText.alignment = TextAlignmentOptions.Center; startText.color = new Color(.025f,.045f,.018f); startText.text = "НАЧАТЬ ВЫЛАЗКУ   →";
+            Label(menuRoot.transform, "BuildInfo", Vector2.zero, new Vector2(78, 96), new Vector2(580, 54), 17).text = "1–4 ИГРОКА · 5 ВОЛН · 5 БОССОВ\nВыбор: мышь или 1–4 · Старт: Enter";
+            var coop = Panel(menuRoot.transform, "Coop", new Vector2(1, 0), new Vector2(-520, 58), new Vector2(250, 72), new Color(.12f, .2f, .25f));
             var coopButton = coop.AddComponent<UnityEngine.UI.Button>(); coopButton.targetGraphic = coop.GetComponent<UnityEngine.UI.Image>(); coopButton.targetGraphic.raycastTarget = true; coopButton.onClick.AddListener(() => network.TogglePanel());
             var coopText = Label(coop.transform, "Label", new Vector2(.5f, .5f), Vector2.zero, new Vector2(240, 65), 24); coopText.alignment = TextAlignmentOptions.Center; coopText.text = "КООПЕРАТИВ";
         }
@@ -369,7 +388,7 @@ namespace DeadZone
             for (int i = 0; i < 16; i++) { float angle = i * Mathf.PI / 8; Vector2 point = origin + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * .9f; if (!Blocked(point, .25f)) { spawn = point; break; } }
             obj.transform.position = spawn;
             var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = CharacterFrame(character, 0); sr.sortingLayerID = playerVisual.GetComponent<SpriteRenderer>().sortingLayerID; sr.sortingOrder = 20;
-            var rb = obj.AddComponent<Rigidbody2D>(); rb.gravityScale = 0; rb.freezeRotation = true; obj.AddComponent<CircleCollider2D>().radius = .22f;
+            var rb = obj.AddComponent<Rigidbody2D>(); rb.gravityScale = 0; rb.freezeRotation = true; var feet=obj.AddComponent<CircleCollider2D>();feet.radius=.22f;feet.offset=Vector2.zero;
             var actor = obj.AddComponent<ZonePlayer>(); actor.game = this; actor.IsLocal = false; actor.OwnerId = owner; actor.ResetHero(character); players.Add(actor); return actor;
         }
         public ZonePlayer NearestTarget(Vector2 position)
@@ -390,15 +409,15 @@ namespace DeadZone
         {
             var obj = new GameObject(name, typeof(RectTransform), typeof(UnityEngine.UI.Image)); obj.transform.SetParent(parent, false);
             var rect = obj.GetComponent<RectTransform>(); rect.anchorMin = rect.anchorMax = rect.pivot = anchor; rect.anchoredPosition = position; rect.sizeDelta = size;
-            var image = obj.GetComponent<UnityEngine.UI.Image>(); image.color = color; image.raycastTarget = false; return obj;
+            var image = obj.GetComponent<UnityEngine.UI.Image>(); image.color = ZonePalette.Surface(color); image.raycastTarget = false; ZoneQuarantineFrame.Attach(obj,size); return obj;
         }
 
         TextMeshProUGUI Label(Transform parent, string name, Vector2 anchor, Vector2 pos, Vector2 size, int fontSize)
         {
             var obj = new GameObject(name, typeof(RectTransform)); obj.transform.SetParent(parent, false);
             var rect = obj.GetComponent<RectTransform>(); rect.anchorMin = rect.anchorMax = rect.pivot = anchor; rect.anchoredPosition = pos; rect.sizeDelta = size;
-            var text = obj.AddComponent<TextMeshProUGUI>(); text.font = font; text.fontSize = fontSize; text.color = Color.white; text.raycastTarget = false; text.textWrappingMode = TextWrappingModes.Normal;
-            ZoneL.Attach(text);text.outlineWidth = .2f; text.outlineColor = new Color(0, 0, 0, .8f); return text;
+            var text = obj.AddComponent<TextMeshProUGUI>(); text.font = font; text.fontSize = fontSize; text.color = ZonePalette.Text; text.raycastTarget = false; text.textWrappingMode = TextWrappingModes.Normal;
+            ZoneL.Attach(text);text.enableAutoSizing=false;return text;
         }
 
         void OnDestroy() { Time.timeScale = 1; if (Instance == this) Instance = null; }
@@ -456,12 +475,14 @@ namespace DeadZone
         readonly int[] loaded = { 12, 30, 70, 6 };
         readonly int[] reserves = { 0, 90, 140, 24 };
         public int ShotsFired { get; private set; }
+        public int ActiveSlot=>slot;public int WeaponInSlot(int index)=>owned[Mathf.Clamp(index,0,1)];
         public int StoredAmmo(int kind) => kind == weapon ? ammo : loaded[kind];
         public int StoredReserve(int kind) => kind == weapon ? reserve : reserves[kind];
 
         void Start()
         {
-            body = GetComponent<Rigidbody2D>(); body.gravityScale = 0; body.freezeRotation = true; body.collisionDetectionMode = CollisionDetectionMode2D.Continuous; body.interpolation = RigidbodyInterpolation2D.Interpolate; animator = GetComponent<Animator>();
+            body = GetComponent<Rigidbody2D>(); body.gravityScale = 0; body.freezeRotation = true; body.collisionDetectionMode = CollisionDetectionMode2D.Continuous; body.interpolation = RigidbodyInterpolation2D.Interpolate; animator = GetComponent<Animator>();GetComponent<Collider2D>().offset=Vector2.zero;ZoneHurtbox.Add(this);
+            foreach(var ally in game.players)if(ally!=this){var collider=ally.GetComponent<Collider2D>();if(collider!=null)Physics2D.IgnoreCollision(GetComponent<Collider2D>(),collider);}
             gun = new GameObject("WeaponAim").transform; gun.SetParent(transform, false);
             var visual = new GameObject("Gun"); visual.transform.SetParent(gun, false); visual.transform.localPosition = new Vector3(.35f, .25f);
             var sr = visual.AddComponent<SpriteRenderer>(); gunSprite = sr; sr.sprite = ZoneArsenal.Sprite(weapon); sr.sortingOrder = 100; sr.sortingLayerID = GetComponentInChildren<SpriteRenderer>().sortingLayerID;
@@ -471,6 +492,13 @@ namespace DeadZone
             reloadMagazine = magazine.AddComponent<SpriteRenderer>(); reloadMagazine.sprite = ZoneArt.Item(3); reloadMagazine.sortingOrder = 101; reloadMagazine.sortingLayerID = sr.sortingLayerID; reloadMagazine.enabled = false;
         }
         public void ResetHero(int index) { foreach(var shrine in FindObjectsByType<ZoneShrine>())if(shrine.Owner==this)Destroy(shrine.gameObject);shrineUntil=0;if(oni!=null)oni.Cancel(); PersonalKills=Revives=0;PersonalDamage=0;revived=false;CharacterIndex = index; hero = passive = index; maxHealth = index == 1 ? 120 : 100; if (game.roster != null && index < game.roster.characters.Length) { var definition = game.roster.characters[index]; hero = (int)definition.activeAbility; passive = (int)definition.passiveAbility; maxHealth = definition.maxHealth; } health = maxHealth; Downed = Dead = false; }
+        public void ResetForMatch(int index)
+        {
+            StopAllCoroutines();ResetHero(index);charge=0;grenades=3;mines=2;owned[0]=0;owned[1]=-1;slot=weapon=0;
+            for(int i=0;i<4;i++){loaded[i]=ZoneArsenal.Stats(i).Magazine;reserves[i]=ZoneArsenal.Stats(i).Reserve;}ammo=loaded[0];reserve=0;
+            ShotsFired=visualShots=0;wasReloading=dropping=false;move=dashDirection=Vector2.zero;nextShot=Time.time+.25f;reloadUntil=dashUntil=nextDash=protectedUntil=flashUntil=castUntil=returnUntil=shrineUntil=nextDrop=0;infinityAt=Time.time;hurtAt=Time.time;CastKind=0;reviveProgress=0;remoteCommand=default;
+            GetComponent<Collider2D>().enabled=true;var rb=GetComponent<Rigidbody2D>();if(game.IsAuthority)rb.simulated=true;rb.linearVelocity=Vector2.zero;
+        }
         public void SetCommand(ZoneCommand command) { if (!command.IsFinite) return; command.move = Vector2.ClampMagnitude(command.move, 1); remoteCommand.Merge(command); remoteInputAt = Time.time; }
         void Update()
         {
@@ -505,10 +533,10 @@ namespace DeadZone
                 ZoneFeedback.Play(weapon);if(IsLocal)ZoneFeedback.Kick(weapon==3?.045f:.015f);
                 ammo--; ShotsFired++; flashUntil = Time.time + .055f; nextShot = Time.time + stats.Interval;
             }
-            if (command.interact) NearestPickup()?.Take(this);
+            if (command.interact) {var pickup=NearestPickup();if(pickup!=null)pickup.Take(this);else ZoneSupplyCache.Nearest(this)?.Open(this);}
             if (command.grenade && CastRemaining <= 0 && grenades > 0) { castUntil = Time.time + .25f; CastKind = 3; grenades--; var obj = new GameObject("ThrownGrenade"); var grenade = obj.AddComponent<ZoneGrenade>(); grenade.owner = this; grenade.origin = transform.position; grenade.destination = Vector2.ClampMagnitude(aimPoint - (Vector2)transform.position, 6) + (Vector2)transform.position; ZoneMap.SetFloor(obj, gameObject.layer); }
-            if (command.mine && CastRemaining <= 0 && mines > 0) { castUntil = Time.time + .35f; CastKind = 4; mines--; var obj = new GameObject("Mine"); obj.layer = gameObject.layer; obj.transform.position = transform.position; var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(1); sr.sortingLayerID = ZoneMap.Sorting(obj.layer); sr.sortingOrder = 20; obj.transform.localScale = Vector3.one * .65f; obj.AddComponent<ZoneMine>().owner = this; }
-            if (Time.time - hurtAt > 5) health = Mathf.Min(maxHealth, health + 7 * Time.deltaTime);
+            if (command.mine && CastRemaining <= 0 && mines > 0) { castUntil = Time.time + .35f; CastKind = 4; mines--; var obj = new GameObject("Mine"); obj.layer = gameObject.layer; obj.transform.position = transform.position; var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(1); sr.sortingLayerID = ZoneMap.Sorting(obj.layer); sr.sortingOrder = ZoneDepth.Order(transform.position.y)-3; obj.transform.localScale = Vector3.one * .65f; obj.AddComponent<ZoneMine>().owner = this; }
+            if (Time.time - hurtAt > 6) health = Mathf.Min(maxHealth, health + 4.5f * Time.deltaTime);
         }
         void LateUpdate()
         {
@@ -521,7 +549,7 @@ namespace DeadZone
             float cast = Mathf.Clamp01(CastRemaining / .6f);
             // Renderer-only motion never moves the collider, feet or weapon parent.
             sr.color = Dead ? new Color(1,1,1,.2f) : Downed ? new Color(1,.55f,.55f) : CastRemaining > 0 ? Color.Lerp(Color.white, CastKind == 1 ? Color.cyan : CastKind == 5 ? new Color(1,.2f,.25f) : CastKind == 2 ? new Color(1,.4f,.5f) : new Color(.75f,.5f,1), cast * .45f) : Color.white;
-            sr.sortingOrder = 30;
+            sr.sortingOrder = ZoneDepth.Order(transform.position.y);
         }
         bool networkMoving;
         public Vector2 SafeMuzzlePosition()
@@ -549,7 +577,7 @@ namespace DeadZone
             gunSprite.transform.localPosition = new Vector3(.28f - recoil * (weapon == 3 ? .14f : .065f), -tip.y * sign);
             gunSprite.sprite = ZoneArsenal.Sprite(weapon); gunSprite.flipY = sign < 0;
             gunSprite.enabled = game.running && !Dead && !Downed && CastRemaining <= 0 && !Oni.Active;
-            gunSprite.sortingOrder = direction.y > Mathf.Abs(direction.x) ? 25 : 35;
+            gunSprite.sortingOrder = ZoneDepth.Order(transform.position.y)+(direction.y>Mathf.Abs(direction.x)?-2:2);
             muzzle.sortingOrder = gunSprite.sortingOrder + 1; muzzle.sprite = ZoneArt.MuzzleFlash(ShotsFired);
             muzzle.transform.position = gunSprite.transform.TransformPoint(new Vector3(tip.x, tip.y * sign));
             muzzle.transform.localScale = new Vector3(weapon == 3 ? .65f : .35f, .20f + recoil * .13f, 1);
@@ -602,18 +630,18 @@ namespace DeadZone
         public ZonePickup NearestPickup()
         {
             ZonePickup nearest = null; float distance = 1.4f;
-            foreach (var pickup in FindObjectsByType<ZonePickup>()) if (pickup.Owner == OwnerId && pickup.gameObject.layer == gameObject.layer)
+            foreach (var pickup in ZonePickup.Active) if (pickup!=null&&pickup.Owner == OwnerId && pickup.gameObject.layer == gameObject.layer&&ZoneCombat.Clear(transform.position,pickup.transform.position,gameObject.layer))
             { float next = Vector2.Distance(transform.position, pickup.transform.position); if (next < distance) { distance = next; nearest = pickup; } }
             return nearest;
         }
         public string PickupHint()
         {
             if (!game.running || Dead || Downed) return "";
-            if (game.IsAuthority) { var pickup = NearestPickup(); return pickup == null ? "" : "E — " + ZoneL.Get(ZoneArsenal.LootName(pickup.kind)); }
+            if (game.IsAuthority) { var pickup = NearestPickup();if(pickup!=null)return "E — "+ZoneL.Get(ZoneArsenal.LootName(pickup.kind));return ZoneSupplyCache.Nearest(this)!=null?ZoneL.Get("E — открыть тайник с припасами"):""; }
             ZoneGhost nearest = null; float distance = 1.4f;
-            foreach (var ghost in FindObjectsByType<ZoneGhost>()) if (ghost.ObjectType == 3 && ghost.gameObject.layer == gameObject.layer)
+            foreach (var ghost in FindObjectsByType<ZoneGhost>()) if ((ghost.ObjectType == 3 || ghost.ObjectType==10) && ghost.gameObject.layer == gameObject.layer&&ZoneCombat.Clear(transform.position,ghost.transform.position,gameObject.layer))
             { float next = Vector2.Distance(transform.position, ghost.transform.position); if (next < distance) { nearest = ghost; distance = next; } }
-            return nearest == null ? "" : "E — " + ZoneL.Get(ZoneArsenal.LootName(nearest.Kind));
+            return nearest == null ? "" : nearest.ObjectType==10?ZoneL.Get("E — открыть тайник с припасами"):"E — " + ZoneL.Get(ZoneArsenal.LootName(nearest.Kind));
         }
         void UseAbility()
         {
@@ -625,7 +653,7 @@ namespace DeadZone
         }
         public void Hit(float damage)
         {
-            if (!game.IsAuthority || !game.running || Downed || Dead || Time.time < dashUntil || Time.time < protectedUntil || Time.time - hurtAt < .4f) return;
+            if (!game.IsAuthority || !game.running || game.paused || Downed || Dead || Time.time < dashUntil || Time.time < protectedUntil || Time.time - hurtAt < .4f) return;
             if (passive == 2 && Time.time >= infinityAt) { infinityAt = Time.time + 10; ZonePulse.Spawn((Vector2)transform.position + Vector2.up * .5f, gameObject.layer, .85f, 6, .65f); return; }
             if (passive == 0 && health < maxHealth * .3f) damage *= .7f;
             if (passive == 1 && health < maxHealth * .4f) damage *= .8f;
@@ -639,55 +667,12 @@ namespace DeadZone
         public void Revive(bool newWave) { ZonePulse.Spawn(transform.position, gameObject.layer, .8f, 9, .7f); Downed = Dead = false; health = newWave ? maxHealth : maxHealth * .4f; reviveProgress = 0; GetComponent<Collider2D>().enabled = true; protectedUntil = Time.time + 1; dashUntil = 0; }
         public void ApplyNetworkState(ZonePlayerState state)
         {
-            shrineUntil=Time.time+state.shrineRemaining;Connected=state.connected;PersonalKills=state.kills;Revives=state.revives;PersonalDamage=state.damage;reviveProgress=state.reviveProgress*2;remoteDownRemaining=state.downRemaining;OwnerId = state.id; CharacterIndex = state.hero; health = state.health; maxHealth = state.maxHealth; charge = state.charge; weapon = state.weapon; ammo = state.ammo; reserve = state.reserve; grenades = state.grenades; mines = state.mines; Downed = state.downed; Dead = state.dead; remoteReloadRemaining = state.reloadRemaining; remoteStateAt = Time.time; castUntil = Time.time + state.castRemaining; CastKind = state.castKind; networkMoving = state.moving; Oni.Apply(state); ZoneMap.SetFloor(gameObject, state.floor);
+            shrineUntil=Time.time+state.shrineRemaining;Connected=state.connected;PersonalKills=state.kills;Revives=state.revives;PersonalDamage=state.damage;reviveProgress=state.reviveProgress*2;remoteDownRemaining=state.downRemaining;OwnerId = state.id; CharacterIndex = state.hero; health = state.health; maxHealth = state.maxHealth; charge = state.charge; weapon = state.weapon; ammo = state.ammo; reserve = state.reserve;owned[0]=state.weaponA;owned[1]=state.weaponB;slot=state.activeSlot; grenades = state.grenades; mines = state.mines; Downed = state.downed; Dead = state.dead; remoteReloadRemaining = state.reloadRemaining; remoteStateAt = Time.time; castUntil = Time.time + state.castRemaining; CastKind = state.castKind; networkMoving = state.moving; Oni.Apply(state); ZoneMap.SetFloor(gameObject, state.floor);
             networkTarget = state.position; if (!hasNetworkPosition || Vector2.Distance(transform.position, networkTarget) > 3) transform.position = networkTarget; hasNetworkPosition = true; if (!IsLocal || state.castKind == 2 && state.castRemaining > 0) aimPoint = state.aim; castAimPoint = state.aim;
-            if (state.shots > ShotsFired) flashUntil = Time.time + .06f; ShotsFired = state.shots;
+            if(state.shots<ShotsFired){visualShots=0;wasReloading=false;}if (state.shots > ShotsFired) flashUntil = Time.time + .06f; ShotsFired = state.shots;
             GetComponent<Rigidbody2D>().simulated = false;
             var sr = GetComponent<SpriteRenderer>(); sr.sprite = game.CharacterFrame(state.hero, state.moving ? 1 + (Mathf.FloorToInt(Time.time * 8) % 2) : 0); sr.color = Dead ? new Color(1, 1, 1, .2f) : Downed ? new Color(1, .5f, .5f) : Color.white;
         }
-    }
-
-    public sealed class ZoneEnemy : MonoBehaviour
-    {
-        public DeadZoneGame game; public int kind; public bool boss; public float health, ReadyAt;
-        Rigidbody2D body; float nextAttack,staggerUntil;Vector2 knockback;
-        SpriteRenderer sprite; Color baseColor; float flashUntil, maxHealth;
-        Transform healthBar;
-        public float MaxHealth=>maxHealth>0?maxHealth:health;
-        void Start()
-        {
-            body = GetComponent<Rigidbody2D>(); sprite = GetComponent<SpriteRenderer>(); baseColor = sprite.color; maxHealth = health;
-            var bar = new GameObject("Health"); bar.transform.SetParent(transform, false); bar.transform.localPosition = new Vector3(0, 1.5f); bar.transform.localScale = new Vector3(1, .08f, 1);
-            var renderer = bar.AddComponent<SpriteRenderer>(); renderer.sprite = game.marker; renderer.color = boss ? new Color(1, .2f, .45f) : new Color(.9f, .4f, .25f); renderer.sortingOrder = 200; renderer.sortingLayerID = sprite.sortingLayerID; healthBar = bar.transform;
-        }
-        void Update() { if (sprite != null) { var color = Time.time < flashUntil ? Color.white : baseColor; color.a = Mathf.Clamp01(1 - (ReadyAt - Time.time) / (boss ? 1.8f : .75f)); sprite.color = color; sprite.sprite = game.EnemyFrame(kind, boss); sprite.flipX = body.linearVelocity.x < -.1f; float size = boss ? 1.6f : 1; transform.localScale = new Vector3(size, size * (1 + (body.linearVelocity.sqrMagnitude > .1f ? Mathf.Sin(Time.time * 9) * .025f : 0)), 1); } if(healthBar!=null)healthBar.gameObject.SetActive(game.running&&Time.time>=ReadyAt&&(boss||health<maxHealth)); if (healthBar != null) healthBar.localScale = new Vector3(Mathf.Clamp01(health / maxHealth), .08f, 1); }
-        void FixedUpdate()
-        {
-            GetComponent<Collider2D>().enabled = Time.time >= ReadyAt;
-            if (!game.running || !game.IsAuthority || Time.time < ReadyAt) { body.linearVelocity = Vector2.zero; return; }
-            if(Time.time<staggerUntil){body.linearVelocity=knockback;return;}
-            var target = game.NearestTarget(transform.position); if (target == null) { body.linearVelocity = Vector2.zero; return; }
-            Vector2 delta = target.transform.position - transform.position; float distance = delta.magnitude;
-            Vector2 direction = ZoneMap.Current != null ? ZoneMap.Current.Direction(body.position, gameObject.layer, target) : delta.normalized;
-            if (ZoneStairTravel.Step(gameObject, direction)) return;
-            bool sameFloor = target.gameObject.layer == gameObject.layer;
-            float speed = boss ? 1.4f + game.wave * .08f : kind == 2 ? .9f : 1.6f;
-            body.linearVelocity = sameFloor && distance < (kind == 1 ? 3 : .6f) ? Vector2.zero : direction * speed;
-            if (!sameFloor) return;
-            if(boss){var brain=GetComponent<ZoneBossBrain>();if(brain!=null){body.linearVelocity=brain.Drive(body.linearVelocity);brain.Tick(target);return;}}
-            if (Time.time < nextAttack) return;
-            if (distance < .85f) { target.Hit(boss ? 25 : 12); nextAttack = Time.time + 1; }
-            else if ((kind == 1 || boss) && distance < 9)
-            {
-                int count = boss ? 3 + kind * 2 : 1;
-                for (int i = 0; i < count; i++) { Vector2 dir = boss && kind >= 2 ? Quaternion.Euler(0, 0, 360f * i / count) * Vector2.right : Quaternion.Euler(0, 0, (i - (count - 1) * .5f) * 14) * delta.normalized; game.Shoot(body.position + dir * .5f, dir, boss ? 15 : 9, true, 5, floor: gameObject.layer); }
-                nextAttack = Time.time + (boss ? 1.7f : 2.5f);
-            }
-        }
-        public void Hit(float damage, ZonePlayer owner = null, bool grantCharge = true) { if (!game.IsAuthority || health <= 0 || Time.time<ReadyAt) return; float actual = Mathf.Min(damage, health); health -= damage;
-            Vector2 impulse=owner!=null?((Vector2)transform.position-(Vector2)owner.transform.position).normalized:Vector2.up;
-            if(!boss){knockback=impulse*2.2f;staggerUntil=Time.time+.085f;}
-            ZoneImpact.Spawn(transform.position+Vector3.up*.45f,impulse,gameObject.layer,true);ZoneFeedback.Hit(transform.position,actual,gameObject.layer); flashUntil = Time.time + .09f; game.damageDealt += actual; owner ??= game.player; owner.PersonalDamage += actual; if (grantCharge) owner.charge = Mathf.Min(100, owner.charge + actual * .09f); if (health <= 0) { owner.PersonalKills++;owner.OnEnemyKilled(); if (grantCharge) owner.charge = Mathf.Min(100, owner.charge + 8); game.EnemyKilled(this); Destroy(gameObject); } }
     }
 
     public sealed class ZoneBullet : MonoBehaviour
@@ -695,11 +680,11 @@ namespace DeadZone
         public Vector2 direction; public float damage, speed, range = 32; public bool hostile; public ZonePlayer owner; float travelled;
         void Update()
         {
-            var game = DeadZoneGame.Instance; if (game == null || !game.running) { Destroy(gameObject); return; }
+            var game = DeadZoneGame.Instance; if (game == null || !game.running) { Destroy(gameObject); return; }if(game.paused)return;
             float step = Mathf.Min(speed * Time.deltaTime, range - travelled);
             foreach (var hit in Physics2D.RaycastAll(transform.position, direction, step))
             {
-                if (hit.collider.isTrigger) continue;
+                if (hit.collider.isTrigger && hit.collider.GetComponent<ZoneHurtbox>()==null) continue;
                 var player = hit.collider.GetComponentInParent<ZonePlayer>(); var enemy = hit.collider.GetComponentInParent<ZoneEnemy>();
                 int floor = hit.collider.gameObject.layer;
                 if (floor >= 20 && floor <= 22 && floor != gameObject.layer) continue;
@@ -714,17 +699,21 @@ namespace DeadZone
     }
     public sealed class ZonePickup : MonoBehaviour
     {
+        public static readonly List<ZonePickup> Active=new();float born;SpriteRenderer sprite;
         public int kind;
         public int ammo = -1, reserve = -1;
         public ulong Owner;
         public static void Spawn(DeadZoneGame game, Vector2 point, int kind, ulong owner = 0, int ammo = -1, int reserve = -1, int floor = -1)
         {
+            int count=0;ZonePickup oldest=null;foreach(var item in Active)if(item!=null&&item.Owner==owner){count++;if(oldest==null||item.born<oldest.born)oldest=item;}if(count>=72&&oldest!=null){Active.Remove(oldest);Destroy(oldest.gameObject);}
             var obj = new GameObject("Pickup " + ZoneArsenal.LootName(kind)); obj.transform.position = point; obj.transform.localScale = Vector3.one * (kind >= 0 && kind < 4 ? 1.2f : .6f);
             obj.layer = floor >= 20 ? floor : game.player.gameObject.layer;
-            var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = kind >= 0 && kind < 4 ? ZoneArsenal.Sprite(kind) : ZoneArt.Item(kind == 4 ? 1 : 2); sr.sortingOrder = 30; sr.sortingLayerID = ZoneMap.Sorting(obj.layer); sr.color = Color.white;
-            var pickup = obj.AddComponent<ZonePickup>(); pickup.kind = kind; pickup.Owner = owner; pickup.ammo = ammo; pickup.reserve = reserve;
+            var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = kind >= 0 && kind < 4 ? ZoneArsenal.Sprite(kind) : ZoneArt.Item(kind == 4 ? 1 : 2); sr.sortingOrder = ZoneDepth.Order(point.y)-3; sr.sortingLayerID = ZoneMap.Sorting(obj.layer); sr.color = Color.white;
+            var pickup = obj.AddComponent<ZonePickup>(); pickup.kind = kind; pickup.Owner = owner; pickup.ammo = ammo; pickup.reserve = reserve;pickup.born=Time.time;pickup.sprite=sr;Active.Add(pickup);
             if (game.network != null && game.network.Active && owner != game.player.OwnerId) sr.enabled = false;
         }
+        void Update(){float remaining=120-(Time.time-born);if(remaining<=0){Destroy(gameObject);return;}if(remaining<5&&sprite!=null){var c=sprite.color;c.a=Mathf.Clamp01(remaining/5);sprite.color=c;}}
+        void OnDestroy(){Active.Remove(this);}
         public void Take(ZonePlayer player) { if (player.OwnerId != Owner) return; player.Pickup(kind, ammo, reserve); Destroy(gameObject); }
     }
     public sealed class ZoneMine : MonoBehaviour
@@ -732,7 +721,7 @@ namespace DeadZone
         public ZonePlayer owner;
         float armedAt;
         void Start() { armedAt = Time.time + 1; }
-        void Update() { var game = DeadZoneGame.Instance; if (game == null || !game.IsAuthority || !game.running || Time.time < armedAt) return; GetComponent<SpriteRenderer>().color = Mathf.Sin(Time.time * 7) > 0 ? Color.white : new Color(.8f, 1, .8f); foreach (var enemy in game.enemies.ToArray()) if (enemy != null && enemy.gameObject.layer == gameObject.layer && Vector2.Distance(enemy.transform.position, transform.position) < 1) { game.Blast(transform.position, 2.5f, 150, owner, gameObject.layer); Destroy(gameObject); break; } }
+        void Update() { var game = DeadZoneGame.Instance; if (game == null || !game.IsAuthority || !game.running || game.paused || Time.time < armedAt) return; GetComponent<SpriteRenderer>().color = Mathf.Sin(Time.time * 7) > 0 ? Color.white : new Color(.8f, 1, .8f); foreach (var enemy in game.enemies.ToArray()) if (enemy != null && enemy.gameObject.layer == gameObject.layer && Vector2.Distance(enemy.transform.position, transform.position) < 1) { game.Blast(transform.position, 2.5f, 150, owner, gameObject.layer); Destroy(gameObject); break; } }
     }
 }
 

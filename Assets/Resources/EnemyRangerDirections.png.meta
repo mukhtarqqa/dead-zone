@@ -1,0 +1,1198 @@
+fileFormatVersion: 2
+guid: fc34ecf598a0d9d4a9807ceb519b5270
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6772467051971148506
+    second: EnemyRangerDirections_0
+  - first:
+      213: 3656017128115270013
+    second: EnemyRangerDirections_1
+  - first:
+      213: 3597335073271002846
+    second: EnemyRangerDirections_2
+  - first:
+      213: 7409644504278307134
+    second: EnemyRangerDirections_3
+  - first:
+      213: -2864509586633162560
+    second: EnemyRangerDirections_4
+  - first:
+      213: 3556938649569363718
+    second: EnemyRangerDirections_5
+  - first:
+      213: 5625616904140366934
+    second: EnemyRangerDirections_6
+  - first:
+      213: -6360228082434320128
+    second: EnemyRangerDirections_7
+  - first:
+      213: 8644288873751141948
+    second: EnemyRangerDirections_8
+  - first:
+      213: 2197063667048259184
+    second: EnemyRangerDirections_9
+  - first:
+      213: -4871554662056572751
+    second: EnemyRangerDirections_10
+  - first:
+      213: -8154614135388440198
+    second: EnemyRangerDirections_11
+  - first:
+      213: 5402423197572757047
+    second: EnemyRangerDirections_12
+  - first:
+      213: 7758684288415249538
+    second: EnemyRangerDirections_13
+  - first:
+      213: 2801302501796636175
+    second: EnemyRangerDirections_14
+  - first:
+      213: 9168848436478086997
+    second: EnemyRangerDirections_15
+  - first:
+      213: -6231447409804683252
+    second: EnemyRangerDirections_16
+  - first:
+      213: -566988275361731816
+    second: EnemyRangerDirections_17
+  - first:
+      213: -3793038333867506697
+    second: EnemyRangerDirections_18
+  - first:
+      213: -7805580558157258674
+    second: EnemyRangerDirections_19
+  - first:
+      213: -4257938910343518236
+    second: EnemyRangerDirections_20
+  - first:
+      213: -6856463235486785406
+    second: EnemyRangerDirections_21
+  - first:
+      213: -7804184979791833374
+    second: EnemyRangerDirections_22
+  - first:
+      213: -5869212441490970946
+    second: EnemyRangerDirections_23
+  - first:
+      213: 6213092321939670167
+    second: EnemyRangerDirections_24
+  - first:
+      213: 4277782239105106964
+    second: EnemyRangerDirections_25
+  - first:
+      213: 1526359626245137413
+    second: EnemyRangerDirections_26
+  - first:
+      213: -5570643135774045712
+    second: EnemyRangerDirections_27
+  - first:
+      213: -4263953496164292734
+    second: EnemyRangerDirections_28
+  - first:
+      213: 993821107108240898
+    second: EnemyRangerDirections_29
+  - first:
+      213: 8228483183531608994
+    second: EnemyRangerDirections_30
+  - first:
+      213: -7921408483145638499
+    second: EnemyRangerDirections_31
+  - first:
+      213: -1321953584024076234
+    second: EnemyRangerDirections_32
+  - first:
+      213: 8255663226452773612
+    second: EnemyRangerDirections_33
+  - first:
+      213: 8893501359824229383
+    second: EnemyRangerDirections_34
+  - first:
+      213: 1234709872591312394
+    second: EnemyRangerDirections_35
+  - first:
+      213: 7030477896542892924
+    second: EnemyRangerDirections_36
+  - first:
+      213: 7288737017049488412
+    second: EnemyRangerDirections_37
+  - first:
+      213: 6901535606905096520
+    second: EnemyRangerDirections_38
+  - first:
+      213: -153375139738511886
+    second: EnemyRangerDirections_39
+  - first:
+      213: 2658296021236491290
+    second: EnemyRangerDirections_40
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EnemyRangerDirections_0
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 1210
+        width: 199
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 625093a291d5302a0800000000000000
+      internalID: -6772467051971148506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1208
+        width: 275
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d71fd062538ccb230800000000000000
+      internalID: 3656017128115270013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_2
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 645
+        width: 457
+        height: 833
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed63f5c803d4ce130800000000000000
+      internalID: 3597335073271002846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_3
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 937
+        width: 224
+        height: 538
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e311f6d2b6854d660800000000000000
+      internalID: 7409644504278307134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_4
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 655
+        width: 253
+        height: 550
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c0870135b73f38d0800000000000000
+      internalID: -2864509586633162560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_5
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 1031
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60780773bd8cc5130800000000000000
+      internalID: 3556938649569363718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_6
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 939
+        width: 239
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65428bdb4c4321e40800000000000000
+      internalID: 5625616904140366934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_7
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 997
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 009d908c14eebb7a0800000000000000
+      internalID: -6360228082434320128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_8
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 655
+        width: 253
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3e5cc76eeea6f770800000000000000
+      internalID: 8644288873751141948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_9
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 322
+        width: 197
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07e145fb3c98d7e10800000000000000
+      internalID: 2197063667048259184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_10
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 319
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b8483078d2c46cb0800000000000000
+      internalID: -4871554662056572751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_11
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 321
+        width: 267
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a79facb16adf4de80800000000000000
+      internalID: -8154614135388440198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_12
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 319
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73677a1664349fa40800000000000000
+      internalID: 5402423197572757047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_13
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 322
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2843567c0426cab60800000000000000
+      internalID: 7758684288415249538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_14
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 328
+        width: 201
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f06600098c930e620800000000000000
+      internalID: 2801302501796636175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_15
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 373
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55f0ca7031b4e3f70800000000000000
+      internalID: 9168848436478086997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_16
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 351
+        width: 228
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c08501ea8937589a0800000000000000
+      internalID: -6231447409804683252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 314
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81ba047ea27a128f0800000000000000
+      internalID: -566988275361731816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_18
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 12
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f343625bbb6c5bc0800000000000000
+      internalID: -3793038333867506697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_19
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 129
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e40675d86d10da390800000000000000
+      internalID: -7805580558157258674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_20
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 19
+        width: 7
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e729adde13c8e4c0800000000000000
+      internalID: -4257938910343518236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_21
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 15
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 280e841b303f8d0a0800000000000000
+      internalID: -6856463235486785406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_22
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 30
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e69116fb17f1b390800000000000000
+      internalID: -7804184979791833374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_23
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 33
+        width: 15
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb6a0a1816e5c8ea0800000000000000
+      internalID: -5869212441490970946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_24
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 35
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 794cbe56c86593650800000000000000
+      internalID: 6213092321939670167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_25
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 17
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 414c554284cbd5b30800000000000000
+      internalID: 4277782239105106964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_26
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 17
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 504e6d93ef7be2510800000000000000
+      internalID: 1526359626245137413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_27
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 65
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f948b1259911b2b0800000000000000
+      internalID: -5570643135774045712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_28
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 15
+        width: 33
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 287a75af2e463d4c0800000000000000
+      internalID: -4263953496164292734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_29
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 15
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20ed87b0803cacd00800000000000000
+      internalID: 993821107108240898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_30
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 16
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab4daaebd1713270800000000000000
+      internalID: 8228483183531608994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_31
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 38
+        width: 13
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9d965934f0811290800000000000000
+      internalID: -7921408483145638499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_32
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 55
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630c0b6283a77ade0800000000000000
+      internalID: -1321953584024076234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_33
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 47
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cea09fdc6f1029270800000000000000
+      internalID: 8255663226452773612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_34
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 45
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 704d6c1fd501c6b70800000000000000
+      internalID: 8893501359824229383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_35
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 21
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a06197c5612922110800000000000000
+      internalID: 1234709872591312394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_36
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 37
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c73bca8d566419160800000000000000
+      internalID: 7030477896542892924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_37
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 47
+        width: 10
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1c997a13bbc62560800000000000000
+      internalID: 7288737017049488412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_38
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 49
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 849c94e811e27cf50800000000000000
+      internalID: 6901535606905096520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_39
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 19
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f5928e7f1a1fddf0800000000000000
+      internalID: -153375139738511886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyRangerDirections_40
+      rect:
+        serializedVersion: 2
+        x: 981
+        y: 15
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a14a2a5a52a24e420800000000000000
+      internalID: 2658296021236491290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      EnemyRangerDirections_0: -6772467051971148506
+      EnemyRangerDirections_1: 3656017128115270013
+      EnemyRangerDirections_10: -4871554662056572751
+      EnemyRangerDirections_11: -8154614135388440198
+      EnemyRangerDirections_12: 5402423197572757047
+      EnemyRangerDirections_13: 7758684288415249538
+      EnemyRangerDirections_14: 2801302501796636175
+      EnemyRangerDirections_15: 9168848436478086997
+      EnemyRangerDirections_16: -6231447409804683252
+      EnemyRangerDirections_17: -566988275361731816
+      EnemyRangerDirections_18: -3793038333867506697
+      EnemyRangerDirections_19: -7805580558157258674
+      EnemyRangerDirections_2: 3597335073271002846
+      EnemyRangerDirections_20: -4257938910343518236
+      EnemyRangerDirections_21: -6856463235486785406
+      EnemyRangerDirections_22: -7804184979791833374
+      EnemyRangerDirections_23: -5869212441490970946
+      EnemyRangerDirections_24: 6213092321939670167
+      EnemyRangerDirections_25: 4277782239105106964
+      EnemyRangerDirections_26: 1526359626245137413
+      EnemyRangerDirections_27: -5570643135774045712
+      EnemyRangerDirections_28: -4263953496164292734
+      EnemyRangerDirections_29: 993821107108240898
+      EnemyRangerDirections_3: 7409644504278307134
+      EnemyRangerDirections_30: 8228483183531608994
+      EnemyRangerDirections_31: -7921408483145638499
+      EnemyRangerDirections_32: -1321953584024076234
+      EnemyRangerDirections_33: 8255663226452773612
+      EnemyRangerDirections_34: 8893501359824229383
+      EnemyRangerDirections_35: 1234709872591312394
+      EnemyRangerDirections_36: 7030477896542892924
+      EnemyRangerDirections_37: 7288737017049488412
+      EnemyRangerDirections_38: 6901535606905096520
+      EnemyRangerDirections_39: -153375139738511886
+      EnemyRangerDirections_4: -2864509586633162560
+      EnemyRangerDirections_40: 2658296021236491290
+      EnemyRangerDirections_5: 3556938649569363718
+      EnemyRangerDirections_6: 5625616904140366934
+      EnemyRangerDirections_7: -6360228082434320128
+      EnemyRangerDirections_8: 8644288873751141948
+      EnemyRangerDirections_9: 2197063667048259184
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -11,7 +11,7 @@ namespace DeadZone.Editor
         {
             var game=DeadZoneGame.Instance;var map=ZoneMap.Current;
             if(!EditorApplication.isPlaying||game==null||game.player==null||map==null)throw new InvalidOperationException("Wait for scene initialization in Play Mode");
-            foreach(string path in AssetDatabase.GetDependencies("Assets/Scenes/DeadZoneCity.unity",true))if(path.StartsWith("Assets/LoBitCity")||path.StartsWith("Assets/Cainos"))throw new Exception("Restricted asset dependency: "+path);
+            foreach(string path in AssetDatabase.GetDependencies(UnityEngine.SceneManagement.SceneManager.GetActiveScene().path,true))if(path.StartsWith("Assets/LoBitCity")||path.StartsWith("Assets/Cainos"))throw new Exception("Restricted asset dependency: "+path);
             int total=0,reachable=0;
             foreach(var node in map.WalkableNodes){total++;if(map.Reachable(map.WorldPoint(node),node.z,game.player))reachable++;}
             if(total<5000||reachable!=total)throw new Exception($"Map disconnected {reachable}/{total}");

@@ -26,16 +26,16 @@ namespace DeadZone
         }
         static GameObject Panel(Transform parent,string name,Vector2 anchor,Vector2 position,Vector2 size)
         {
-            var obj=new GameObject(name,typeof(RectTransform),typeof(UnityEngine.UI.Image));obj.transform.SetParent(parent,false);var r=obj.GetComponent<RectTransform>();r.anchorMin=r.anchorMax=r.pivot=anchor;r.anchoredPosition=position;r.sizeDelta=size;obj.GetComponent<UnityEngine.UI.Image>().color=new Color(.035f,.065f,.09f,.98f);return obj;
+            var obj=new GameObject(name,typeof(RectTransform),typeof(UnityEngine.UI.Image));obj.transform.SetParent(parent,false);var r=obj.GetComponent<RectTransform>();r.anchorMin=r.anchorMax=r.pivot=anchor;r.anchoredPosition=position;r.sizeDelta=size;obj.GetComponent<UnityEngine.UI.Image>().color=ZonePalette.Graphite;ZoneQuarantineFrame.Attach(obj,size);return obj;
         }
         static TextMeshProUGUI Label(Transform parent,string value,Vector2 position,Vector2 size,TMP_FontAsset font,int fontSize)
         {
-            var obj=new GameObject("Label",typeof(RectTransform));obj.transform.SetParent(parent,false);var r=obj.GetComponent<RectTransform>();r.anchorMin=r.anchorMax=r.pivot=new Vector2(0,1);r.anchoredPosition=position;r.sizeDelta=size;var text=obj.AddComponent<TextMeshProUGUI>();text.font=font;text.fontSize=fontSize;text.color=Color.white;text.raycastTarget=false;text.text=value;ZoneL.Attach(text);return text;
+            var obj=new GameObject("Label",typeof(RectTransform));obj.transform.SetParent(parent,false);var r=obj.GetComponent<RectTransform>();r.anchorMin=r.anchorMax=r.pivot=new Vector2(0,1);r.anchoredPosition=position;r.sizeDelta=size;var text=obj.AddComponent<TextMeshProUGUI>();text.font=font;text.fontSize=fontSize;text.color=ZonePalette.Text;text.raycastTarget=false;text.text=value;ZoneL.Attach(text);return text;
         }
         static void Button(Transform parent,string label,Vector2 position,Vector2 size,TMP_FontAsset font,UnityEngine.Events.UnityAction action,bool bottom=false)
         {
             var obj=Panel(parent,label,new Vector2(0,1),position,size);if(bottom){var r=obj.GetComponent<RectTransform>();r.anchorMin=r.anchorMax=r.pivot=Vector2.zero;r.anchoredPosition=new Vector2(position.x,12);}
-            obj.GetComponent<UnityEngine.UI.Image>().color=new Color(.12f,.28f,.31f);var button=obj.AddComponent<UnityEngine.UI.Button>();button.targetGraphic=obj.GetComponent<UnityEngine.UI.Image>();button.onClick.AddListener(action);
+            obj.GetComponent<UnityEngine.UI.Image>().color=ZonePalette.Button;var button=obj.AddComponent<UnityEngine.UI.Button>();button.targetGraphic=obj.GetComponent<UnityEngine.UI.Image>();button.onClick.AddListener(action);
             var text=Label(obj.transform,label,Vector2.zero,size,font,22);text.alignment=TextAlignmentOptions.Center;
         }
     }

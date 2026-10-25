@@ -13,18 +13,18 @@ using UnityEngine.SceneManagement;
 
 namespace DeadZone
 {
-    [Serializable] public sealed class ZoneHello { public int protocol = 8; public string token; public int hero; }
+    [Serializable] public sealed class ZoneHello { public int protocol = 9; public string token; public int hero; }
     [Serializable] public sealed class ZonePlayerState
     {
         public ulong id;
-        public int hero, weapon, ammo, reserve, grenades, mines, shots, floor, castKind, maceSwings,kills,revives;
+        public int hero, weapon, weaponA,weaponB,activeSlot,ammo, reserve, grenades, mines, shots, floor, castKind, maceSwings,kills,revives;
         public float health, maxHealth, charge, reloadRemaining, castRemaining, oniRemaining, shrineRemaining,maceRemaining,damage,reviveProgress,downRemaining;
         public Vector2 position, aim, maceDirection;
         public bool moving, downed, dead, connected, reloading;
     }
     [Serializable] public sealed class ZoneObjectState
     {
-        public int id, type, kind, floor; public Vector2 position, velocity, origin; public float age, endAge; public float scale, health, remaining; public bool boss, hostile;
+        public int id, type, kind, floor,facing,animation; public Vector2 position, velocity, origin; public float age, endAge; public float scale, health, remaining,maxHealth; public bool boss, hostile;
     }
     [Serializable] public sealed class ZoneWorld
     {
@@ -55,7 +55,7 @@ namespace DeadZone
         bool smokeClient,smokeObserver,sawFour,sawShrine,sawPersonalStats,sawDowned,sawReviveProgress,sawRecovery;float smokeSeconds;
         bool expectReject, smokeReconnect;
         float smokeStarted, smokeOriginX;
-        int worldsReceived;
+        int worldsReceived,maxWorldCharacters;bool reworkSmoke,sawFinished,sawRematch,sawReset,sawCache,sawCorpse,sawTwoWeapons;
         bool sawOni, sawMaceSwing, sawOniRestore;
         bool sawClock, sawRem, sawGojo, sawShield, sawPurpleCharge, sawPurpleFlight, sawPurpleImpact, smokeMineSent;
         bool smokeEffectsSent, smokeReloadSent, smokeSawMine, smokeSawGrenade, smokeSawPulse, smokeSawReload, smokeSawFloor;
@@ -103,11 +103,15 @@ namespace DeadZone
             var args = Environment.GetCommandLineArgs();
             for (int i = 0; i < args.Length - 1; i++) if (args[i] == "-dz-hero" && int.TryParse(args[i + 1], out int hero)) game.selected = Mathf.Clamp(hero, 0, game.HeroCount - 1);
             for(int i=0;i<args.Length-1;i++)if(args[i]=="-dz-smoke-seconds")float.TryParse(args[i+1],out smokeSeconds);smokeObserver=Array.IndexOf(args,"-dz-observer-smoke")>=0;smokeClient = Array.IndexOf(args, "-dz-smoke") >= 0||smokeObserver;
+            reworkSmoke=Array.IndexOf(args,"-dz-rework-smoke")>=0;if(reworkSmoke)smokeClient=smokeObserver=true;if(smokeClient)ZoneProfile.SuppressRecording=true;
             expectReject = Array.IndexOf(args, "-dz-expect-reject") >= 0;
             smokeReconnect = Array.IndexOf(args, "-dz-reconnect-test") >= 0;
             for (int i = 0; i < args.Length - 1; i++) if (args[i] == "-dz-join") { ui.SetVisible(true); JoinLan(args[i + 1]); }
             for (int i = 0; i < args.Length - 1; i++) if (args[i] == "-dz-join-code") { ui.SetVisible(true); JoinInternet(args[i + 1]); }
             if (Array.IndexOf(args, "-dz-host") >= 0) HostLan();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if(Array.IndexOf(args,"-dz-net-sim")>=0&&transport!=null&&transport.GetNetworkDriver().IsCreated){Unity.Networking.Transport.NetworkSimulatorParameterExtensions.ModifyNetworkSimulatorParameters(transport.GetNetworkDriver(),new Unity.Networking.Transport.NetworkSimulatorParameter{SendDelayMS=60,SendJitterMS=15,SendPacketLossPercent=1,ReceivePacketLossPercent=1});Debug.Log("DZ_NET_SIMULATOR: send delay60ms jitter15ms send/receive loss1%");}
+#endif
         }
         static int ObjectId(GameObject obj)
         {
@@ -215,7 +219,7 @@ namespace DeadZone
             {
                 if (request.Payload.Length > 512) throw new Exception("Некорректные данные подключения.");
                 var hello = JsonUtility.FromJson<ZoneHello>(Encoding.UTF8.GetString(request.Payload));
-                if (hello == null || hello.protocol != 8 || hello.hero < 0 || hello.hero >= game.HeroCount || hello.token == null || hello.token.Length != 32) throw new Exception("Версии игры не совпадают.");
+                if (hello == null || hello.protocol != 9 || hello.hero < 0 || hello.hero >= game.HeroCount || hello.token == null || hello.token.Length != 32) throw new Exception("Версии игры не совпадают.");
                 var returning = peers.Find(p => p.token == hello.token);
                 if (returning != null)
                 {
@@ -293,12 +297,14 @@ namespace DeadZone
         }
         void ReceiveWorld(ulong sender, FastBufferReader reader)
         {
-            if (!ClientOnly || sender != NetworkManager.ServerClientId || reader.Length > 65536) return;
-            reader.ReadValueSafe(out string json);
+            if (!ClientOnly || sender != NetworkManager.ServerClientId || reader.Length > ZoneWorldCodec.MaxWireBytes+4) return;
+            string json;
+            try{reader.ReadValueSafe(out int count);if(count<=0||count>ZoneWorldCodec.MaxWireBytes||count>reader.Length-4)return;var payload=new byte[count];reader.ReadBytesSafe(ref payload,count);json=ZoneWorldCodec.Decode(payload);}
+            catch(Exception error){Debug.LogWarning("World message rejected: "+error.Message);return;}
             var world = JsonUtility.FromJson<ZoneWorld>(json);
-            if (world == null || world.sequence <= receivedSequence) return;
+            if (world == null || world.players==null || world.objects==null || world.sequence <= receivedSequence) return;
             receivedSequence = world.sequence;
-            worldsReceived++;
+            worldsReceived++;maxWorldCharacters=Mathf.Max(maxWorldCharacters,json.Length);sawFinished|=world.ended;sawRematch|=sawFinished&&world.running;
             var heroes=new HashSet<int>();bool anyDowned=false;foreach(var state in world.players){if(state.connected)heroes.Add(state.hero);anyDowned|=state.downed;sawReviveProgress|=state.reviveProgress>0;}sawRecovery|=sawDowned&&!anyDowned;sawDowned|=anyDowned;sawFour|=heroes.Count==4;
             bool wasRunning = game.running;
 
@@ -308,7 +314,7 @@ namespace DeadZone
                 seen.Add(state.id);
                 if (!clientActors.TryGetValue(state.id, out var actor)) { actor = state.id == manager.LocalClientId ? game.player : game.CreatePeer(state.id, state.hero); clientActors[state.id] = actor; }
                 if (state.id == manager.LocalClientId) { game.selected = state.hero; actor.IsLocal = true; }
-                actor.ApplyNetworkState(state);
+                actor.ApplyNetworkState(state);if(state.id==manager.LocalClientId){sawTwoWeapons|=state.weaponA==0&&state.weaponB>0;sawReset|=sawRematch&&state.kills==0&&state.damage==0&&state.revives==0&&state.weaponA==0&&state.weaponB==-1&&state.health==state.maxHealth;}
                 if (smokeClient && state.id == manager.LocalClientId) { smokeSawReload |= state.reloading; sawPersonalStats|=state.kills==3&&state.damage>=75&&state.revives==1;sawOni |= state.oniRemaining>38; sawMaceSwing |= state.maceSwings>0 && state.maceRemaining>0; sawOniRestore |= sawOni && state.oniRemaining<=0 && state.shots>0; smokeSawFloor |= state.floor >= 20 && state.floor <= 22; }
             }
             game.ApplyRemoteMatch(world.running, world.ended, world.victory, world.wave, world.kills, world.damage, world.boss, world.bossHealth, world.remaining, world.notice, world.pending,world.alive,world.elapsed);
@@ -316,7 +322,7 @@ namespace DeadZone
             var objectIds = new HashSet<int>();
             foreach (var state in world.objects)
             {
-                objectIds.Add(state.id);
+                objectIds.Add(state.id);sawCache|=state.type==10;sawCorpse|=state.type==9;
                 if (!ghosts.TryGetValue(state.id, out var obj) || obj == null)
                 {
                     obj = new GameObject("Network object " + state.id); var renderer = obj.AddComponent<SpriteRenderer>(); renderer.sortingOrder = state.type == 1 ? 20 : 100; renderer.sortingLayerID = game.playerVisual.GetComponent<SpriteRenderer>().sortingLayerID; obj.AddComponent<ZoneGhost>(); ghosts[state.id] = obj;
@@ -329,10 +335,13 @@ namespace DeadZone
         }
         static void Send(NetworkManager network, string name, ulong recipient, string json)
         {
-            if (json.Length > 30000) return;
-            using var writer = new FastBufferWriter(json.Length * 2 + 16, Allocator.Temp);
-            writer.WriteValueSafe(json);
-            network.CustomMessagingManager.SendNamedMessage(name, recipient, writer, NetworkDelivery.ReliableFragmentedSequenced);
+            if(name==WorldMessage)
+            {
+                var payload=ZoneWorldCodec.Encode(json);using var writer=new FastBufferWriter(payload.Length+4,Allocator.Temp);writer.WriteValueSafe(payload.Length);writer.WriteBytesSafe(payload);
+                network.CustomMessagingManager.SendNamedMessage(name,recipient,writer,NetworkDelivery.ReliableFragmentedSequenced);return;
+            }
+            if(json.Length>1024)throw new InvalidOperationException("Input message exceeds its byte budget");
+            using var input=new FastBufferWriter(json.Length*2+16,Allocator.Temp);input.WriteValueSafe(json);network.CustomMessagingManager.SendNamedMessage(name,recipient,input,NetworkDelivery.ReliableFragmentedSequenced);
         }
         void Update()
         {
@@ -359,6 +368,7 @@ namespace DeadZone
                         bool pass = worldsReceived >= 5 && game.players.Count >= 2 && game.wave == 1 && (smokeReconnect ? game.player.Dead : game.player.ShotsFired > 0 && Mathf.Abs(game.player.transform.position.x - smokeOriginX) > .05f);
                         if(smokeObserver)pass=worldsReceived>=5&&sawFour&&sawShrine&&sawPersonalStats&&sawDowned&&sawReviveProgress&&sawRecovery&&game.player.ShotsFired>0;
                         else if (!smokeReconnect) pass &= sawPersonalStats&&smokeSawMine && smokeSawGrenade && smokeSawPulse && smokeSawReload && smokeSawFloor && sawClock && sawRem && sawGojo && sawShield && sawPurpleCharge && sawPurpleFlight && sawPurpleImpact && sawOni && sawMaceSwing && sawOniRestore;
+                        if(reworkSmoke){pass&=maxWorldCharacters>30000&&sawCache&&sawCorpse&&sawTwoWeapons&&sawFinished&&sawRematch&&sawReset;Debug.Log($"DZ_NET_REWORK: maxWorldChars={maxWorldCharacters}, cache={sawCache}, corpse={sawCorpse}, twoSlots={sawTwoWeapons}, results={sawFinished}, rematch={sawRematch}, reset={sawReset}");}
                         if(smokeObserver)Debug.Log(pass?"DZ_NET_FOUR_PASS: four unique heroes, Shrine replica, personal statistics, downed/revive/recovery, shooting":"DZ_NET_FOUR_FAIL");
                         Debug.Log($"DZ_NET_STATS: personal={sawPersonalStats}, fourHeroes={sawFour}, shrine={sawShrine}, downed={sawDowned}, reviveBar={sawReviveProgress}, recovery={sawRecovery}");
                         if (smokeReconnect) Debug.Log(pass ? "DZ_NET_RECONNECT_PASS" : "DZ_NET_RECONNECT_FAIL");
@@ -388,10 +398,13 @@ namespace DeadZone
             foreach (var peer in peers) if (peer.actor != null)
             {
                 var actor = peer.actor;
-                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer });
+                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, weaponA=actor.WeaponInSlot(0),weaponB=actor.WeaponInSlot(1),activeSlot=actor.ActiveSlot,ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer });
             }
             var objects = new List<ZoneObjectState>();
-            foreach (var enemy in game.enemies) if (enemy != null) objects.Add(new ZoneObjectState { id = ObjectId(enemy.gameObject), type = 1, kind = enemy.kind, position = enemy.transform.position, velocity = enemy.GetComponent<Rigidbody2D>().linearVelocity, scale = enemy.transform.localScale.x, health = enemy.health, boss = enemy.boss, floor = enemy.gameObject.layer, remaining = Mathf.Max(0, enemy.ReadyAt - Time.time) });
+            foreach (var enemy in game.enemies) if (enemy != null) objects.Add(new ZoneObjectState { id = ObjectId(enemy.gameObject), type = 1, kind = enemy.kind, facing=enemy.Facing,animation=enemy.AnimationPose,maxHealth=enemy.MaxHealth,age=enemy.HitFlashRemaining, position = enemy.transform.position, velocity = enemy.GetComponent<Rigidbody2D>().linearVelocity, scale = enemy.transform.localScale.x, health = enemy.health, boss = enemy.boss, floor = enemy.gameObject.layer, remaining = Mathf.Max(0, enemy.ReadyAt - Time.time) });
+            foreach(var corpse in ZoneCorpse.Active)if(corpse!=null)objects.Add(new ZoneObjectState{id=ObjectId(corpse.gameObject),type=9,kind=corpse.Kind,boss=corpse.Boss,facing=corpse.Facing,position=corpse.transform.position,scale=corpse.transform.localScale.x,floor=corpse.gameObject.layer,age=corpse.Age});
+            var recipientActor=peers.Find(p=>p.id==recipient)?.actor;
+            foreach(var cache in ZoneSupplyCache.Active)if(cache!=null&&!cache.Opened(recipientActor))objects.Add(new ZoneObjectState{id=ObjectId(cache.gameObject),type=10,kind=cache.WeaponKind,position=cache.transform.position,scale=1.25f,floor=cache.gameObject.layer});
             foreach (var bullet in FindObjectsByType<ZoneBullet>()) objects.Add(new ZoneObjectState { id = ObjectId(bullet.gameObject), type = 2, position = bullet.transform.position, velocity = bullet.direction * bullet.speed, hostile = bullet.hostile, scale = .22f, floor = bullet.gameObject.layer });
             foreach (var pickup in FindObjectsByType<ZonePickup>()) if (pickup.Owner == recipient) objects.Add(new ZoneObjectState { id = ObjectId(pickup.gameObject), type = 3, kind = pickup.kind, position = pickup.transform.position, scale = .6f, floor = pickup.gameObject.layer });
             foreach (var mine in FindObjectsByType<ZoneMine>()) objects.Add(new ZoneObjectState { id = ObjectId(mine.gameObject), type = 4, position = mine.transform.position, scale = .65f, floor = mine.gameObject.layer });
@@ -436,12 +449,16 @@ namespace DeadZone
 
     public sealed class ZoneGhost : MonoBehaviour
     {
+        public static readonly List<ZoneGhost> Active=new();
         public int ObjectType { get; private set; }
         public int Kind { get; private set; }
-        Vector2 target, velocity; float receivedAt; bool initialized;
+        public bool IsBoss=>boss;public float MaxHealth=>maxHealth;
+        Vector2 target, velocity;float receivedAt;bool initialized;int facing,animation;bool boss;float health,maxHealth,flashUntil;SpriteRenderer healthBar;
+        void OnEnable(){Active.Add(this);}void OnDestroy(){Active.Remove(this);}
         public void Apply(DeadZoneGame game, ZoneObjectState state)
         {
             ObjectType = state.type; Kind = state.kind; gameObject.layer = state.floor;
+            if(state.type==9){var corpse=GetComponent<ZoneCorpse>();if(corpse==null)corpse=gameObject.AddComponent<ZoneCorpse>();corpse.Apply(state);return;}
             if(state.type==8)
             {
                 GetComponent<SpriteRenderer>().enabled=false;var shrine=GetComponent<ZoneShrine>();if(shrine==null)shrine=gameObject.AddComponent<ZoneShrine>();shrine.Apply(state);return;
@@ -462,15 +479,26 @@ namespace DeadZone
             if (!initialized) { transform.position = target; initialized = true; }
             bool firearm = state.type == 3 && state.kind >= 0 && state.kind < 4;
             var sr = GetComponent<SpriteRenderer>(); sr.sprite = state.type == 1 ? game.EnemyFrame(state.kind, state.boss) : firearm ? ZoneArsenal.Sprite(state.kind) : state.type == 4 || state.type == 3 && state.kind == 4 ? ZoneArt.Item(1) : state.type == 5 ? ZoneArt.Item(0) : state.type == 3 ? ZoneArt.Item(2) : game.marker;
-            if (state.type == 1) sr.flipX = state.velocity.x < -.1f;
+            if(state.type==1)
+            {
+                if(initialized&&health>0&&state.health<health)ZoneFeedback.Hit(state.position,health-state.health,state.floor);
+                facing=state.facing;animation=state.animation;boss=state.boss;health=state.health;maxHealth=state.maxHealth;flashUntil=Time.unscaledTime+state.age;sr.flipX=false;sr.sprite=ZoneEnemyArt.Frame(state.kind,facing,animation,boss);
+                if(healthBar==null){var bar=new GameObject("Enemy health");bar.transform.SetParent(transform,false);bar.transform.localPosition=new Vector3(0,boss?2:state.kind==3?2.05f:1.8f);healthBar=bar.AddComponent<SpriteRenderer>();healthBar.sprite=game.marker;healthBar.color=new Color(.94f,.38f,.24f);healthBar.sortingLayerID=ZoneMap.Sorting(state.floor);healthBar.sortingOrder=3100;}
+                healthBar.enabled=health>0&&maxHealth>0&&(boss||health<maxHealth);healthBar.transform.localScale=new Vector3(maxHealth>0?health/maxHealth:1,.065f,1);
+            }
             sr.color = state.type == 1 ? (state.boss ? new Color(1, .65f, .85f) : Color.white) : state.type == 2 ? (state.hostile ? Color.red : Color.yellow) : state.type == 4 || state.type == 3 && state.kind == 4 ? Color.cyan : firearm ? Color.white : Color.green;
-            sr.sortingLayerID = ZoneMap.Sorting(state.floor);
-            if (state.type == 3 || state.type == 4 || state.type == 5) sr.color = Color.white;
+            sr.sortingLayerID = ZoneMap.Sorting(state.floor);sr.sortingOrder=state.type==2||state.type==5?3000:ZoneDepth.Order(state.position.y)-(state.type==1?0:3);
+            if (state.type == 3 || state.type == 4 || state.type == 5 || state.type==10) sr.color = Color.white;if(state.type==10)sr.sprite=ZoneArt.Item(2);
             if (state.type == 1) { var color = sr.color; color.a = Mathf.Clamp01(1 - state.remaining / (state.boss ? 1.8f : .75f)); sr.color = color; }
             transform.localScale = state.type == 2 ? new Vector3(.22f, .12f, 1) : Vector3.one * (firearm ? 1.2f : state.scale);
             if (state.type == 2) transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(state.velocity.y, state.velocity.x) * Mathf.Rad2Deg);
         }
-        void Update() { if (ObjectType == 6 || ObjectType == 7 || ObjectType==8) return; transform.position = Vector2.Lerp(transform.position, target + velocity * Mathf.Min(.1f, Time.unscaledTime - receivedAt), 1 - Mathf.Exp(-22 * Time.unscaledDeltaTime)); }
+        void Update()
+        {
+            if(ObjectType==6||ObjectType==7||ObjectType==8||ObjectType==9)return;
+            transform.position=Vector2.Lerp(transform.position,target+velocity*Mathf.Min(.1f,Time.unscaledTime-receivedAt),1-Mathf.Exp(-22*Time.unscaledDeltaTime));
+            if(ObjectType==1){var sr=GetComponent<SpriteRenderer>();int pose=animation==1||animation==2?1+(Mathf.FloorToInt(Time.time*(Kind==2?12:7)+(GetEntityId().GetHashCode()%97)*.13f)&1):animation;sr.sprite=ZoneEnemyArt.Frame(Kind,facing,pose,boss);var c=ZoneEnemyArt.Tint(Kind,boss);c.a=sr.color.a;if(Time.unscaledTime<flashUntil)c=Color.Lerp(c,new Color(1,.35f,.3f,c.a),.65f);sr.color=c;sr.sortingOrder=ZoneDepth.Order(transform.position.y);}
+        }
     }
 }
 

@@ -29,10 +29,10 @@ namespace DeadZone
             if(instance==null){var obj=new GameObject("Combat audio");instance=obj.AddComponent<ZoneFeedback>();for(int i=0;i<instance.voices.Length;i++){var source=obj.AddComponent<AudioSource>();source.spatialBlend=0;source.playOnAwake=false;instance.voices[i]=source;}}
             if(sounds==null)
             {
-                sounds=new AudioClip[12];var random=new System.Random(19);
+                sounds=new AudioClip[14];var random=new System.Random(19);
                 for(int k=0;k<sounds.Length;k++)
                 {
-                    float duration=k==0?.13f:k==1?.10f:k==2?.17f:k==3?.32f:k==5?.6f:k>=10?.7f:.12f;
+                    float duration=k==12?1.1f:k==13?.18f:k==0?.13f:k==1?.10f:k==2?.17f:k==3?.32f:k==5?.6f:k>=10?.7f:.12f;
                     int count=Mathf.RoundToInt(22050*duration);var data=new float[count];
                     for(int i=0;i<count;i++)
                     {
@@ -41,6 +41,8 @@ namespace DeadZone
                         float body=Mathf.Sin(2*Mathf.PI*hz*t*(1-x*.45f));
                         float attack=Mathf.Min(1,t*1800);
                         float signal=k<4?noise*(k==3?.7f:.4f)+body*.6f:k==5?noise*.8f+body*.4f:k>=10?body*.5f+Mathf.Sin(t*2*Mathf.PI*(hz*1.5f))*.25f:noise*.3f+body*.35f;
+                        if(k==12){env=Mathf.Sin(x*Mathf.PI)*(.5f+.5f*x);signal=Mathf.Sin(2*Mathf.PI*(48+35*x)*t)*.65f+Mathf.Sin(t*2*Mathf.PI*96)*.2f+noise*.12f;}
+                        if(k==13){env=Mathf.Pow(1-x,3);signal=noise*.65f+Mathf.Sin(t*2*Mathf.PI*(1800-1300*x))*.25f+body*.18f;}
                         data[i]=Mathf.Clamp(signal*env*attack*.45f,-1,1);
                     }
                     sounds[k]=AudioClip.Create("Dead Zone effect "+k,count,1,22050,false);sounds[k].SetData(data,0);
@@ -57,7 +59,7 @@ namespace DeadZone
             if(Application.isBatchMode)return;
             Play(player?6:4);if(player)Kick(.12f);
             var obj=new GameObject("Damage number");obj.transform.position=point+Vector2.up*.9f;
-            var text=obj.AddComponent<TMPro.TextMeshPro>();text.text=Mathf.CeilToInt(damage).ToString();text.fontSize=3;text.alignment=TMPro.TextAlignmentOptions.Center;text.color=player?new Color(1,.3f,.4f):new Color(1,.86f,.4f);var renderer=obj.GetComponent<MeshRenderer>();renderer.sortingLayerID=ZoneMap.Sorting(floor);renderer.sortingOrder=220;text.rectTransform.sizeDelta=new Vector2(2,1);obj.AddComponent<ZoneFloatingNumber>();
+            var text=obj.AddComponent<TMPro.TextMeshPro>();text.text=Mathf.CeilToInt(damage).ToString();text.fontSize=3;text.alignment=TMPro.TextAlignmentOptions.Center;text.color=player?new Color(1,.3f,.4f):new Color(1,.86f,.4f);var renderer=obj.GetComponent<MeshRenderer>();renderer.sortingLayerID=ZoneMap.Sorting(floor);renderer.sortingOrder=3200;text.rectTransform.sizeDelta=new Vector2(2,1);obj.AddComponent<ZoneFloatingNumber>();
         }
     }
     public sealed class ZoneFloatingNumber : MonoBehaviour

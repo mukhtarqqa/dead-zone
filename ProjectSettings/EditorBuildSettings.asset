@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/DeadZoneCity.unity
-    guid: fc189d736e0ec1a4bb2b37913ecf5a2a
+    path: Assets/Scenes/DeadZoneCityV2.unity
+    guid: a924f080e68d1c44aa1b7c61124e7ac3
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 021e720fc0f843646814beed00af315a, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
