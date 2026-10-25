@@ -46,8 +46,8 @@ namespace DeadZone
             hostLan.interactable = joinLan.interactable = hostOnline.interactable = joinOnline.interactable = available;
             address.interactable = code.interactable = available;
             start.interactable = network.IsHost && !game.running && !game.ended;
-            team.text = "ТВОЙ ГЕРОЙ: <color=#74E5D0>" + game.HeroName(game.selected) + "</color>     ·     УЧАСТНИКИ: " + network.MemberCount + " / " + Mathf.Min(4, game.HeroCount);
-            status.text = network.Status + (string.IsNullOrEmpty(network.RoomCode) ? "" : "\nКОД: <color=#74E5D0>" + network.RoomCode + "</color>") + "\n" + network.MemberSummary();
+            team.text = ZoneL.Format("ТВОЙ ГЕРОЙ: <color=#74E5D0>{0}</color>     ·     УЧАСТНИКИ: {1} / {2}",game.HeroName(game.selected),network.MemberCount,Mathf.Min(4,game.HeroCount));
+            status.text = ZoneL.Get(network.Status) + (string.IsNullOrEmpty(network.RoomCode) ? "" : ZoneL.Format("\nКОД: <color=#74E5D0>{0}</color>",network.RoomCode)) + "\n" + network.MemberSummary();
         }
         UnityEngine.UI.Button BottomButton(string label, Vector2 position, Vector2 size, UnityEngine.Events.UnityAction click) => Button(root.transform, label, position, size, click, true);
         UnityEngine.UI.Button Button(Transform parent, string label, Vector2 position, Vector2 size, UnityEngine.Events.UnityAction click, bool bottom = false)
@@ -73,7 +73,7 @@ namespace DeadZone
         {
             var obj = new GameObject(name, typeof(RectTransform)); obj.transform.SetParent(parent, false);
             var rect = obj.GetComponent<RectTransform>(); rect.anchorMin = rect.anchorMax = rect.pivot = anchor; rect.anchoredPosition = position; rect.sizeDelta = size;
-            var text = obj.AddComponent<TextMeshProUGUI>(); text.font = font; text.fontSize = fontSize; text.color = Color.white; text.raycastTarget = false; text.textWrappingMode = TextWrappingModes.Normal; return text;
+            var text = obj.AddComponent<TextMeshProUGUI>(); text.font = font; text.fontSize = fontSize; text.color = Color.white; text.raycastTarget = false; text.textWrappingMode = TextWrappingModes.Normal;ZoneL.Attach(text); return text;
         }
         GameObject Panel(Transform parent, string name, Vector2 anchor, Vector2 position, Vector2 size, Color color)
         {

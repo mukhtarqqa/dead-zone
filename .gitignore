@@ -22,3 +22,7 @@
 /Assets/Screenshots.meta
 /*-result.txt
 *.log
+/Assets/AddressableAssetsData/Windows/
+/Assets/AddressableAssetsData/Windows.meta
+/Assets/StreamingAssets/aa/
+/Assets/StreamingAssets/aa.meta

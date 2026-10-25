@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace DeadZone.Data
 {
-    public enum ActiveAbility { ReturnByDeath, OniRage, HollowPurple }
-    public enum PassiveAbility { Determination, OniBlood, Infinity }
+    public enum ActiveAbility { ReturnByDeath, OniRage, HollowPurple, MalevolentShrine }
+    public enum PassiveAbility { Determination, OniBlood, Infinity, CurseKing }
 
     [CreateAssetMenu(menuName = "Dead Zone/Character")]
     public sealed class HeroDefinition : ScriptableObject

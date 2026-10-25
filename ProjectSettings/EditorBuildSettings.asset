@@ -9,4 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/DeadZoneCity.unity
     guid: fc189d736e0ec1a4bb2b37913ecf5a2a
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 021e720fc0f843646814beed00af315a, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: e35e885da906e4b48a6731081262a963, type: 2}

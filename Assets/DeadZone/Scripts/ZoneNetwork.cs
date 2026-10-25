@@ -13,12 +13,12 @@ using UnityEngine.SceneManagement;
 
 namespace DeadZone
 {
-    [Serializable] public sealed class ZoneHello { public int protocol = 7; public string token; public int hero; }
+    [Serializable] public sealed class ZoneHello { public int protocol = 8; public string token; public int hero; }
     [Serializable] public sealed class ZonePlayerState
     {
         public ulong id;
-        public int hero, weapon, ammo, reserve, grenades, mines, shots, floor, castKind, maceSwings;
-        public float health, maxHealth, charge, reloadRemaining, castRemaining, oniRemaining, maceRemaining;
+        public int hero, weapon, ammo, reserve, grenades, mines, shots, floor, castKind, maceSwings,kills,revives;
+        public float health, maxHealth, charge, reloadRemaining, castRemaining, oniRemaining, shrineRemaining,maceRemaining,damage,reviveProgress,downRemaining;
         public Vector2 position, aim, maceDirection;
         public bool moving, downed, dead, connected, reloading;
     }
@@ -52,7 +52,7 @@ namespace DeadZone
         uint sequence, receivedSequence;
         ZoneCommand pendingInput;
         static int nextObjectId;
-        bool smokeClient;
+        bool smokeClient,smokeObserver,sawFour,sawShrine,sawPersonalStats,sawDowned,sawReviveProgress,sawRecovery;float smokeSeconds;
         bool expectReject, smokeReconnect;
         float smokeStarted, smokeOriginX;
         int worldsReceived;
@@ -87,7 +87,7 @@ namespace DeadZone
         public string MemberSummary()
         {
             var lines = new List<string>();
-            if (IsHost) foreach (var peer in peers) lines.Add(game.HeroName(peer.hero) + (peer.connected ? "  ·  в комнате" : "  ·  отключён"));
+            if (IsHost) foreach (var peer in peers) lines.Add(game.HeroName(peer.hero) + (peer.connected ? ZoneL.Get("  ·  в комнате") : ZoneL.Get("  ·  отключён")));
             else foreach (var actor in clientActors.Values) lines.Add(game.HeroName(actor.CharacterIndex));
             return string.Join("\n", lines);
         }
@@ -102,7 +102,7 @@ namespace DeadZone
             yield return null;
             var args = Environment.GetCommandLineArgs();
             for (int i = 0; i < args.Length - 1; i++) if (args[i] == "-dz-hero" && int.TryParse(args[i + 1], out int hero)) game.selected = Mathf.Clamp(hero, 0, game.HeroCount - 1);
-            smokeClient = Array.IndexOf(args, "-dz-smoke") >= 0;
+            for(int i=0;i<args.Length-1;i++)if(args[i]=="-dz-smoke-seconds")float.TryParse(args[i+1],out smokeSeconds);smokeObserver=Array.IndexOf(args,"-dz-observer-smoke")>=0;smokeClient = Array.IndexOf(args, "-dz-smoke") >= 0||smokeObserver;
             expectReject = Array.IndexOf(args, "-dz-expect-reject") >= 0;
             smokeReconnect = Array.IndexOf(args, "-dz-reconnect-test") >= 0;
             for (int i = 0; i < args.Length - 1; i++) if (args[i] == "-dz-join") { ui.SetVisible(true); JoinLan(args[i + 1]); }
@@ -155,7 +155,7 @@ namespace DeadZone
             try
             {
                 if (!System.Net.IPAddress.TryParse(address.Trim(), out var ip) || ip.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork) throw new Exception("Введи IPv4-адрес хоста, например 192.168.1.10.");
-                Prepare(false); transport.SetConnectionData(address.Trim(), Port); if (!manager.StartClient()) throw new Exception("Не удалось начать подключение."); RegisterHandlers(); Status = "Подключение к " + address.Trim() + "…";
+                Prepare(false); transport.SetConnectionData(address.Trim(), Port); if (!manager.StartClient()) throw new Exception("Не удалось начать подключение."); RegisterHandlers(); Status = ZoneL.Format("Подключение к {0}…",address.Trim());
             }
             catch (Exception error) { Status = error.Message; }
         }
@@ -175,7 +175,7 @@ namespace DeadZone
                 await InitializeCloud();
                 session = await MultiplayerService.Instance.CreateSessionAsync(new SessionOptions { Name = "Dead Zone", Type = "dead-zone-v1", MaxPlayers = Mathf.Min(4, game.HeroCount), IsPrivate = true }.WithRelayNetwork());
                 if (this == null) return;
-                RegisterHandlers(); Status = "Комната создана. Код: " + session.Code;
+                RegisterHandlers(); Status = ZoneL.Format("Комната создана. Код: {0}",session.Code);
             }
             catch (Exception error) { Status = error.Message; if (manager != null && manager.IsListening) manager.Shutdown(); }
             finally { Busy = false; }
@@ -215,7 +215,7 @@ namespace DeadZone
             {
                 if (request.Payload.Length > 512) throw new Exception("Некорректные данные подключения.");
                 var hello = JsonUtility.FromJson<ZoneHello>(Encoding.UTF8.GetString(request.Payload));
-                if (hello == null || hello.protocol != 7 || hello.hero < 0 || hello.hero >= game.HeroCount || hello.token == null || hello.token.Length != 32) throw new Exception("Версии игры не совпадают.");
+                if (hello == null || hello.protocol != 8 || hello.hero < 0 || hello.hero >= game.HeroCount || hello.token == null || hello.token.Length != 32) throw new Exception("Версии игры не совпадают.");
                 var returning = peers.Find(p => p.token == hello.token);
                 if (returning != null)
                 {
@@ -243,8 +243,9 @@ namespace DeadZone
                 if (peer == null) return;
                 peer.connected = true;
                 if (peer.actor == null) peer.actor = id == 0 ? game.player : game.CreatePeer(id, peer.hero);
-                peer.actor.OwnerId = id;
-                Status = "Игроков в комнате: " + MemberCount + ". Хост может начать матч.";
+                ulong oldOwner=peer.actor.OwnerId;peer.actor.OwnerId = id;
+                if(oldOwner!=id)foreach(var pickup in FindObjectsByType<ZonePickup>())if(pickup.Owner==oldOwner)pickup.Owner=id;
+                Status = ZoneL.Format("Игроков в комнате: {0}. Хост может начать матч.",MemberCount);
             }
             else if (id == manager.LocalClientId)
             {
@@ -298,8 +299,9 @@ namespace DeadZone
             if (world == null || world.sequence <= receivedSequence) return;
             receivedSequence = world.sequence;
             worldsReceived++;
+            var heroes=new HashSet<int>();bool anyDowned=false;foreach(var state in world.players){if(state.connected)heroes.Add(state.hero);anyDowned|=state.downed;sawReviveProgress|=state.reviveProgress>0;}sawRecovery|=sawDowned&&!anyDowned;sawDowned|=anyDowned;sawFour|=heroes.Count==4;
             bool wasRunning = game.running;
-            game.ApplyRemoteMatch(world.running, world.ended, world.victory, world.wave, world.kills, world.damage, world.boss, world.bossHealth, world.remaining, world.notice, world.pending,world.alive,world.elapsed);
+
             var seen = new HashSet<ulong>();
             foreach (var state in world.players)
             {
@@ -307,8 +309,9 @@ namespace DeadZone
                 if (!clientActors.TryGetValue(state.id, out var actor)) { actor = state.id == manager.LocalClientId ? game.player : game.CreatePeer(state.id, state.hero); clientActors[state.id] = actor; }
                 if (state.id == manager.LocalClientId) { game.selected = state.hero; actor.IsLocal = true; }
                 actor.ApplyNetworkState(state);
-                if (smokeClient && state.id == manager.LocalClientId) { smokeSawReload |= state.reloading; sawOni |= state.oniRemaining>38; sawMaceSwing |= state.maceSwings>0 && state.maceRemaining>0; sawOniRestore |= sawOni && state.oniRemaining<=0 && state.shots>0; smokeSawFloor |= state.floor >= 20 && state.floor <= 22; }
+                if (smokeClient && state.id == manager.LocalClientId) { smokeSawReload |= state.reloading; sawPersonalStats|=state.kills==3&&state.damage>=75&&state.revives==1;sawOni |= state.oniRemaining>38; sawMaceSwing |= state.maceSwings>0 && state.maceRemaining>0; sawOniRestore |= sawOni && state.oniRemaining<=0 && state.shots>0; smokeSawFloor |= state.floor >= 20 && state.floor <= 22; }
             }
+            game.ApplyRemoteMatch(world.running, world.ended, world.victory, world.wave, world.kills, world.damage, world.boss, world.bossHealth, world.remaining, world.notice, world.pending,world.alive,world.elapsed);
             foreach (var id in new List<ulong>(clientActors.Keys)) if (!seen.Contains(id)) { var actor = clientActors[id]; if (actor != game.player) { game.players.Remove(actor); Destroy(actor.gameObject); } clientActors.Remove(id); }
             var objectIds = new HashSet<int>();
             foreach (var state in world.objects)
@@ -319,7 +322,7 @@ namespace DeadZone
                     obj = new GameObject("Network object " + state.id); var renderer = obj.AddComponent<SpriteRenderer>(); renderer.sortingOrder = state.type == 1 ? 20 : 100; renderer.sortingLayerID = game.playerVisual.GetComponent<SpriteRenderer>().sortingLayerID; obj.AddComponent<ZoneGhost>(); ghosts[state.id] = obj;
                 }
                 obj.GetComponent<ZoneGhost>().Apply(game, state);
-                if (smokeClient) { smokeSawMine |= state.type == 4; smokeSawGrenade |= state.type == 5; smokeSawPulse |= state.type == 6; sawClock |= state.type==6 && state.kind==3; sawRem |= state.type==6 && state.kind==4; sawGojo |= state.type==7; if(state.type==7){sawPurpleCharge |= state.age<ZonePurple.ChargeTime; sawPurpleFlight |= state.age>=ZonePurple.ChargeTime && state.endAge<0; sawPurpleImpact |= state.endAge>=0;} sawShield |= state.type==6 && state.kind==6; }
+                if (smokeClient) { sawShrine|=state.type==8&&state.age>=ZoneShrine.ChargeTime;smokeSawMine |= state.type == 4; smokeSawGrenade |= state.type == 5; smokeSawPulse |= state.type == 6; sawClock |= state.type==6 && state.kind==3; sawRem |= state.type==6 && state.kind==4; sawGojo |= state.type==7; if(state.type==7){sawPurpleCharge |= state.age<ZonePurple.ChargeTime; sawPurpleFlight |= state.age>=ZonePurple.ChargeTime && state.endAge<0; sawPurpleImpact |= state.endAge>=0;} sawShield |= state.type==6 && state.kind==6; }
             }
             foreach (var id in new List<int>(ghosts.Keys)) if (!objectIds.Contains(id)) { Destroy(ghosts[id]); ghosts.Remove(id); }
             if (world.running && !wasRunning) ui.SetVisible(false);
@@ -351,10 +354,13 @@ namespace DeadZone
                     if (!smokeEffectsSent && !smokeReconnect && elapsed > .75f) { smokeEffectsSent = true; pendingInput.Merge(new ZoneCommand { aim = (Vector2)game.player.transform.position + Vector2.right * 4, grenade = true }); }
                     if (!smokeMineSent && elapsed > 1.2f && !smokeReconnect) { smokeMineSent = true; pendingInput.Merge(new ZoneCommand { aim = (Vector2)game.player.transform.position + Vector2.right * 4, mine = true }); }
                     if (!smokeReloadSent && elapsed > 2.8f && !smokeReconnect) { smokeReloadSent = true; pendingInput.Merge(new ZoneCommand { aim = (Vector2)game.player.transform.position + Vector2.right * 4, reload = true }); }
-                    if (elapsed > 5f)
+                    if (elapsed > (smokeSeconds>0?smokeSeconds:smokeObserver?8f:5f))
                     {
                         bool pass = worldsReceived >= 5 && game.players.Count >= 2 && game.wave == 1 && (smokeReconnect ? game.player.Dead : game.player.ShotsFired > 0 && Mathf.Abs(game.player.transform.position.x - smokeOriginX) > .05f);
-                        if (!smokeReconnect) pass &= smokeSawMine && smokeSawGrenade && smokeSawPulse && smokeSawReload && smokeSawFloor && sawClock && sawRem && sawGojo && sawShield && sawPurpleCharge && sawPurpleFlight && sawPurpleImpact && sawOni && sawMaceSwing && sawOniRestore;
+                        if(smokeObserver)pass=worldsReceived>=5&&sawFour&&sawShrine&&sawPersonalStats&&sawDowned&&sawReviveProgress&&sawRecovery&&game.player.ShotsFired>0;
+                        else if (!smokeReconnect) pass &= sawPersonalStats&&smokeSawMine && smokeSawGrenade && smokeSawPulse && smokeSawReload && smokeSawFloor && sawClock && sawRem && sawGojo && sawShield && sawPurpleCharge && sawPurpleFlight && sawPurpleImpact && sawOni && sawMaceSwing && sawOniRestore;
+                        if(smokeObserver)Debug.Log(pass?"DZ_NET_FOUR_PASS: four unique heroes, Shrine replica, personal statistics, downed/revive/recovery, shooting":"DZ_NET_FOUR_FAIL");
+                        Debug.Log($"DZ_NET_STATS: personal={sawPersonalStats}, fourHeroes={sawFour}, shrine={sawShrine}, downed={sawDowned}, reviveBar={sawReviveProgress}, recovery={sawRecovery}");
                         if (smokeReconnect) Debug.Log(pass ? "DZ_NET_RECONNECT_PASS" : "DZ_NET_RECONNECT_FAIL");
                         Debug.Log(pass ? "DZ_NET_CLIENT_PASS: snapshots, two players, authoritative movement and shooting." : $"DZ_NET_CLIENT_FAIL: worlds={worldsReceived}, players={game.players.Count}, wave={game.wave}, shots={game.player.ShotsFired}, dx={game.player.transform.position.x - smokeOriginX}");
                         Debug.Log($"DZ_REM_NETWORK: hornAndMace={sawOni}, swing={sawMaceSwing}, restoredGun={sawOniRestore}");
@@ -382,7 +388,7 @@ namespace DeadZone
             foreach (var peer in peers) if (peer.actor != null)
             {
                 var actor = peer.actor;
-                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer });
+                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer });
             }
             var objects = new List<ZoneObjectState>();
             foreach (var enemy in game.enemies) if (enemy != null) objects.Add(new ZoneObjectState { id = ObjectId(enemy.gameObject), type = 1, kind = enemy.kind, position = enemy.transform.position, velocity = enemy.GetComponent<Rigidbody2D>().linearVelocity, scale = enemy.transform.localScale.x, health = enemy.health, boss = enemy.boss, floor = enemy.gameObject.layer, remaining = Mathf.Max(0, enemy.ReadyAt - Time.time) });
@@ -390,6 +396,7 @@ namespace DeadZone
             foreach (var pickup in FindObjectsByType<ZonePickup>()) if (pickup.Owner == recipient) objects.Add(new ZoneObjectState { id = ObjectId(pickup.gameObject), type = 3, kind = pickup.kind, position = pickup.transform.position, scale = .6f, floor = pickup.gameObject.layer });
             foreach (var mine in FindObjectsByType<ZoneMine>()) objects.Add(new ZoneObjectState { id = ObjectId(mine.gameObject), type = 4, position = mine.transform.position, scale = .65f, floor = mine.gameObject.layer });
             foreach (var grenade in FindObjectsByType<ZoneGrenade>()) objects.Add(new ZoneObjectState { id = ObjectId(grenade.gameObject), type = 5, position = grenade.transform.position, floor = grenade.gameObject.layer, scale = .45f });
+            foreach(var shrine in FindObjectsByType<ZoneShrine>())objects.Add(new ZoneObjectState{id=ObjectId(shrine.gameObject),type=8,floor=shrine.Floor,position=shrine.transform.position,age=shrine.Age});
             foreach (var purple in FindObjectsByType<ZonePurple>()) objects.Add(new ZoneObjectState { id=ObjectId(purple.gameObject), type=7, floor=purple.Floor, position=purple.transform.position, origin=purple.Origin, velocity=purple.Direction, age=purple.Age, endAge=purple.ImpactAge });
             foreach (var pulse in FindObjectsByType<ZonePulse>()) if (pulse.Remaining > .05f) objects.Add(new ZoneObjectState { id = ObjectId(pulse.gameObject), type = 6, position = pulse.transform.position, floor = pulse.Floor, kind = pulse.Kind, scale = pulse.Radius, health = pulse.Duration, velocity = pulse.Direction, remaining = pulse.Remaining });
             return new ZoneWorld { sequence = sequence, running = game.running, ended = game.ended, victory = game.Victory, wave = game.wave, pending=game.PendingEnemies, alive=game.enemies.Count,elapsed=game.Elapsed, kills = game.kills, damage = game.damageDealt, boss = game.BossPhase, bossHealth = game.CurrentBossHealth, remaining = game.BreakRemaining, notice = game.message, players = actors.ToArray(), objects = objects.ToArray() };
@@ -435,6 +442,10 @@ namespace DeadZone
         public void Apply(DeadZoneGame game, ZoneObjectState state)
         {
             ObjectType = state.type; Kind = state.kind; gameObject.layer = state.floor;
+            if(state.type==8)
+            {
+                GetComponent<SpriteRenderer>().enabled=false;var shrine=GetComponent<ZoneShrine>();if(shrine==null)shrine=gameObject.AddComponent<ZoneShrine>();shrine.Apply(state);return;
+            }
             if (state.type == 7)
             {
                 GetComponent<SpriteRenderer>().enabled=false;
@@ -459,7 +470,7 @@ namespace DeadZone
             transform.localScale = state.type == 2 ? new Vector3(.22f, .12f, 1) : Vector3.one * (firearm ? 1.2f : state.scale);
             if (state.type == 2) transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(state.velocity.y, state.velocity.x) * Mathf.Rad2Deg);
         }
-        void Update() { if (ObjectType == 6 || ObjectType == 7) return; transform.position = Vector2.Lerp(transform.position, target + velocity * Mathf.Min(.1f, Time.unscaledTime - receivedAt), 1 - Mathf.Exp(-22 * Time.unscaledDeltaTime)); }
+        void Update() { if (ObjectType == 6 || ObjectType == 7 || ObjectType==8) return; transform.position = Vector2.Lerp(transform.position, target + velocity * Mathf.Min(.1f, Time.unscaledTime - receivedAt), 1 - Mathf.Exp(-22 * Time.unscaledDeltaTime)); }
     }
 }
 

@@ -45,7 +45,10 @@ namespace DeadZone.Editor
                 Debug.Log(report.summary.result == BuildResult.Succeeded ? "DZ_NET_BUILD_PASS" : "DZ_NET_BUILD_FAIL");
         }
         [MenuItem("Dead Zone/Host LAN smoke test")]
-        public static void StartHostSmoke()
+        public static void StartHostSmoke()=>StartHost(2);
+        [MenuItem("Dead Zone/Host four-player smoke test")]
+        public static void StartFour()=>StartHost(4);
+        static void StartHost(int required)
         {
             if (!EditorApplication.isPlaying) throw new InvalidOperationException("Enter Play Mode first.");
             var game = DeadZoneGame.Instance;
@@ -56,18 +59,23 @@ namespace DeadZone.Editor
             game.enemies.Clear();
             game.selected = 2; game.network.HostLan();
             double deadline = EditorApplication.timeSinceStartup + 90;
-            bool started = false, gojoTested = false, remRestored = false; float matchAt = 0;
+            bool started = false, gojoTested = false, remRestored = false,downTested=false; float matchAt = 0;
             void Poll()
             {
                 if (!EditorApplication.isPlaying || game == null) { EditorApplication.update -= Poll; return; }
-                if (game.network.MemberCount >= 2 && !started) { game.Begin(); started = true; matchAt=Time.time; ZonePulse.Spawn(game.player.transform.position,game.player.gameObject.layer,.9f,3,12);
-                    foreach(var actor in game.players) { actor.charge=100; actor.SetCommand(new ZoneCommand { ability=true, aim=(Vector2)actor.transform.position+Vector2.right*4 }); }
+                if (game.network.MemberCount >= required && !started) { game.Begin(); started = true; matchAt=Time.time; ZonePulse.Spawn(game.player.transform.position,game.player.gameObject.layer,.9f,3,12);
+                    foreach(var actor in game.players) { actor.PersonalKills=3;actor.PersonalDamage=75;actor.Revives=1;actor.charge=100; actor.SetCommand(new ZoneCommand { ability=true, aim=(Vector2)actor.transform.position+Vector2.right*4 }); }
                     Debug.Log("DZ_NET_HOST_TWO_PLAYERS: match started."); }
                 if(started && !gojoTested && Time.time-matchAt>1)
                 {
                     gojoTested=true;game.player.Hit(1);
                 }
                 if(started && !remRestored && Time.time-matchAt>2){remRestored=true;foreach(var actor in game.players)if(actor.CharacterIndex==1)actor.Oni.Cancel();}
+                if(started&&required==4&&Time.time-matchAt>3&&!downTested){downTested=true;var rem=game.players.Find(p=>p.CharacterIndex==1);if(rem!=null)rem.Hit(10000);}
+                if(started&&required==4&&Time.time-matchAt>3.2f&&Time.time-matchAt<6)
+                {
+                    var rem=game.players.Find(p=>p.CharacterIndex==1);if(rem!=null&&rem.Downed){game.player.transform.position=rem.transform.position+Vector3.left*.7f;game.player.GetComponent<Rigidbody2D>().position=game.player.transform.position;game.player.SetCommand(new ZoneCommand{interactHeld=true,aim=rem.transform.position});}
+                }
                 if (started && game.network.MemberCount == 1) { EditorApplication.update -= Poll; Debug.Log("DZ_NET_HOST_DISCONNECT_PASS: disconnected peer was removed from active count."); }
                 else if (EditorApplication.timeSinceStartup > deadline) { EditorApplication.update -= Poll; Debug.LogError("DZ_NET_HOST_TEST_TIMEOUT"); }
             }

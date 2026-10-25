@@ -24,15 +24,15 @@ namespace DeadZone
         public bool BossPhase => bossPhase;
         public bool Victory { get; private set; }
         public float BreakRemaining => Mathf.Max(0, breakUntil - Time.time);
-        public float Elapsed => Time.time - startedAt;
+        public float Elapsed => ended?finishedElapsed:Time.time-startedAt;
         public float RemoteBossHealth;
         public int wave, kills;
         public float damageDealt;
         public bool running, ended, paused;
         public int selected;
         public string message;
-        float breakUntil, startedAt;
-        bool bossPhase;
+        float breakUntil, startedAt, finishedElapsed;
+        bool bossPhase,statisticsRecorded;
         public ZoneBalance Balance {get;private set;}
         int pendingEnemies;float nextSpawn;
         public int PendingEnemies => pendingEnemies;
@@ -52,8 +52,8 @@ namespace DeadZone
         Sprite[] enemyFrames;
         public Sprite EnemyFrame(int kind, bool boss) => enemyFrames == null ? CharacterFrame(3, 0) : enemyFrames[boss ? Mathf.Clamp(kind + 1, 1, 5) : Mathf.Clamp(kind,0,2)];
         [System.NonSerialized] public Sprite[,] characterFrames;
-        public Sprite CharacterFrame(int character, int frame) => characterFrames == null ? playerVisual.GetComponent<SpriteRenderer>().sprite : characterFrames[Mathf.Clamp(character, 0, 3), Mathf.Clamp(frame, 0, 2)];
-        public static readonly string[] Heroes = { "Субару Нацуки", "Рем", "Годжо Сатору" };
+        public Sprite CharacterFrame(int character, int frame) => character==3&&ZoneActorArt.Sukuna(Vector2.down,frame)!=null?ZoneActorArt.Sukuna(Vector2.down,frame): characterFrames == null ? playerVisual.GetComponent<SpriteRenderer>().sprite : characterFrames[Mathf.Clamp(character, 0, 3), Mathf.Clamp(frame, 0, 2)];
+        public static readonly string[] Heroes = { "Субару Нацуки", "Рем", "Годжо Сатору", "Рёмен Сукуна" };
         public static readonly string[] Bosses = { "Охотник", "Стрелок", "Разрушитель", "Призыватель", "Хранитель зоны" };
         public static readonly string[] Weapons = { "Пистолет", "АК-47", "Пулемёт", "Дробовик" };
 
@@ -99,6 +99,7 @@ namespace DeadZone
             network.Initialize(this, menuRoot.transform.parent, font);
             gameObject.AddComponent<ZoneOptions>().Initialize(this,menuRoot.transform.parent,font);
             gameObject.AddComponent<ZoneCombatHud>().Initialize(this,hudRoot.transform,font);
+            gameObject.AddComponent<ZoneAllyHud>().Initialize(this,hudRoot.transform,font);gameObject.AddComponent<ZoneMusic>();gameObject.AddComponent<ZoneLanguageStartup>();gameObject.AddComponent<ZoneStatisticsPanel>().Initialize(this,menuRoot.transform.parent,font);
         }
 
         void Update()
@@ -111,7 +112,7 @@ namespace DeadZone
             var keys = ZoneKeyboard.Current;
             if (keys == null) return;
             menuRoot.SetActive(!running && !ended);
-            hudRoot.SetActive(running || ended); resultShade.SetActive(ended);
+            hudRoot.SetActive(running || ended);if(ended){center.fontSize=26;center.text=ResultText(Victory);}else center.fontSize=32; resultShade.SetActive(ended);
             healthFill.localScale = new Vector3(Mathf.Clamp01(player.health / player.maxHealth), 1, 1);
             if (!running && !ended)
             {
@@ -128,15 +129,15 @@ namespace DeadZone
             }
             else if (ended)
             {
-                if (keys.enterKey.wasPressedThisFrame) { if (network.Active) network.Leave(); else { Time.timeScale = 1; SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); } }
+                if (keys.enterKey.wasPressedThisFrame && !OptionsVisible && !network.PanelVisible) { if (network.Active) network.Leave(); else { Time.timeScale = 1; SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); } }
             }
             else
             {
                 if (keys.escapeKey.wasPressedThisFrame && !OptionsVisible) { if (network.Active) network.TogglePanel(); }
-                if (paused) center.text = "ПАУЗА\n\nEsc — продолжить";
+                if (paused) center.text = ZoneL.Get("ПАУЗА\n\nEsc — продолжить");
                 else
                 {
-                    center.text = Time.time < breakUntil ? message + "\n" + Mathf.CeilToInt(breakUntil - Time.time) : "";
+                    center.text = Time.time < breakUntil ? (message.StartsWith("Волна пройдена")?ZoneL.Get("Волна пройдена · собери припасы"):bossPhase?ZoneL.Format("Босс: {0}",ZoneL.Get(Bosses[Mathf.Max(0,wave-1)])):ZoneL.Format("Волна {0}",wave))+"\n"+Mathf.CeilToInt(breakUntil-Time.time) : "";
                     if (IsAuthority && pendingEnemies==0 && enemies.Count == 0 && Time.time >= breakUntil)
                     {
                         if (!bossPhase) SpawnBoss();
@@ -148,12 +149,12 @@ namespace DeadZone
             if (player != null)
             {
                 hud.text = $"<b>{HeroName(selected)}</b>   HP {Mathf.CeilToInt(player.health)}/{player.maxHealth}\n" +
-                    (player.Oni.Active ? $"<color=#FF75BC>БУЛАВА ОНИ · {Mathf.CeilToInt(player.Oni.Remaining)} с</color>" : $"{Weapons[player.weapon]}   {player.ammo} / {(player.weapon == 0 ? "∞" : player.reserve.ToString())}") +
-                    (player.Oni.Active ? "   ЛКМ — УДАР" : player.Reloading ? "   ПЕРЕЗАРЯДКА" : player.ammo == 0 ? "   НЕТ ПАТРОНОВ" : "") + $"\nСпособность: {Mathf.FloorToInt(player.charge)}%   Гранаты: {player.grenades}   Мины: {player.mines}" + "\n" + player.PickupHint();
-                help.text = $"<color=#74E5D0>ВОЛНА {wave:00} / 05</color>     УБИЙСТВА {kills}\n" + (bossPhase ? $"БОСС: {Bosses[Mathf.Max(0, wave - 1)]}   HP {Mathf.CeilToInt(CurrentBossHealth)}" : "Уничтожьте врагов зоны");
-                if (running && !bossPhase && !paused) help.text += $"\nОСТАЛОСЬ: {RemainingEnemies}";
-                if (running && player.Dead) center.text = "ВЫ ПОГИБЛИ\nВозвращение в начале следующей волны";
-                else if (running && player.Downed) center.text = "ВЫ РАНЕНЫ\nСоюзник может поднять вас клавишей E";
+                    (player.Oni.Active ? ZoneL.Format("<color=#FF75BC>БУЛАВА ОНИ · {0} с</color>",Mathf.CeilToInt(player.Oni.Remaining)) : $"{ZoneL.Get(Weapons[player.weapon])}   {player.ammo} / {(player.weapon == 0 ? "∞" : player.reserve.ToString())}") +
+                    (player.Oni.Active ? ZoneL.Get("   ЛКМ — УДАР") : player.Reloading ? ZoneL.Get("   ПЕРЕЗАРЯДКА") : player.ammo == 0 ? ZoneL.Get("   НЕТ ПАТРОНОВ") : "") + ZoneL.Format("\nСпособность: {0}%   Гранаты: {1}   Мины: {2}",Mathf.FloorToInt(player.charge),player.grenades,player.mines) + "\n" + player.PickupHint();
+                help.text = ZoneL.Format("<color=#74E5D0>ВОЛНА {0:00} / 05</color>     УБИЙСТВА {1}\n",wave,kills) + (bossPhase ? ZoneL.Format("БОСС: {0}   HP {1}",ZoneL.Get(Bosses[Mathf.Max(0,wave-1)]),Mathf.CeilToInt(CurrentBossHealth)) : ZoneL.Get("Уничтожьте врагов зоны"));
+                if (running && !bossPhase && !paused) help.text += ZoneL.Format("\nОСТАЛОСЬ: {0}",RemainingEnemies);
+                if (running && player.Dead) center.text = ZoneL.Get("ВЫ ПОГИБЛИ\nВозвращение в начале следующей волны");
+                else if (running && player.Downed) center.text = ZoneL.Get("ВЫ РАНЕНЫ\nСоюзник может поднять вас клавишей E");
             }
         }
 
@@ -171,7 +172,7 @@ namespace DeadZone
         public void Begin()
         {
             if (!IsAuthority || running) return;
-            running = true; ended=false; paused=false;OptionsVisible=false;Time.timeScale=1;wave = 1;kills=0;damageDealt=0; startedAt = Time.time;
+            statisticsRecorded=false;running = true; ended=false; paused=false;OptionsVisible=false;Time.timeScale=1;wave = 1;kills=0;damageDealt=0; startedAt = Time.time;
             foreach (var actor in players) actor.ResetHero(actor.IsLocal ? selected : actor.CharacterIndex);
             center.text = ""; network?.MatchStarted();
             foreach (var actor in players)
@@ -258,6 +259,7 @@ namespace DeadZone
 
         public void EnemyKilled(ZoneEnemy enemy)
         {
+            if(enemy.boss){ZonePulse.Spawn(enemy.transform.position,enemy.gameObject.layer,3,5,1);ZoneFeedback.Play(11);}
             enemies.Remove(enemy); kills++;
             if (!enemy.boss && Random.value < Balance.lootChance) foreach (var actor in players) { int loot = Random.Range(0, 5); ZonePickup.Spawn(this, enemy.transform.position, loot == 0 ? -1 : loot, actor.OwnerId, floor: enemy.gameObject.layer); }
             if (enemy.boss)
@@ -270,10 +272,17 @@ namespace DeadZone
 
         public void Finish(bool victory)
         {
-            running = false; ended = true;
+            finishedElapsed=Time.time-startedAt;running = false; ended = true;
             Victory = victory;
-            center.text = (victory ? "<color=#74E5D0>ПОБЕДА</color>" : "<color=#F16E7A>ПОРАЖЕНИЕ</color>") +
-                $"\n\nУбийства: {kills}\nУрон: {Mathf.RoundToInt(damageDealt)}\nВремя: {Mathf.FloorToInt(Elapsed/60):00}:{Mathf.FloorToInt(Elapsed%60):00}\n\nEnter — заново";
+            if(!statisticsRecorded&&player!=null){ZoneProfile.Record(player,victory,Elapsed);statisticsRecorded=true;}
+            center.text = ResultText(victory);
+        }
+
+        public string ResultText(bool victory)
+        {
+            string result=ZoneL.Get(victory?"<color=#74E5D0>ПОБЕДА</color>":"<color=#F16E7A>ПОРАЖЕНИЕ</color>")+"\n"+ZoneL.Format("Время: {0:00}:{1:00}",Mathf.FloorToInt(Elapsed/60),Mathf.FloorToInt(Elapsed%60))+"\n";
+            foreach(var actor in players)result+="\n"+ZoneL.Format("{0} · Убийства {1} · Урон {2} · Поднято {3}",HeroName(actor.CharacterIndex),actor.PersonalKills,Mathf.RoundToInt(actor.PersonalDamage),actor.Revives);
+            return result+"\n\n"+ZoneL.Get("Enter — заново");
         }
 
         public void Shoot(Vector2 origin, Vector2 direction, float damage, bool hostile, float speed = 16, ZonePlayer owner = null, float range = 32, int floor = -1)
@@ -283,6 +292,7 @@ namespace DeadZone
             var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = marker; sr.color = hostile ? Color.red : new Color(1, .9f, .4f); sr.sortingOrder = 200; sr.sortingLayerID = ZoneMap.Sorting(obj.layer);
             obj.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             obj.transform.localScale = new Vector3(.22f, .12f, 1);
+            if(!hostile&&!Application.isBatchMode)obj.AddComponent<ZoneTracer>();
             var bullet = obj.AddComponent<ZoneBullet>(); bullet.direction = direction; bullet.damage = damage; bullet.hostile = hostile; bullet.speed = speed; bullet.owner = owner; bullet.range = range;
         }
 
@@ -323,8 +333,8 @@ namespace DeadZone
             Label(menuRoot.transform, "Subtitle", new Vector2(0, 1), new Vector2(75, -155), new Vector2(1100, 60), 22).text = "Пять волн. Пять боссов. Один шанс выбраться. ";
             Label(menuRoot.transform, "Section", new Vector2(0, 1), new Vector2(75, -240), new Vector2(1000, 55), 20).text = "ВЫБЕРИ ПЕРСОНАЖА  /  " + HeroCount.ToString("00");
             heroCards = new UnityEngine.UI.Image[HeroCount];
-            string[] roles = { "ВЫЖИВАНИЕ", "БЛИЖНИЙ БОЙ", "КОНТРОЛЬ" };
-            string[] descriptions = { "Упорство\nМеньше урона при низком HP\n\nВозвращение · Q\nСтраховка от смертельного удара", "Кровь они\nВыносливость при низком HP\n\nФорма они · Q\nРог и булава на 40 секунд", "Бесконечность\nПериодическая блокировка удара\n\nФиолетовый · Q\nДальний пробивающий снаряд" };
+            string[] roles = { "ВЫЖИВАНИЕ", "БЛИЖНИЙ БОЙ", "КОНТРОЛЬ", "ПРОКЛЯТИЕ" };
+            string[] descriptions = { "Упорство\nМеньше урона при низком HP\n\nВозвращение · Q\nСтраховка от смертельного удара", "Кровь они\nВыносливость при низком HP\n\nФорма они · Q\nРог и булава на 40 секунд", "Бесконечность\nПериодическая блокировка удара\n\nФиолетовый · Q\nДальний пробивающий снаряд", "Король проклятий\n+4 HP за своё убийство\n\nЗловещее святилище · Q\nРубящие атаки в области на 8 секунд" };
             for (int i = 0; i < HeroCount; i++)
             {
                 int index = i;
@@ -333,19 +343,19 @@ namespace DeadZone
                 card.GetComponent<RectTransform>().pivot = new Vector2(0, .5f);
                 var image = card.GetComponent<UnityEngine.UI.Image>(); image.raycastTarget = true; heroCards[i] = image;
                 var button = card.AddComponent<UnityEngine.UI.Button>(); button.targetGraphic = image; button.onClick.AddListener(() => { if (network == null || !network.Active) selected = index; });
-                Label(card.transform, "Number", new Vector2(0, 1), new Vector2(24, -22), new Vector2(350, 40), 18).text = "<color=#74E5D0>0" + (i + 1) + "  /  " + (i < 3 ? roles[i] : "НОВЫЙ ГЕРОЙ") + "</color>";
-                Label(card.transform, "Name", new Vector2(0, 1), new Vector2(24, -78), new Vector2(width - 48, 60), 34).text = "<b>" + HeroName(i) + "</b>";
-                Label(card.transform, "Abilities", new Vector2(0, 1), new Vector2(24, -155), new Vector2(width - 150, 175), 20).text = i < 3 ? descriptions[i] : "Способности из каталога персонажей";
-                if (characterFrames != null && i < 3)
+                Label(card.transform, "Number", new Vector2(0, 1), new Vector2(24, -22), new Vector2(width-110, 40), HeroCount>3?16:18).text = "<color=#74E5D0>0" + (i + 1) + "  /  " + (i < 4 ? roles[i] : "НОВЫЙ ГЕРОЙ") + "</color>";
+                Label(card.transform, "Name", new Vector2(0, 1), new Vector2(24, HeroCount>3?-90:-78), new Vector2(width - 48, 60), HeroCount>3?28:34).text = "<b>" + HeroName(i) + "</b>";
+                Label(card.transform, "Abilities", new Vector2(0, 1), new Vector2(24, -155), new Vector2(width - (HeroCount>3?48:150), 175), HeroCount>3?18:20).text = i < 4 ? descriptions[i] : "Способности из каталога персонажей";
+                if (characterFrames != null && i < HeroCount)
                 {
-                    var portrait = Panel(card.transform, "Portrait", Vector2.one, new Vector2(-20, -120), new Vector2(92, 120), Color.white);
-                    var imageComponent = portrait.GetComponent<UnityEngine.UI.Image>(); imageComponent.sprite = CharacterFrame(i, 0); imageComponent.preserveAspect = true;
+                    var portrait = Panel(card.transform, "Portrait", Vector2.one, new Vector2(-20, HeroCount>3?-15:-120), HeroCount>3?new Vector2(64,84):new Vector2(92,120), Color.white);
+                    var imageComponent = portrait.GetComponent<UnityEngine.UI.Image>(); imageComponent.sprite = ZoneActorArt.Frame(this,i,Vector2.down,false); imageComponent.preserveAspect = true;
                 }
             }
             var start = Panel(menuRoot.transform, "Start", new Vector2(1, 0), new Vector2(-75, 65), new Vector2(450, 75), Accent);
             var startButton = start.AddComponent<UnityEngine.UI.Button>(); start.GetComponent<UnityEngine.UI.Image>().raycastTarget = true; startButton.targetGraphic = start.GetComponent<UnityEngine.UI.Image>(); startButton.onClick.AddListener(Begin);
             var startText = Label(start.transform, "Label", new Vector2(.5f, .5f), Vector2.zero, new Vector2(430, 65), 25); startText.alignment = TextAlignmentOptions.Center; startText.color = new Color(.025f, .08f, .09f); startText.text = "НАЧАТЬ ВЫЛАЗКУ   →";
-            Label(menuRoot.transform, "BuildInfo", Vector2.zero, new Vector2(75, 65), new Vector2(850, 70), 19).text = "ОДИНОЧНЫЙ РЕЖИМ  /  РАННИЙ ПРОТОТИП\nВыбор: мышь или 1–3 · Старт: Enter";
+            Label(menuRoot.transform, "BuildInfo", Vector2.zero, new Vector2(75, 65), new Vector2(850, 70), 19).text = "ОДИНОЧНЫЙ РЕЖИМ\nВыбор: мышь или 1–4 · Старт: Enter";
             var coop = Panel(menuRoot.transform, "Coop", new Vector2(1, 0), new Vector2(-550, 65), new Vector2(250, 75), new Color(.12f, .2f, .25f));
             var coopButton = coop.AddComponent<UnityEngine.UI.Button>(); coopButton.targetGraphic = coop.GetComponent<UnityEngine.UI.Image>(); coopButton.targetGraphic.raycastTarget = true; coopButton.onClick.AddListener(() => network.TogglePanel());
             var coopText = Label(coop.transform, "Label", new Vector2(.5f, .5f), Vector2.zero, new Vector2(240, 65), 24); coopText.alignment = TextAlignmentOptions.Center; coopText.text = "КООПЕРАТИВ";
@@ -371,7 +381,7 @@ namespace DeadZone
         public void CheckTeamDefeat() { foreach (var actor in players) if (!actor.Dead && !actor.Downed && (network == null || network.IsParticipantConnected(actor.OwnerId))) return; Finish(false); }
         public void ApplyRemoteMatch(bool active, bool finished, bool victory, int currentWave, int currentKills, float damage, bool boss, float bossHealth, float remaining, string notice, int pending=0,int alive=0,float elapsed=0)
         {
-            pendingEnemies=pending;RemoteEnemyCount=alive;startedAt=Time.time-elapsed;wave = currentWave; kills = currentKills; damageDealt = damage; bossPhase = boss; RemoteBossHealth = bossHealth; breakUntil = Time.time + remaining; message = notice;
+            if(active)statisticsRecorded=false;pendingEnemies=pending;RemoteEnemyCount=alive;startedAt=Time.time-elapsed;wave = currentWave; kills = currentKills; damageDealt = damage; bossPhase = boss; RemoteBossHealth = bossHealth; breakUntil = Time.time + remaining; message = notice;
             running = active; if (finished && !ended) Finish(victory); ended = finished;
         }
 
@@ -388,7 +398,7 @@ namespace DeadZone
             var obj = new GameObject(name, typeof(RectTransform)); obj.transform.SetParent(parent, false);
             var rect = obj.GetComponent<RectTransform>(); rect.anchorMin = rect.anchorMax = rect.pivot = anchor; rect.anchoredPosition = pos; rect.sizeDelta = size;
             var text = obj.AddComponent<TextMeshProUGUI>(); text.font = font; text.fontSize = fontSize; text.color = Color.white; text.raycastTarget = false; text.textWrappingMode = TextWrappingModes.Normal;
-            text.outlineWidth = .2f; text.outlineColor = new Color(0, 0, 0, .8f); return text;
+            ZoneL.Attach(text);text.outlineWidth = .2f; text.outlineColor = new Color(0, 0, 0, .8f); return text;
         }
 
         void OnDestroy() { Time.timeScale = 1; if (Instance == this) Instance = null; }
@@ -402,6 +412,10 @@ namespace DeadZone
         public int CharacterIndex;
         public bool Downed, Dead;
         public int PersonalKills, Revives;
+        public bool Connected=true;
+        public float ReviveProgress => Mathf.Clamp01(reviveProgress/2);
+        public float DownRemaining => game.IsAuthority?Mathf.Max(0,downUntil-Time.time):Mathf.Max(0,remoteDownRemaining-(Time.time-remoteStateAt));
+        float remoteDownRemaining;
         public float PersonalDamage;
         ZoneCommand remoteCommand;
         float remoteInputAt, downUntil, reviveProgress, lastRevive;
@@ -413,6 +427,11 @@ namespace DeadZone
         Vector2 castAimPoint;
         ZoneRemRage oni;
         public ZoneRemRage Oni { get { if(oni==null){oni=GetComponent<ZoneRemRage>();if(oni==null)oni=gameObject.AddComponent<ZoneRemRage>();oni.Actor=this;}return oni; } }
+        float shrineUntil;
+        public float ShrineRemaining => Mathf.Max(0,shrineUntil-Time.time);
+        public void EndShrine(){shrineUntil=0;}
+        public void OnEnemyKilled(){if(passive==3&&!Downed&&!Dead)health=Mathf.Min(maxHealth,health+4);}
+        public float MoveSpeed => game.roster!=null&&CharacterIndex<game.roster.characters.Length?game.roster.characters[CharacterIndex].moveSpeed:3.5f;
         public float CastRemaining => Mathf.Max(0, castUntil - Time.time);
         public int CastKind { get; private set; }
         public Vector2 MuzzlePosition => muzzle != null ? (Vector2)muzzle.transform.position : (Vector2)transform.position;
@@ -451,7 +470,7 @@ namespace DeadZone
             var magazine = new GameObject("Reload magazine"); magazine.transform.SetParent(gun, false); magazine.transform.localScale = Vector3.one * .3f;
             reloadMagazine = magazine.AddComponent<SpriteRenderer>(); reloadMagazine.sprite = ZoneArt.Item(3); reloadMagazine.sortingOrder = 101; reloadMagazine.sortingLayerID = sr.sortingLayerID; reloadMagazine.enabled = false;
         }
-        public void ResetHero(int index) { if(oni!=null)oni.Cancel(); CharacterIndex = index; hero = passive = index; maxHealth = index == 1 ? 120 : 100; if (game.roster != null && index < game.roster.characters.Length) { var definition = game.roster.characters[index]; hero = (int)definition.activeAbility; passive = (int)definition.passiveAbility; maxHealth = definition.maxHealth; } health = maxHealth; Downed = Dead = false; }
+        public void ResetHero(int index) { foreach(var shrine in FindObjectsByType<ZoneShrine>())if(shrine.Owner==this)Destroy(shrine.gameObject);shrineUntil=0;if(oni!=null)oni.Cancel(); PersonalKills=Revives=0;PersonalDamage=0;revived=false;CharacterIndex = index; hero = passive = index; maxHealth = index == 1 ? 120 : 100; if (game.roster != null && index < game.roster.characters.Length) { var definition = game.roster.characters[index]; hero = (int)definition.activeAbility; passive = (int)definition.passiveAbility; maxHealth = definition.maxHealth; } health = maxHealth; Downed = Dead = false; }
         public void SetCommand(ZoneCommand command) { if (!command.IsFinite) return; command.move = Vector2.ClampMagnitude(command.move, 1); remoteCommand.Merge(command); remoteInputAt = Time.time; }
         void Update()
         {
@@ -474,7 +493,7 @@ namespace DeadZone
             if (command.swap) SwitchWeapon();
             if (!Oni.Active && (command.reload || command.fire && ammo == 0) && !Reloading && ammo < magazines[weapon] && (weapon == 0 || reserve > 0)) reloadUntil = Time.time + ZoneArsenal.Stats(weapon).Reload;
             if (command.dash && CastRemaining <= 0 && Time.time >= nextDash && move.sqrMagnitude > 0) { ZonePulse.Spawn(transform.position, gameObject.layer, .7f, 8, .35f); dashDirection = move; dashUntil = Time.time + .18f; nextDash = Time.time + 2; }
-            if (command.ability && charge >= 100 && !Oni.Active) UseAbility();
+            if (command.ability && charge >= 100 && !Oni.Active && ShrineRemaining<=0) UseAbility();
             if (command.fire && Oni.Active && CastRemaining <= 0) Oni.TrySwing(aimPoint);
             if (command.fire && !Oni.Active && CastRemaining <= 0 && !Reloading && Time.time >= nextShot && ammo > 0)
             {
@@ -501,7 +520,7 @@ namespace DeadZone
             sr.flipX = ZoneActorArt.Flip(CharacterIndex,look);
             float cast = Mathf.Clamp01(CastRemaining / .6f);
             // Renderer-only motion never moves the collider, feet or weapon parent.
-            sr.color = Dead ? new Color(1,1,1,.2f) : Downed ? new Color(1,.55f,.55f) : CastRemaining > 0 ? Color.Lerp(Color.white, CastKind == 1 ? Color.cyan : CastKind == 2 ? new Color(1,.4f,.5f) : new Color(.75f,.5f,1), cast * .45f) : Color.white;
+            sr.color = Dead ? new Color(1,1,1,.2f) : Downed ? new Color(1,.55f,.55f) : CastRemaining > 0 ? Color.Lerp(Color.white, CastKind == 1 ? Color.cyan : CastKind == 5 ? new Color(1,.2f,.25f) : CastKind == 2 ? new Color(1,.4f,.5f) : new Color(.75f,.5f,1), cast * .45f) : Color.white;
             sr.sortingOrder = 30;
         }
         bool networkMoving;
@@ -541,7 +560,8 @@ namespace DeadZone
             float insert = weapon == 3 ? Mathf.Sin(Mathf.Repeat(progress * 6, 1) * Mathf.PI) : reload;
             reloadMagazine.transform.localPosition = new Vector3(weapon == 3 ? .25f + insert * .18f : .28f, (-.07f - insert * (weapon == 0 ? .3f : weapon == 1 ? .5f : weapon == 2 ? .35f : .17f)) * sign);
             reloadMagazine.transform.localRotation = Quaternion.Euler(0, 0, weapon == 1 ? reload * 25 * sign : weapon == 3 ? 90 : 0);
-            if (ShotsFired > visualShots) ZoneDebris.Spawn(EjectionPosition, gameObject.layer, true);
+            if (ShotsFired > visualShots) { ZoneDebris.Spawn(EjectionPosition, gameObject.layer, true); if(!game.IsAuthority)ZoneFeedback.Play(weapon); }
+            if(Reloading&&!wasReloading)ZoneFeedback.Play(8);if(!Reloading&&wasReloading)ZoneFeedback.Play(9);
             if (Reloading && !wasReloading && weapon != 3) ZoneDebris.Spawn(gun.TransformPoint(new Vector3(.28f,-.1f*sign)), gameObject.layer, false, weapon);
             visualShots = ShotsFired; wasReloading = Reloading;
         }
@@ -558,7 +578,7 @@ namespace DeadZone
             if (body == null || !game.IsAuthority || dropping) return;
             bool stopped = !game.running || game.paused || Dead || CastKind == 2 && CastRemaining > 0 || (IsLocal && game.network != null && game.network.PanelVisible);
             if (!stopped && !Downed && ZoneStairTravel.Step(gameObject, move)) return;
-            body.linearVelocity = stopped ? Vector2.zero : !Downed && Time.time < dashUntil ? dashDirection * 15 : move * 3.5f;
+            body.linearVelocity = stopped ? Vector2.zero : !Downed && Time.time < dashUntil ? dashDirection * 15 : move * MoveSpeed;
         }
         void Equip(int kind) { weapon = kind; ammo = loaded[kind]; reserve = reserves[kind]; reloadUntil = 0; }
         public void SwitchWeapon()
@@ -589,17 +609,18 @@ namespace DeadZone
         public string PickupHint()
         {
             if (!game.running || Dead || Downed) return "";
-            if (game.IsAuthority) { var pickup = NearestPickup(); return pickup == null ? "" : "E — " + ZoneArsenal.LootName(pickup.kind); }
+            if (game.IsAuthority) { var pickup = NearestPickup(); return pickup == null ? "" : "E — " + ZoneL.Get(ZoneArsenal.LootName(pickup.kind)); }
             ZoneGhost nearest = null; float distance = 1.4f;
             foreach (var ghost in FindObjectsByType<ZoneGhost>()) if (ghost.ObjectType == 3 && ghost.gameObject.layer == gameObject.layer)
             { float next = Vector2.Distance(transform.position, ghost.transform.position); if (next < distance) { nearest = ghost; distance = next; } }
-            return nearest == null ? "" : "E — " + ZoneArsenal.LootName(nearest.Kind);
+            return nearest == null ? "" : "E — " + ZoneL.Get(ZoneArsenal.LootName(nearest.Kind));
         }
         void UseAbility()
         {
             charge = 0; castAimPoint = aimPoint; castUntil = Time.time + .6f; CastKind = hero;
             if (hero == 0) { returnPoint = transform.position; returnHealth = health; returnUntil = Time.time + 12; ZonePulse.Spawn(returnPoint, gameObject.layer, .9f, 3, 12); }
             else if (hero == 1) { reloadUntil=0; Oni.Activate(); }
+            else if(hero==3){CastKind=5;castUntil=Time.time+ZoneShrine.ChargeTime;shrineUntil=Time.time+ZoneShrine.ChargeTime+ZoneShrine.Duration;ZoneShrine.Spawn(this);}
             else { castUntil = Time.time + ZonePurple.ChargeTime; ZonePurple.Spawn(this, aimPoint - ((Vector2)transform.position + Vector2.up * .55f)); }
         }
         public void Hit(float damage)
@@ -618,7 +639,7 @@ namespace DeadZone
         public void Revive(bool newWave) { ZonePulse.Spawn(transform.position, gameObject.layer, .8f, 9, .7f); Downed = Dead = false; health = newWave ? maxHealth : maxHealth * .4f; reviveProgress = 0; GetComponent<Collider2D>().enabled = true; protectedUntil = Time.time + 1; dashUntil = 0; }
         public void ApplyNetworkState(ZonePlayerState state)
         {
-            OwnerId = state.id; CharacterIndex = state.hero; health = state.health; maxHealth = state.maxHealth; charge = state.charge; weapon = state.weapon; ammo = state.ammo; reserve = state.reserve; grenades = state.grenades; mines = state.mines; Downed = state.downed; Dead = state.dead; remoteReloadRemaining = state.reloadRemaining; remoteStateAt = Time.time; castUntil = Time.time + state.castRemaining; CastKind = state.castKind; networkMoving = state.moving; Oni.Apply(state); ZoneMap.SetFloor(gameObject, state.floor);
+            shrineUntil=Time.time+state.shrineRemaining;Connected=state.connected;PersonalKills=state.kills;Revives=state.revives;PersonalDamage=state.damage;reviveProgress=state.reviveProgress*2;remoteDownRemaining=state.downRemaining;OwnerId = state.id; CharacterIndex = state.hero; health = state.health; maxHealth = state.maxHealth; charge = state.charge; weapon = state.weapon; ammo = state.ammo; reserve = state.reserve; grenades = state.grenades; mines = state.mines; Downed = state.downed; Dead = state.dead; remoteReloadRemaining = state.reloadRemaining; remoteStateAt = Time.time; castUntil = Time.time + state.castRemaining; CastKind = state.castKind; networkMoving = state.moving; Oni.Apply(state); ZoneMap.SetFloor(gameObject, state.floor);
             networkTarget = state.position; if (!hasNetworkPosition || Vector2.Distance(transform.position, networkTarget) > 3) transform.position = networkTarget; hasNetworkPosition = true; if (!IsLocal || state.castKind == 2 && state.castRemaining > 0) aimPoint = state.aim; castAimPoint = state.aim;
             if (state.shots > ShotsFired) flashUntil = Time.time + .06f; ShotsFired = state.shots;
             GetComponent<Rigidbody2D>().simulated = false;
@@ -629,9 +650,10 @@ namespace DeadZone
     public sealed class ZoneEnemy : MonoBehaviour
     {
         public DeadZoneGame game; public int kind; public bool boss; public float health, ReadyAt;
-        Rigidbody2D body; float nextAttack;
+        Rigidbody2D body; float nextAttack,staggerUntil;Vector2 knockback;
         SpriteRenderer sprite; Color baseColor; float flashUntil, maxHealth;
         Transform healthBar;
+        public float MaxHealth=>maxHealth>0?maxHealth:health;
         void Start()
         {
             body = GetComponent<Rigidbody2D>(); sprite = GetComponent<SpriteRenderer>(); baseColor = sprite.color; maxHealth = health;
@@ -643,6 +665,7 @@ namespace DeadZone
         {
             GetComponent<Collider2D>().enabled = Time.time >= ReadyAt;
             if (!game.running || !game.IsAuthority || Time.time < ReadyAt) { body.linearVelocity = Vector2.zero; return; }
+            if(Time.time<staggerUntil){body.linearVelocity=knockback;return;}
             var target = game.NearestTarget(transform.position); if (target == null) { body.linearVelocity = Vector2.zero; return; }
             Vector2 delta = target.transform.position - transform.position; float distance = delta.magnitude;
             Vector2 direction = ZoneMap.Current != null ? ZoneMap.Current.Direction(body.position, gameObject.layer, target) : delta.normalized;
@@ -661,7 +684,10 @@ namespace DeadZone
                 nextAttack = Time.time + (boss ? 1.7f : 2.5f);
             }
         }
-        public void Hit(float damage, ZonePlayer owner = null, bool grantCharge = true) { if (!game.IsAuthority || health <= 0 || Time.time<ReadyAt) return; float actual = Mathf.Min(damage, health); health -= damage;ZoneFeedback.Hit(transform.position,actual,gameObject.layer); flashUntil = Time.time + .09f; game.damageDealt += actual; owner ??= game.player; owner.PersonalDamage += actual; if (grantCharge) owner.charge = Mathf.Min(100, owner.charge + actual * .09f); if (health <= 0) { owner.PersonalKills++; if (grantCharge) owner.charge = Mathf.Min(100, owner.charge + 8); game.EnemyKilled(this); Destroy(gameObject); } }
+        public void Hit(float damage, ZonePlayer owner = null, bool grantCharge = true) { if (!game.IsAuthority || health <= 0 || Time.time<ReadyAt) return; float actual = Mathf.Min(damage, health); health -= damage;
+            Vector2 impulse=owner!=null?((Vector2)transform.position-(Vector2)owner.transform.position).normalized:Vector2.up;
+            if(!boss){knockback=impulse*2.2f;staggerUntil=Time.time+.085f;}
+            ZoneImpact.Spawn(transform.position+Vector3.up*.45f,impulse,gameObject.layer,true);ZoneFeedback.Hit(transform.position,actual,gameObject.layer); flashUntil = Time.time + .09f; game.damageDealt += actual; owner ??= game.player; owner.PersonalDamage += actual; if (grantCharge) owner.charge = Mathf.Min(100, owner.charge + actual * .09f); if (health <= 0) { owner.PersonalKills++;owner.OnEnemyKilled(); if (grantCharge) owner.charge = Mathf.Min(100, owner.charge + 8); game.EnemyKilled(this); Destroy(gameObject); } }
     }
 
     public sealed class ZoneBullet : MonoBehaviour
@@ -680,6 +706,7 @@ namespace DeadZone
                 if (hostile ? enemy != null : player != null) continue;
                 if (hostile && player != null) player.Hit(damage);
                 else if (!hostile && enemy != null) enemy.Hit(damage, owner);
+                ZoneImpact.Spawn(hit.point,hit.normal,gameObject.layer,enemy!=null);
                 Destroy(gameObject); return;
             }
             transform.position += (Vector3)direction * step; travelled += step; if (travelled >= range) Destroy(gameObject);

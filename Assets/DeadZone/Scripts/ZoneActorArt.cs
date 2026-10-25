@@ -7,6 +7,17 @@ namespace DeadZone
         static Sprite[,,] frames;
         static bool loaded;
         static Sprite[,] castFrames;
+        static Sprite[,] sukuna;
+        public static Sprite Sukuna(Vector2 look,int frame)
+        {
+            if(sukuna==null)
+            {
+                var atlas=Resources.Load<Texture2D>("SukunaDirections");if(atlas==null)return null;
+                int w=atlas.width/4,h=atlas.height/3;var pixels=atlas.GetPixels32();sukuna=new Sprite[4,3];
+                for(int d=0;d<4;d++)for(int f=0;f<3;f++)sukuna[d,f]=Extract(atlas,pixels,w,h,d,f,1.5f);
+            }
+            return sukuna[Facing(look),Mathf.Clamp(frame,0,2)];
+        }
         public static Sprite Cast(DeadZoneGame game, Vector2 look, float remaining)
         {
             if(castFrames==null)
@@ -64,6 +75,7 @@ namespace DeadZone
                 }
             }
             int frame=moving ? 1+Mathf.FloorToInt(Time.time*8)%2 : 0;
+            if(hero==3){var sprite=Sukuna(look,frame);if(sprite!=null)return sprite;}
             return frames != null && hero < 3 ? frames[Mathf.Clamp(hero,0,2),Facing(look),frame] : game.CharacterFrame(hero,frame);
         }
     }

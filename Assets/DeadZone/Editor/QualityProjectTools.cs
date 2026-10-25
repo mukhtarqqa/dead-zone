@@ -11,6 +11,7 @@ namespace DeadZone.Editor
         public static void BuildWindows()
         {
             if(EditorApplication.isPlaying)throw new System.InvalidOperationException("Exit Play Mode first");
+            UnityEditor.AddressableAssets.Settings.AddressableAssetSettings.BuildPlayerContent();
             string root=Directory.GetParent(Application.dataPath).FullName;
             string output=Path.Combine(root,"Builds","Quality","DeadZone.exe");Directory.CreateDirectory(Path.GetDirectoryName(output));
             var report=UnityEditor.BuildPipeline.BuildPlayer(new BuildPlayerOptions{scenes=new[]{"Assets/Scenes/DeadZoneCity.unity"},locationPathName=output,target=BuildTarget.StandaloneWindows64,options=BuildOptions.Development});

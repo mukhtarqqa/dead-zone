@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-String-Tables-ru
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Localization-String-Tables-ru
+  m_GUID: 5fdb0f5f0fbad7f4a9405a56e8d6a50a
+  m_SerializeEntries:
+  - m_GUID: 9f1894ab94d4c2d46af76dc8fcbda072
+    m_Address: DeadZone_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 1a484c3eb1b8cc147bd44f470bb199a3, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 457e3cce95dd8ed418140d48ee7c4b04, type: 2}
+    - {fileID: 11400000, guid: 4c43bd5c45743e545b29fbea79925232, type: 2}
+    - {fileID: 11400000, guid: b738515f89756584c86afc6785b16f2d, type: 2}

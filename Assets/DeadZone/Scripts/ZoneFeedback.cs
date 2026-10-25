@@ -19,24 +19,35 @@ namespace DeadZone
     {
         static ZoneFeedback instance;
         static AudioClip[] sounds;
-        AudioSource source;
+        readonly AudioSource[] voices=new AudioSource[12];int voice;
+        static readonly System.Random audioRandom=new System.Random(73);
         public static float Volume {get=>PlayerPrefs.GetFloat("dz.volume",.5f);set{PlayerPrefs.SetFloat("dz.volume",Mathf.Clamp01(value));}}
         public static bool Shake {get=>PlayerPrefs.GetInt("dz.shake",1)!=0;set{PlayerPrefs.SetInt("dz.shake",value?1:0);PlayerPrefs.Save();}}
         public static void Play(int kind)
         {
             if(Application.isBatchMode||Volume<=0)return;
-            if(instance==null){var obj=new GameObject("Combat audio");instance=obj.AddComponent<ZoneFeedback>();instance.source=obj.AddComponent<AudioSource>();instance.source.spatialBlend=0;instance.source.playOnAwake=false;}
+            if(instance==null){var obj=new GameObject("Combat audio");instance=obj.AddComponent<ZoneFeedback>();for(int i=0;i<instance.voices.Length;i++){var source=obj.AddComponent<AudioSource>();source.spatialBlend=0;source.playOnAwake=false;instance.voices[i]=source;}}
             if(sounds==null)
             {
-                sounds=new AudioClip[8];var random=new System.Random(19);
-                for(int k=0;k<8;k++)
+                sounds=new AudioClip[12];var random=new System.Random(19);
+                for(int k=0;k<sounds.Length;k++)
                 {
-                    int count=Mathf.RoundToInt(22050*(k==3?.20f:k==5?.27f:.08f));var data=new float[count];
-                    for(int i=0;i<count;i++){float t=(float)i/22050,env=Mathf.Pow(1-(float)i/count,k==5?2:5);float noise=(float)random.NextDouble()*2-1;data[i]=(noise*(k<4?.55f:.18f)+Mathf.Sin(t*(k<4?150:70)*Mathf.PI*2)*.45f)*env*.45f;}
+                    float duration=k==0?.13f:k==1?.10f:k==2?.17f:k==3?.32f:k==5?.6f:k>=10?.7f:.12f;
+                    int count=Mathf.RoundToInt(22050*duration);var data=new float[count];
+                    for(int i=0;i<count;i++)
+                    {
+                        float t=(float)i/22050,x=(float)i/count,env=Mathf.Pow(1-x,k==5?2:4),noise=(float)random.NextDouble()*2-1;
+                        float hz=k==0?190:k==1?125:k==2?85:k==3?65:k==8?1100:k==9?650:k==10?320:70;
+                        float body=Mathf.Sin(2*Mathf.PI*hz*t*(1-x*.45f));
+                        float attack=Mathf.Min(1,t*1800);
+                        float signal=k<4?noise*(k==3?.7f:.4f)+body*.6f:k==5?noise*.8f+body*.4f:k>=10?body*.5f+Mathf.Sin(t*2*Mathf.PI*(hz*1.5f))*.25f:noise*.3f+body*.35f;
+                        data[i]=Mathf.Clamp(signal*env*attack*.45f,-1,1);
+                    }
                     sounds[k]=AudioClip.Create("Dead Zone effect "+k,count,1,22050,false);sounds[k].SetData(data,0);
                 }
             }
-            instance.source.PlayOneShot(sounds[Mathf.Clamp(kind,0,7)],Volume);
+            var selected=instance.voices[instance.voice++%instance.voices.Length];selected.pitch=.96f+(float)audioRandom.NextDouble()*.08f;
+            selected.PlayOneShot(sounds[Mathf.Clamp(kind,0,sounds.Length-1)],Volume);
         }
         static float kick;
         public static void Kick(float amount){if(Shake)kick=Mathf.Max(kick,amount);}

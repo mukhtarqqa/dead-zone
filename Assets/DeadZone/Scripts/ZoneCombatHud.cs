@@ -25,8 +25,8 @@ namespace DeadZone
             if(game==null||game.player==null)return;
             bool aiming=game.running&&!game.InputBlocked&&!game.player.Dead;crosshair.gameObject.SetActive(aiming);Cursor.visible=!aiming;
             if(aiming){RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas,Input.mousePosition,null,out var point);crosshair.anchoredPosition=point;bool target=false;foreach(var c in Physics2D.OverlapPointAll(game.player.aimPoint))if(c.GetComponentInParent<ZoneEnemy>()!=null&&c.gameObject.layer==game.player.gameObject.layer)target=true;foreach(var mark in marks)mark.color=target?new Color(1,.35f,.4f):new Color(.7f,1,.93f);}
-            var p=game.player;float value=p.Oni.Active?p.Oni.Remaining/ZoneRemRage.Duration:p.charge/100;
-            ability.text=p.Oni.Active?$"РЕМ · ОНИ {Mathf.CeilToInt(p.Oni.Remaining)} с":p.CastRemaining>0?"ПОДГОТОВКА СПОСОБНОСТИ":p.charge>=100?"Q · СПОСОБНОСТЬ ГОТОВА":$"Q · ЗАРЯД {Mathf.FloorToInt(p.charge)}%";
+            var p=game.player;float value=p.Oni.Active?p.Oni.Remaining/ZoneRemRage.Duration:p.ShrineRemaining>0?p.ShrineRemaining/(ZoneShrine.Duration+ZoneShrine.ChargeTime):p.charge/100;
+            ability.text=p.ShrineRemaining>0?ZoneL.Format("СУКУНА · СВЯТИЛИЩЕ {0} с",Mathf.CeilToInt(p.ShrineRemaining)):p.Oni.Active?ZoneL.Format("РЕМ · ОНИ {0} с",Mathf.CeilToInt(p.Oni.Remaining)):p.CastRemaining>0?ZoneL.Get("ПОДГОТОВКА СПОСОБНОСТИ"):p.charge>=100?ZoneL.Get("Q · СПОСОБНОСТЬ ГОТОВА"):ZoneL.Format("Q · ЗАРЯД {0}%",Mathf.FloorToInt(p.charge));
             charge.localScale=new Vector3(Mathf.Clamp01(value),1,1);reload.gameObject.SetActive(p.Reloading);reload.localScale=new Vector3(Mathf.Clamp01(1-p.ReloadRemaining/ZoneArsenal.Stats(p.weapon).Reload),1,1);
             boss.parent.gameObject.SetActive(game.running&&game.BossPhase);
             float hp=game.RemoteBossHealth;if(game.IsAuthority){var e=game.enemies.Find(enemy=>enemy!=null&&enemy.boss);hp=e==null?0:e.health;}

@@ -1,0 +1,990 @@
+fileFormatVersion: 2
+guid: 463853ea41eb8364ab0a7f4ad3808d9d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4296917740241271386
+    second: SukunaDirections_0
+  - first:
+      213: 5802292004079629270
+    second: SukunaDirections_1
+  - first:
+      213: -5934920179561985067
+    second: SukunaDirections_2
+  - first:
+      213: 8812711956731567789
+    second: SukunaDirections_3
+  - first:
+      213: 3112619977523513958
+    second: SukunaDirections_4
+  - first:
+      213: 6170321364586324688
+    second: SukunaDirections_5
+  - first:
+      213: 3614903891770709251
+    second: SukunaDirections_6
+  - first:
+      213: -9085907511915113897
+    second: SukunaDirections_7
+  - first:
+      213: -5525726271451338056
+    second: SukunaDirections_8
+  - first:
+      213: -7232687920944793990
+    second: SukunaDirections_9
+  - first:
+      213: -4101097200130598268
+    second: SukunaDirections_10
+  - first:
+      213: 2196120295385504951
+    second: SukunaDirections_11
+  - first:
+      213: -1451534562953881372
+    second: SukunaDirections_12
+  - first:
+      213: -8714089298062715616
+    second: SukunaDirections_13
+  - first:
+      213: 270423410965962057
+    second: SukunaDirections_14
+  - first:
+      213: -9166331449188864845
+    second: SukunaDirections_15
+  - first:
+      213: -3522059626868558813
+    second: SukunaDirections_16
+  - first:
+      213: -2478413430117904719
+    second: SukunaDirections_17
+  - first:
+      213: 5236157051734283332
+    second: SukunaDirections_18
+  - first:
+      213: -1335546081099492931
+    second: SukunaDirections_19
+  - first:
+      213: 5539605617567592667
+    second: SukunaDirections_20
+  - first:
+      213: 3194393622767695694
+    second: SukunaDirections_21
+  - first:
+      213: -2669580018259297771
+    second: SukunaDirections_22
+  - first:
+      213: 3874056426756125047
+    second: SukunaDirections_23
+  - first:
+      213: 3962991803511391725
+    second: SukunaDirections_24
+  - first:
+      213: 768776776093154370
+    second: SukunaDirections_25
+  - first:
+      213: -7201014006657539828
+    second: SukunaDirections_26
+  - first:
+      213: -4387595104685710537
+    second: SukunaDirections_27
+  - first:
+      213: 5703863610777141129
+    second: SukunaDirections_28
+  - first:
+      213: -5048560925587026167
+    second: SukunaDirections_29
+  - first:
+      213: -9176705252754013969
+    second: SukunaDirections_30
+  - first:
+      213: 8605826645959637305
+    second: SukunaDirections_31
+  - first:
+      213: 4066720585252388216
+    second: SukunaDirections_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SukunaDirections_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 23
+        width: 415
+        height: 1032
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a548dfc4184e54c0800000000000000
+      internalID: -4296917740241271386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_1
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 30
+        width: 291
+        height: 1034
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d3714af5d1e58050800000000000000
+      internalID: 5802292004079629270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_2
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 0
+        width: 361
+        height: 1054
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5db09ee8a8de2ada0800000000000000
+      internalID: -5934920179561985067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_3
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 17
+        width: 373
+        height: 1039
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dae92d835da0d4a70800000000000000
+      internalID: 8812711956731567789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_4
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 809
+        width: 37
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66ac211d06f323b20800000000000000
+      internalID: 3112619977523513958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_5
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 786
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d2eb2ed69261a550800000000000000
+      internalID: 6170321364586324688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_6
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 773
+        width: 40
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3059b2edfe7ba2230800000000000000
+      internalID: 3614903891770709251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_7
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 745
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7521f32d14f58e180800000000000000
+      internalID: -9085907511915113897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_8
+      rect:
+        serializedVersion: 2
+        x: 1414
+        y: 751
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ba69109b3da053b0800000000000000
+      internalID: -5525726271451338056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_9
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 727
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a76b3d408a450ab90800000000000000
+      internalID: -7232687920944793990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_10
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 704
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48addd433d9f517c0800000000000000
+      internalID: -4101097200130598268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_11
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 453
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bc9a7ae5cf2a7e10800000000000000
+      internalID: 2196120295385504951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_12
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 439
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e89eeb610d1bdbe0800000000000000
+      internalID: -1451534562953881372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_13
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 439
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02550ffd3f5511780800000000000000
+      internalID: -8714089298062715616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_14
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 422
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94d5395d8acb0c300800000000000000
+      internalID: 270423410965962057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_15
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 380
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bc2b9dbc16aac080800000000000000
+      internalID: -9166331449188864845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_16
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 374
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32431c61e612f1fc0800000000000000
+      internalID: -3522059626868558813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_17
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 169
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bec343dd18ea9dd0800000000000000
+      internalID: -2478413430117904719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_18
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 147
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44457c0a8119aa840800000000000000
+      internalID: 5236157051734283332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_19
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 115
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db156ee4aef277de0800000000000000
+      internalID: -1335546081099492931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_20
+      rect:
+        serializedVersion: 2
+        x: 1341
+        y: 108
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd0ffd685f1a0ec40800000000000000
+      internalID: 5539605617567592667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_21
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 98
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4777d54314c45c20800000000000000
+      internalID: 3194393622767695694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_22
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 83
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51a7c201e1fb3fad0800000000000000
+      internalID: -2669580018259297771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_23
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 62
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7713e946bc963c530800000000000000
+      internalID: 3874056426756125047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_24
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 58
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de5c4186c006ff630800000000000000
+      internalID: 3962991803511391725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_25
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 52
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24c3a9a976e3baa00800000000000000
+      internalID: 768776776093154370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_26
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 0
+        width: 37
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c01a09ed9ebd01c90800000000000000
+      internalID: -7201014006657539828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_27
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 39
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73327feaf712c13c0800000000000000
+      internalID: -4387595104685710537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_28
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 31
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98ff5afcbb1382f40800000000000000
+      internalID: 5703863610777141129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_29
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 27
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90fc77b2698efe9b0800000000000000
+      internalID: -5048560925587026167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_30
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 37
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe0c221613bc5a080800000000000000
+      internalID: -9176705252754013969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_31
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 33
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 939f3072db90e6770800000000000000
+      internalID: 8605826645959637305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SukunaDirections_32
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 21
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87dbcbc63d4ef6830800000000000000
+      internalID: 4066720585252388216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SukunaDirections_0: -4296917740241271386
+      SukunaDirections_1: 5802292004079629270
+      SukunaDirections_10: -4101097200130598268
+      SukunaDirections_11: 2196120295385504951
+      SukunaDirections_12: -1451534562953881372
+      SukunaDirections_13: -8714089298062715616
+      SukunaDirections_14: 270423410965962057
+      SukunaDirections_15: -9166331449188864845
+      SukunaDirections_16: -3522059626868558813
+      SukunaDirections_17: -2478413430117904719
+      SukunaDirections_18: 5236157051734283332
+      SukunaDirections_19: -1335546081099492931
+      SukunaDirections_2: -5934920179561985067
+      SukunaDirections_20: 5539605617567592667
+      SukunaDirections_21: 3194393622767695694
+      SukunaDirections_22: -2669580018259297771
+      SukunaDirections_23: 3874056426756125047
+      SukunaDirections_24: 3962991803511391725
+      SukunaDirections_25: 768776776093154370
+      SukunaDirections_26: -7201014006657539828
+      SukunaDirections_27: -4387595104685710537
+      SukunaDirections_28: 5703863610777141129
+      SukunaDirections_29: -5048560925587026167
+      SukunaDirections_3: 8812711956731567789
+      SukunaDirections_30: -9176705252754013969
+      SukunaDirections_31: 8605826645959637305
+      SukunaDirections_32: 4066720585252388216
+      SukunaDirections_4: 3112619977523513958
+      SukunaDirections_5: 6170321364586324688
+      SukunaDirections_6: 3614903891770709251
+      SukunaDirections_7: -9085907511915113897
+      SukunaDirections_8: -5525726271451338056
+      SukunaDirections_9: -7232687920944793990
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

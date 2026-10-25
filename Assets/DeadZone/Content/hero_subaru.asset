@@ -17,7 +17,7 @@ MonoBehaviour:
   portrait: {fileID: 0}
   visualPrefab: {fileID: 0}
   maxHealth: 100
-  moveSpeed: 3.5
+  moveSpeed: 3.7
   activeAbility: 0
   passiveAbility: 0
   damageToCharge: 1000
