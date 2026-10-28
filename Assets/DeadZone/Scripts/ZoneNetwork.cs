@@ -48,7 +48,7 @@ namespace DeadZone
         ZoneNetworkUI ui;
         string token;
         bool handlersRegistered, leaving;
-        float nextSend, connectDeadline;
+        float nextInputSend, nextWorldSend, connectDeadline;
         uint sequence, receivedSequence;
         ZoneCommand pendingInput;
         static int nextObjectId;
@@ -72,6 +72,35 @@ namespace DeadZone
         public string RoomCode => session == null ? "" : session.Code;
         public int MemberCount => IsHost ? peers.FindAll(p => p.connected).Count : clientActors.Count;
         public bool IsParticipantConnected(ulong id) => !Active || !IsHost || peers.Exists(p => p.id == id && p.connected);
+        public ulong CurrentPingMs
+        {
+            get
+            {
+                if (transport == null || manager == null || !manager.IsListening) return 0;
+                try
+                {
+                    if (manager.IsServer)
+                    {
+                        ulong sum = 0; int count = 0;
+                        foreach (var peer in peers)
+                        {
+                            if (peer.id != NetworkManager.ServerClientId && peer.connected)
+                            {
+                                sum += transport.GetCurrentRtt(peer.id);
+                                count++;
+                            }
+                        }
+                        return count > 0 ? sum / (ulong)count : 0;
+                    }
+                    if (manager.IsClient)
+                    {
+                        return transport.GetCurrentRtt(NetworkManager.ServerClientId);
+                    }
+                }
+                catch { }
+                return 0;
+            }
+        }
 
         public void Initialize(DeadZoneGame owner, Transform canvas, TMPro.TMP_FontAsset font)
         {
@@ -129,6 +158,12 @@ namespace DeadZone
                 transport = obj.AddComponent<UnityTransport>();
                 manager = obj.AddComponent<NetworkManager>();
             }
+            transport.MaxPacketQueueSize = 512;
+            transport.MaxPayloadSize = 6144;
+            transport.HeartbeatTimeoutMS = 250;
+            transport.ConnectTimeoutMS = 500;
+            transport.MaxConnectAttempts = 60;
+            transport.DisconnectTimeoutMS = 15000;
             manager.ConnectionApprovalCallback = null;
             manager.OnServerStarted -= RegisterHandlers;
             manager.OnClientConnectedCallback -= Connected;
@@ -138,7 +173,7 @@ namespace DeadZone
                 NetworkTransport = transport, EnableSceneManagement = false,
                 ConnectionApproval = true, ForceSamePrefabs = false,
                 ConnectionData = Encoding.UTF8.GetBytes(JsonUtility.ToJson(new ZoneHello { token = token, hero = game.selected })),
-                TickRate = 30
+                TickRate = 60
             };
             manager.ConnectionApprovalCallback = Approve;
             manager.OnServerStarted += RegisterHandlers;
@@ -148,6 +183,7 @@ namespace DeadZone
             game.player.OwnerId = 0; game.player.CharacterIndex = game.selected;
             if (host) peers.Add(new Peer { id = 0, token = token, hero = game.selected, actor = game.player, connected = true });
             connectDeadline = Time.realtimeSinceStartup + 20;
+            nextInputSend = nextWorldSend = 0;
         }
         public void HostLan()
         {
@@ -177,7 +213,16 @@ namespace DeadZone
             {
                 Prepare(true); Busy = true; Status = "Создание интернет-комнаты…";
                 await InitializeCloud();
-                session = await MultiplayerService.Instance.CreateSessionAsync(new SessionOptions { Name = "Dead Zone", Type = "dead-zone-v1", MaxPlayers = Mathf.Min(4, game.HeroCount), IsPrivate = true }.WithRelayNetwork());
+                var sessionOptions = new SessionOptions
+                {
+                    Name = "Dead Zone",
+                    Type = "dead-zone-v1",
+                    MaxPlayers = Mathf.Min(4, game.HeroCount),
+                    IsPrivate = true
+                }
+                .WithRelayNetwork(new RelayNetworkOptions(region: null, preserveRegion: true))
+                .WithNetworkOptions(new NetworkOptions { RelayProtocol = RelayProtocol.UDP });
+                session = await MultiplayerService.Instance.CreateSessionAsync(sessionOptions);
                 if (this == null) return;
                 RegisterHandlers(); Status = ZoneL.Format("Комната создана. Код: {0}",session.Code);
             }
@@ -197,12 +242,19 @@ namespace DeadZone
                 session = null;
                 string storedId = PlayerPrefs.GetString("dz.session.id." + Profile(), "");
                 string storedCode = PlayerPrefs.GetString("dz.session.code." + Profile(), "");
+                var joinOptions = new JoinSessionOptions
+                {
+                    Type = "dead-zone-v1"
+                }.WithNetworkOptions(new NetworkOptions { RelayProtocol = RelayProtocol.UDP });
                 if (!string.IsNullOrEmpty(storedId) && storedCode == requestedCode)
                 {
                     var joined = await MultiplayerService.Instance.GetJoinedSessionIdsAsync();
-                    if (joined.Contains(storedId)) session = await MultiplayerService.Instance.ReconnectToSessionAsync(storedId, new ReconnectSessionOptions { Type = "dead-zone-v1" });
+                    if (joined.Contains(storedId))
+                    {
+                        session = await MultiplayerService.Instance.ReconnectToSessionAsync(storedId, new ReconnectSessionOptions { Type = "dead-zone-v1" });
+                    }
                 }
-                if (session == null) session = await MultiplayerService.Instance.JoinSessionByCodeAsync(requestedCode, new JoinSessionOptions { Type = "dead-zone-v1" });
+                if (session == null) session = await MultiplayerService.Instance.JoinSessionByCodeAsync(requestedCode, joinOptions);
                 PlayerPrefs.SetString("dz.session.id." + Profile(), session.Id); PlayerPrefs.SetString("dz.session.code." + Profile(), requestedCode); PlayerPrefs.Save();
                 if (this == null) return;
                 RegisterHandlers(); Status = "Подключено. Ждём старта хоста.";
@@ -341,7 +393,7 @@ namespace DeadZone
                 network.CustomMessagingManager.SendNamedMessage(name,recipient,writer,NetworkDelivery.ReliableFragmentedSequenced);return;
             }
             if(json.Length>1024)throw new InvalidOperationException("Input message exceeds its byte budget");
-            using var input=new FastBufferWriter(json.Length*2+16,Allocator.Temp);input.WriteValueSafe(json);network.CustomMessagingManager.SendNamedMessage(name,recipient,input,NetworkDelivery.ReliableFragmentedSequenced);
+            using var input=new FastBufferWriter(json.Length*2+16,Allocator.Temp);input.WriteValueSafe(json);network.CustomMessagingManager.SendNamedMessage(name,recipient,input,NetworkDelivery.ReliableSequenced);
         }
         void Update()
         {
@@ -383,11 +435,22 @@ namespace DeadZone
                 else pendingInput.Merge(game.InputBlocked ? default : ZoneCommand.Read(game.gameCamera));
             }
             if (ClientOnly && !manager.IsConnectedClient && Time.realtimeSinceStartup > connectDeadline) { Status = "Время подключения истекло. Проверь IP и доступность хоста."; manager.Shutdown(); ui.SetVisible(true); return; }
-            if (Time.unscaledTime < nextSend) return;
-            nextSend = Time.unscaledTime + .1f;
-            if (ClientOnly && manager.IsConnectedClient) { Send(manager, InputMessage, NetworkManager.ServerClientId, JsonUtility.ToJson(pendingInput)); pendingInput.ClearEdges(); }
-            else if (IsHost)
+
+            // High-rate input stream (60 Hz or immediate on any action)
+            if (ClientOnly && manager.IsConnectedClient)
             {
+                bool instant = pendingInput.fire || pendingInput.reload || pendingInput.swap || pendingInput.dash || pendingInput.ability || pendingInput.interact || pendingInput.grenade || pendingInput.mine || pendingInput.drop;
+                if (instant || Time.unscaledTime >= nextInputSend)
+                {
+                    nextInputSend = Time.unscaledTime + 0.0166f;
+                    Send(manager, InputMessage, NetworkManager.ServerClientId, JsonUtility.ToJson(pendingInput));
+                    pendingInput.ClearEdges();
+                }
+            }
+            // 33 Hz world snapshot stream
+            else if (IsHost && Time.unscaledTime >= nextWorldSend)
+            {
+                nextWorldSend = Time.unscaledTime + 0.03f;
                 sequence++;
                 foreach (var peer in peers) if (peer.id != NetworkManager.ServerClientId && peer.connected) Send(manager, WorldMessage, peer.id, JsonUtility.ToJson(Snapshot(peer.id)));
             }

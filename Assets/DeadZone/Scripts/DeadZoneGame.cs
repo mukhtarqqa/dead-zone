@@ -167,6 +167,7 @@ namespace DeadZone
             if (player != null)
             {
                 hud.text="<size=16><color=#CEC4B3>"+HeroName(player.CharacterIndex)+"</color></size>\n<b>"+Mathf.CeilToInt(player.health)+"</b><size=17> / "+player.maxHealth+" HP</size>";
+                if (network != null && network.Active) hud.text += "\n<size=14><color=#94A86B>PING: " + network.CurrentPingMs + " ms</color></size>";
                 if(healthPortrait!=null)healthPortrait.sprite=ZoneActorArt.Frame(this,player.CharacterIndex,Vector2.down,false);
                 healthFill.GetComponent<UnityEngine.UI.Image>().color=player.health<=player.maxHealth*.3f?new Color(1,.38f,.32f):ZoneUi.Mint;
                 help.text=ended?ZoneL.Get(Victory?"ЗОНА ЗАЧИЩЕНА":"ВЫЛАЗКА ЗАВЕРШЕНА"):bossPhase&&CurrentBossHealth>0?ZoneL.Get(Bosses[Mathf.Max(0,wave-1)]):bossPhase?ZoneL.Get("ПЕРЕДЫШКА"):ZoneL.Format("ВОЛНА {0:00} / 05",wave);
@@ -506,7 +507,7 @@ namespace DeadZone
             remoteCommand.ClearEdges();
             if(IsLocal&&game.InputBlocked)command=new ZoneCommand {aim=aimPoint};
             if (IsLocal || game.IsAuthority) aimPoint = CastKind == 2 && CastRemaining > 0 ? castAimPoint : command.aim;
-            if (!game.IsAuthority) { if (hasNetworkPosition) transform.position = Vector2.Lerp(transform.position, networkTarget, 1 - Mathf.Exp(-24 * Time.unscaledDeltaTime)); return; }
+            if (!game.IsAuthority) { if (hasNetworkPosition) transform.position = Vector2.Lerp(transform.position, networkTarget, 1 - Mathf.Exp((IsLocal ? -36f : -28f) * Time.unscaledDeltaTime)); return; }
             GetComponent<SpriteRenderer>().color = Dead ? new Color(1, 1, 1, .2f) : Downed ? new Color(1, .5f, .5f) : Color.white;
             if (!game.running || game.paused || Dead || (IsLocal && game.network != null && game.network.PanelVisible)) { move = Vector2.zero; return; }
             move = command.move;

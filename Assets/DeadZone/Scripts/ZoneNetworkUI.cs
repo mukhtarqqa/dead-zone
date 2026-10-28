@@ -47,6 +47,7 @@ namespace DeadZone
             address.interactable = code.interactable = available;
             start.interactable = network.IsHost && !game.running && !game.ended;
             team.text = ZoneL.Format("ТВОЙ ГЕРОЙ: <color=#94A86B>{0}</color>     ·     УЧАСТНИКИ: {1} / {2}",game.HeroName(game.selected),network.MemberCount,Mathf.Min(4,game.HeroCount));
+            if (network.Active) team.text += ZoneL.Format("     ·     ПИНГ: <color=#94A86B>{0} мс</color>", network.CurrentPingMs);
             status.text = ZoneL.Get(network.Status) + (string.IsNullOrEmpty(network.RoomCode) ? "" : ZoneL.Format("\nКОД: <color=#94A86B>{0}</color>",network.RoomCode)) + "\n" + network.MemberSummary();
         }
         UnityEngine.UI.Button BottomButton(string label, Vector2 position, Vector2 size, UnityEngine.Events.UnityAction click) => Button(root.transform, label, position, size, click, true);
