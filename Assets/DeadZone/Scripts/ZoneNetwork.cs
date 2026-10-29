@@ -19,6 +19,9 @@ namespace DeadZone
         public ulong id;
         public int hero, weapon, weaponA,weaponB,activeSlot,ammo, reserve, grenades, mines, shots, floor, castKind, maceSwings,kills,revives;
         public float health, maxHealth, charge, reloadRemaining, castRemaining, oniRemaining, shrineRemaining,maceRemaining,damage,reviveProgress,downRemaining;
+        // Optional cosmetic fields: older protocol-9 snapshots simply default to no dash.
+        public float dashRemaining;
+        public Vector2 dashDirection;
         public Vector2 position, aim, maceDirection;
         public bool moving, downed, dead, connected, reloading;
     }
@@ -461,7 +464,7 @@ namespace DeadZone
             foreach (var peer in peers) if (peer.actor != null)
             {
                 var actor = peer.actor;
-                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, weaponA=actor.WeaponInSlot(0),weaponB=actor.WeaponInSlot(1),activeSlot=actor.ActiveSlot,ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer });
+                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, weaponA=actor.WeaponInSlot(0),weaponB=actor.WeaponInSlot(1),activeSlot=actor.ActiveSlot,ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer, dashRemaining = actor.DashRemaining, dashDirection = actor.DashFacing });
             }
             var objects = new List<ZoneObjectState>();
             foreach (var enemy in game.enemies) if (enemy != null) objects.Add(new ZoneObjectState { id = ObjectId(enemy.gameObject), type = 1, kind = enemy.kind, facing=enemy.Facing,animation=enemy.AnimationPose,maxHealth=enemy.MaxHealth,age=enemy.HitFlashRemaining, position = enemy.transform.position, velocity = enemy.GetComponent<Rigidbody2D>().linearVelocity, scale = enemy.transform.localScale.x, health = enemy.health, boss = enemy.boss, floor = enemy.gameObject.layer, remaining = Mathf.Max(0, enemy.ReadyAt - Time.time) });

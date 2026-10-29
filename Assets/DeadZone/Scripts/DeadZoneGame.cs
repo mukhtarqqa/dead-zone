@@ -453,6 +453,9 @@ namespace DeadZone
         public void OnEnemyKilled(){if(passive==3&&!Downed&&!Dead)health=Mathf.Min(maxHealth,health+4);}
         public float MoveSpeed => game.roster!=null&&CharacterIndex<game.roster.characters.Length?game.roster.characters[CharacterIndex].moveSpeed:3.5f;
         public float CastRemaining => Mathf.Max(0, castUntil - Time.time);
+        public const float DashDuration = .18f;
+        public float DashRemaining => Mathf.Max(0, dashUntil - Time.time);
+        public Vector2 DashFacing => dashDirection;
         public int CastKind { get; private set; }
         public Vector2 MuzzlePosition => muzzle != null ? (Vector2)muzzle.transform.position : (Vector2)transform.position;
         public Vector2 EjectionPosition => gunSprite != null ? (Vector2)gunSprite.transform.TransformPoint(new Vector3(0, gunSprite.flipY ? -.06f : .06f)) : (Vector2)transform.position;
@@ -521,7 +524,7 @@ namespace DeadZone
             if (reloadUntil > 0 && Time.time >= reloadUntil) { int count = weapon == 0 ? magazines[0] - ammo : Mathf.Min(magazines[weapon] - ammo, reserve); ammo += count; if (weapon != 0) reserve -= count; loaded[weapon] = ammo; reserves[weapon] = reserve; reloadUntil = 0; }
             if (command.swap) SwitchWeapon();
             if (!Oni.Active && (command.reload || command.fire && ammo == 0) && !Reloading && ammo < magazines[weapon] && (weapon == 0 || reserve > 0)) reloadUntil = Time.time + ZoneArsenal.Stats(weapon).Reload;
-            if (command.dash && CastRemaining <= 0 && Time.time >= nextDash && move.sqrMagnitude > 0) { ZonePulse.Spawn(transform.position, gameObject.layer, .7f, 8, .35f); dashDirection = move; dashUntil = Time.time + .18f; nextDash = Time.time + 2; }
+            if (command.dash && CastRemaining <= 0 && Time.time >= nextDash && move.sqrMagnitude > 0) { ZonePulse.Spawn(transform.position, gameObject.layer, .7f, 8, .35f); dashDirection = move; dashUntil = Time.time + DashDuration; nextDash = Time.time + 2; }
             if (command.ability && charge >= 100 && !Oni.Active && ShrineRemaining<=0) UseAbility();
             if (command.fire && Oni.Active && CastRemaining <= 0) Oni.TrySwing(aimPoint);
             if (command.fire && !Oni.Active && CastRemaining <= 0 && !Reloading && Time.time >= nextShot && ammo > 0)
@@ -545,7 +548,8 @@ namespace DeadZone
             var sr = GetComponent<SpriteRenderer>();
             Vector2 look = aimPoint - (Vector2)transform.position;
             bool walking = game.IsAuthority ? move.sqrMagnitude > .01f : networkMoving;
-            sr.sprite = CharacterIndex == 2 && CastKind == 2 && CastRemaining > 0 ? ZoneActorArt.Cast(game,look,CastRemaining) : ZoneActorArt.Frame(game, CharacterIndex, look, walking && !Dead);
+            sr.sprite = Oni.Active && ZoneRemArt.Available ? ZoneRemArt.ForActor(this, look, walking)
+                : CharacterIndex == 2 && CastKind == 2 && CastRemaining > 0 ? ZoneActorArt.Cast(game,look,CastRemaining) : ZoneActorArt.Frame(game, CharacterIndex, look, walking && !Dead);
             sr.flipX = ZoneActorArt.Flip(CharacterIndex,look);
             float cast = Mathf.Clamp01(CastRemaining / .6f);
             // Renderer-only motion never moves the collider, feet or weapon parent.
@@ -668,6 +672,8 @@ namespace DeadZone
         public void Revive(bool newWave) { ZonePulse.Spawn(transform.position, gameObject.layer, .8f, 9, .7f); Downed = Dead = false; health = newWave ? maxHealth : maxHealth * .4f; reviveProgress = 0; GetComponent<Collider2D>().enabled = true; protectedUntil = Time.time + 1; dashUntil = 0; }
         public void ApplyNetworkState(ZonePlayerState state)
         {
+            dashUntil = Time.time + Mathf.Clamp(state.dashRemaining, 0, DashDuration);
+            dashDirection = state.dashDirection.sqrMagnitude > .001f ? state.dashDirection.normalized : Vector2.down;
             shrineUntil=Time.time+state.shrineRemaining;Connected=state.connected;PersonalKills=state.kills;Revives=state.revives;PersonalDamage=state.damage;reviveProgress=state.reviveProgress*2;remoteDownRemaining=state.downRemaining;OwnerId = state.id; CharacterIndex = state.hero; health = state.health; maxHealth = state.maxHealth; charge = state.charge; weapon = state.weapon; ammo = state.ammo; reserve = state.reserve;owned[0]=state.weaponA;owned[1]=state.weaponB;slot=state.activeSlot; grenades = state.grenades; mines = state.mines; Downed = state.downed; Dead = state.dead; remoteReloadRemaining = state.reloadRemaining; remoteStateAt = Time.time; castUntil = Time.time + state.castRemaining; CastKind = state.castKind; networkMoving = state.moving; Oni.Apply(state); ZoneMap.SetFloor(gameObject, state.floor);
             networkTarget = state.position; if (!hasNetworkPosition || Vector2.Distance(transform.position, networkTarget) > 3) transform.position = networkTarget; hasNetworkPosition = true; if (!IsLocal || state.castKind == 2 && state.castRemaining > 0) aimPoint = state.aim; castAimPoint = state.aim;
             if(state.shots<ShotsFired){visualShots=0;wasReloading=false;}if (state.shots > ShotsFired) flashUntil = Time.time + .06f; ShotsFired = state.shots;

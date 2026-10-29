@@ -62,7 +62,7 @@ namespace DeadZone
             if(!ZoneMap.Obstacle(point,.1f,gameObject.layer))ZonePulse.Spawn(point,gameObject.layer,.85f,4,.35f);
         }
         ZoneRemRageView view;
-        void LateUpdate(){if(view==null&&Active){view=gameObject.AddComponent<ZoneRemRageView>();view.Form=this;}}
+        void LateUpdate(){if(view==null&&Active&&!ZoneRemArt.Available){view=gameObject.AddComponent<ZoneRemRageView>();view.Form=this;}}
     }
 
     public sealed class ZoneRemRageView : MonoBehaviour
@@ -100,7 +100,7 @@ namespace DeadZone
         void LateUpdate()
         {
             if(root==null||Form==null)return;
-            root.gameObject.SetActive(Form.Active);if(!Form.Active)return;
+            root.gameObject.SetActive(Form.Active&&!ZoneRemArt.Available);if(!root.gameObject.activeSelf)return;
             var actor=Form.Actor;int depth=ZoneDepth.Order(actor.transform.position.y);
             foreach(var renderer in root.GetComponentsInChildren<Renderer>())renderer.sortingOrder=depth+8;
             Vector2 look=actor.aimPoint-(Vector2)actor.transform.position;

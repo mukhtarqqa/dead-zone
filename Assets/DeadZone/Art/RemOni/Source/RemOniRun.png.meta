@@ -1,0 +1,691 @@
+fileFormatVersion: 2
+guid: ddcff06aa093d9b4d901e88b6370ab50
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4806172972147940220
+    second: RemOniRun_0
+  - first:
+      213: -5489510352837321255
+    second: RemOniRun_1
+  - first:
+      213: 7879889905486624460
+    second: RemOniRun_2
+  - first:
+      213: -2813481869751470270
+    second: RemOniRun_3
+  - first:
+      213: 605026238463289898
+    second: RemOniRun_4
+  - first:
+      213: 5181952686634684656
+    second: RemOniRun_5
+  - first:
+      213: -957989323864012281
+    second: RemOniRun_6
+  - first:
+      213: 3723934839905474230
+    second: RemOniRun_7
+  - first:
+      213: 3639007032199526243
+    second: RemOniRun_8
+  - first:
+      213: 901209013177346356
+    second: RemOniRun_9
+  - first:
+      213: -8482165867097679419
+    second: RemOniRun_10
+  - first:
+      213: 745713104586489722
+    second: RemOniRun_11
+  - first:
+      213: -2618230597604385173
+    second: RemOniRun_12
+  - first:
+      213: -5121610711638320485
+    second: RemOniRun_13
+  - first:
+      213: -3042106008987671340
+    second: RemOniRun_14
+  - first:
+      213: 7179752946757174617
+    second: RemOniRun_15
+  - first:
+      213: 8261063163513136769
+    second: RemOniRun_16
+  - first:
+      213: -2940555801754904890
+    second: RemOniRun_17
+  - first:
+      213: -6304218971382711556
+    second: RemOniRun_18
+  - first:
+      213: 7916408167377500763
+    second: RemOniRun_19
+  - first:
+      213: 2537288148562764333
+    second: RemOniRun_20
+  - first:
+      213: -4824442995351815645
+    second: RemOniRun_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RemOniRun_0
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 763
+        width: 217
+        height: 257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7b16fd9ad4f2b240800000000000000
+      internalID: 4806172972147940220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_1
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 763
+        width: 213
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dd5d443b6751d3b0800000000000000
+      internalID: -5489510352837321255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_2
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 525
+        width: 239
+        height: 493
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc677bd9e1efa5d60800000000000000
+      internalID: 7879889905486624460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_3
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 763
+        width: 219
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 247367b552184f8d0800000000000000
+      internalID: -2813481869751470270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_4
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 758
+        width: 215
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2a2567882c756800800000000000000
+      internalID: 605026238463289898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_5
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 763
+        width: 204
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f0ddb9638ef9e740800000000000000
+      internalID: 5181952686634684656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_6
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 526
+        width: 223
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70a087c19c984b2f0800000000000000
+      internalID: -957989323864012281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_7
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 525
+        width: 211
+        height: 234
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b65443b1031ea330800000000000000
+      internalID: 3723934839905474230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_8
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 525
+        width: 223
+        height: 234
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 367b6619d99508230800000000000000
+      internalID: 3639007032199526243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_9
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 284
+        width: 247
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 439e0da92dcb18c00800000000000000
+      internalID: 901209013177346356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_10
+      rect:
+        serializedVersion: 2
+        x: 1052
+        y: 523
+        width: 205
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c913b5951b494a80800000000000000
+      internalID: -8482165867097679419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_11
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 287
+        width: 258
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7f3b3f1e1e495a00800000000000000
+      internalID: 745713104586489722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_12
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 289
+        width: 240
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6e5bb9b42d2aabd0800000000000000
+      internalID: -2618230597604385173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_13
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 274
+        width: 248
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9a56f671326ce8b0800000000000000
+      internalID: -5121610711638320485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_14
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 285
+        width: 228
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d4653dd3b448c5d0800000000000000
+      internalID: -3042106008987671340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_15
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 34
+        width: 241
+        height: 257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 955868ed34b93a360800000000000000
+      internalID: 7179752946757174617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_16
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 285
+        width: 249
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 186e340ad2135a270800000000000000
+      internalID: 8261063163513136769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_17
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 42
+        width: 233
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c65f2af31c0137d0800000000000000
+      internalID: -2940555801754904890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_18
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 42
+        width: 253
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfa74782f3ae288a0800000000000000
+      internalID: -6304218971382711556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_19
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 41
+        width: 253
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5a7989094bbcdd60800000000000000
+      internalID: 7916408167377500763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_20
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 37
+        width: 245
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2264e3c022463320800000000000000
+      internalID: 2537288148562764333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniRun_21
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 36
+        width: 233
+        height: 252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32afeee18a22c0db0800000000000000
+      internalID: -4824442995351815645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      RemOniRun_0: 4806172972147940220
+      RemOniRun_1: -5489510352837321255
+      RemOniRun_10: -8482165867097679419
+      RemOniRun_11: 745713104586489722
+      RemOniRun_12: -2618230597604385173
+      RemOniRun_13: -5121610711638320485
+      RemOniRun_14: -3042106008987671340
+      RemOniRun_15: 7179752946757174617
+      RemOniRun_16: 8261063163513136769
+      RemOniRun_17: -2940555801754904890
+      RemOniRun_18: -6304218971382711556
+      RemOniRun_19: 7916408167377500763
+      RemOniRun_2: 7879889905486624460
+      RemOniRun_20: 2537288148562764333
+      RemOniRun_21: -4824442995351815645
+      RemOniRun_3: -2813481869751470270
+      RemOniRun_4: 605026238463289898
+      RemOniRun_5: 5181952686634684656
+      RemOniRun_6: -957989323864012281
+      RemOniRun_7: 3723934839905474230
+      RemOniRun_8: 3639007032199526243
+      RemOniRun_9: 901209013177346356
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

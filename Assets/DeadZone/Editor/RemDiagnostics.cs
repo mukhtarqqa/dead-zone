@@ -70,7 +70,7 @@ namespace DeadZone.Editor
             var g=DeadZoneGame.Instance;if(g==null||g.player==null)throw new Exception("Wait for scene");if(!g.running)g.Begin();g.enabled=false;
             foreach(var enemy in g.enemies.ToArray())UnityEngine.Object.Destroy(enemy.gameObject);g.enemies.Clear();foreach(var loot in UnityEngine.Object.FindObjectsByType<ZonePickup>())UnityEngine.Object.Destroy(loot.gameObject);
             var actor=g.player;actor.enabled=false;actor.GetComponent<Rigidbody2D>().linearVelocity=Vector2.zero;actor.ResetHero(1);actor.transform.position=new Vector2(-3,-5);actor.aimPoint=new Vector2(5,-5);
-            actor.GetComponent<SpriteRenderer>().sprite=ZoneActorArt.Frame(g,1,Vector2.right,false);actor.GetComponent<SpriteRenderer>().flipX=false;actor.Oni.Activate();actor.AnimateWeapon();
+            actor.GetComponent<SpriteRenderer>().sprite=ZoneActorArt.Frame(g,1,Vector2.right,false);actor.GetComponent<SpriteRenderer>().flipX=false;actor.Oni.Activate();actor.SendMessage("LateUpdate");actor.AnimateWeapon();
             g.gameCamera.transform.position=new Vector3(-2,-5,-10);g.gameCamera.orthographicSize=3;
         }
     }

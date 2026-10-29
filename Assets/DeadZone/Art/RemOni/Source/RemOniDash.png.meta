@@ -1,0 +1,587 @@
+fileFormatVersion: 2
+guid: 41db00cd344a1f040b908430f7f10fc5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1756440862089795944
+    second: RemOniDash_0
+  - first:
+      213: -4882340340401952413
+    second: RemOniDash_1
+  - first:
+      213: -3754480214822334321
+    second: RemOniDash_2
+  - first:
+      213: 5968724628469245851
+    second: RemOniDash_3
+  - first:
+      213: 7084039881790212587
+    second: RemOniDash_4
+  - first:
+      213: -1391900451419562217
+    second: RemOniDash_5
+  - first:
+      213: 8074076442944201288
+    second: RemOniDash_6
+  - first:
+      213: -2992966095908169716
+    second: RemOniDash_7
+  - first:
+      213: 8822748386878691201
+    second: RemOniDash_8
+  - first:
+      213: -8614852117273770692
+    second: RemOniDash_9
+  - first:
+      213: 8954981417473543065
+    second: RemOniDash_10
+  - first:
+      213: 8002166600659356699
+    second: RemOniDash_11
+  - first:
+      213: -8777031444486758829
+    second: RemOniDash_12
+  - first:
+      213: 7709699783223090709
+    second: RemOniDash_13
+  - first:
+      213: -2820235929753894074
+    second: RemOniDash_14
+  - first:
+      213: -6970590843978176217
+    second: RemOniDash_15
+  - first:
+      213: 803379232169597590
+    second: RemOniDash_16
+  - first:
+      213: 7722145888853761484
+    second: RemOniDash_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RemOniDash_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 926
+        width: 276
+        height: 296
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 896282a875edf97e0800000000000000
+      internalID: -1756440862089795944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_1
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 926
+        width: 312
+        height: 297
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36928c104517e3cb0800000000000000
+      internalID: -4882340340401952413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_2
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 917
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f80584ff22865ebc0800000000000000
+      internalID: -3754480214822334321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_3
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 919
+        width: 341
+        height: 301
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b97e80a0d6b25d250800000000000000
+      internalID: 5968724628469245851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_4
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 918
+        width: 254
+        height: 306
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be94ec85db09f4260800000000000000
+      internalID: 7084039881790212587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_5
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 623
+        width: 271
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71f5e6ef9e9feace0800000000000000
+      internalID: -1391900451419562217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 738
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 842e90f1fb1ec0070800000000000000
+      internalID: 8074076442944201288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_7
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 622
+        width: 316
+        height: 285
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c081b947139d676d0800000000000000
+      internalID: -2992966095908169716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_8
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 638
+        width: 355
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1871e86b9e2b07a70800000000000000
+      internalID: 8822748386878691201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_9
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 624
+        width: 276
+        height: 282
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35006d84a5e17880800000000000000
+      internalID: -8614852117273770692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_10
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 353
+        width: 293
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b0cb6572c764c70800000000000000
+      internalID: 8954981417473543065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_11
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 341
+        width: 349
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1ccbc140286d0f60800000000000000
+      internalID: 8002166600659356699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_12
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 351
+        width: 359
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35edee86768b13680800000000000000
+      internalID: -8777031444486758829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_13
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 351
+        width: 252
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51e1be7ea1b5efa60800000000000000
+      internalID: 7709699783223090709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_14
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 261
+        height: 342
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 643c9383d528cd8d0800000000000000
+      internalID: -2820235929753894074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_15
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 59
+        width: 315
+        height: 282
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72927162f8c734f90800000000000000
+      internalID: -6970590843978176217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_16
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 55
+        width: 347
+        height: 285
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69a1569b72d262b00800000000000000
+      internalID: 803379232169597590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemOniDash_17
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 25
+        width: 270
+        height: 319
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccd1fd0b5c29a2b60800000000000000
+      internalID: 7722145888853761484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      RemOniDash_0: -1756440862089795944
+      RemOniDash_1: -4882340340401952413
+      RemOniDash_10: 8954981417473543065
+      RemOniDash_11: 8002166600659356699
+      RemOniDash_12: -8777031444486758829
+      RemOniDash_13: 7709699783223090709
+      RemOniDash_14: -2820235929753894074
+      RemOniDash_15: -6970590843978176217
+      RemOniDash_16: 803379232169597590
+      RemOniDash_17: 7722145888853761484
+      RemOniDash_2: -3754480214822334321
+      RemOniDash_3: 5968724628469245851
+      RemOniDash_4: 7084039881790212587
+      RemOniDash_5: -1391900451419562217
+      RemOniDash_6: 8074076442944201288
+      RemOniDash_7: -2992966095908169716
+      RemOniDash_8: 8822748386878691201
+      RemOniDash_9: -8614852117273770692
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
