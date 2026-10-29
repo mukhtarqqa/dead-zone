@@ -36,6 +36,7 @@
 - Оружие: `Assets/DeadZone/Scripts/ZoneArsenal.cs`.
 - Перевод: `Assets/DeadZone/Localization/Translations.json`, затем меню `Dead Zone/Build Russian and Kazakh tables`. Таблицы можно редактировать через Unity Localization.
 - Герои: `Assets/DeadZone/Content`; игровой код: `Assets/DeadZone/Scripts`.
+- Звуки зомби: `Assets/Resources/ZombieAudioBank.asset` — клипы, громкость, дальность и интервалы в Inspector. [Исходники и настройка](Docs/ZOMBIE_AUDIO.md).
 - Цвета интерфейса: `Assets/DeadZone/Scripts/ZonePalette.cs`; меню и HUD: `DeadZoneGame.cs`, `ZoneCombatHud.cs`, `ZoneResultsPanel.cs`, `ZoneRecoveryHud.cs`. Интерфейс создаётся кодом при запуске.
 - Эффект Сукуны: `ZoneShrineView.cs`, `ZoneShrineArt.cs` и `Assets/Resources/SukunaShrineStages.png`.
 - Сборка: меню `Dead Zone/Build polished Windows game`, результат `Builds/Quality/DeadZone.exe`.

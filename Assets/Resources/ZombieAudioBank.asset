@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1c9718627a1504d9c9517ff01e1714, type: 3}
+  m_Name: ZombieAudioBank
+  m_EditorClassIdentifier: Assembly-CSharp::DeadZone.ZoneZombieAudioBank
+  growls:
+  - {fileID: 8300000, guid: 44c74d5db56d1714a8bf2fbc9c109ddf, type: 3}
+  - {fileID: 8300000, guid: f121386b528f30b4cbf61e5c748822ce, type: 3}
+  - {fileID: 8300000, guid: e52af0a7339f62648af214c11a3301c2, type: 3}
+  attacks:
+  - {fileID: 8300000, guid: 9213acf51aa550c43a8ab65206dfa35d, type: 3}
+  - {fileID: 8300000, guid: b2358f2dc46629d41b4bc1a91eda26de, type: 3}
+  - {fileID: 8300000, guid: 25720f69d3190894cb77caedd52c13a5, type: 3}
+  - {fileID: 8300000, guid: 3c0319022f8fc1242bc7daf3fcbe7b25, type: 3}
+  - {fileID: 8300000, guid: 59dd7f466844e174ead9f15cd9eb5423, type: 3}
+  - {fileID: 8300000, guid: e4a4c20e99b016d49b338a3615e177a6, type: 3}
+  - {fileID: 8300000, guid: 7d11f68cc145b0e4997a0f030e11202f, type: 3}
+  - {fileID: 8300000, guid: 30adc50e48b7770489302bcb64375953, type: 3}
+  - {fileID: 8300000, guid: dfdd5f39bfdd2b2439ed7eb84e23f5d6, type: 3}
+  - {fileID: 8300000, guid: 15f958fee25aff5449a626b670087ef8, type: 3}
+  growlVolume: 0.32
+  attackVolume: 0.55
+  fullVolumeDistance: 2
+  audibleDistance: 22
+  minGrowlInterval: 5
+  maxGrowlInterval: 9
+  voiceLimit: 6
+  growlLimit: 2
