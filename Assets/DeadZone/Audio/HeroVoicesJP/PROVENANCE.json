@@ -1,0 +1,54 @@
+{
+  "approval": "User approved Rem variant A, Sukuna and Subaru on 2026-10-29; Gojo rejected and excluded.",
+  "imported_into_unity": true,
+  "processing": "Decoded to mono PCM WAV 44100 Hz; uniform peak 0.65 for audition. Original speed and pitch. No synthesis, voice cloning, denoising or edits to words. The complete Sukuna excerpt is retained so the user can review both phrases before synchronization.",
+  "clips": [
+    {
+      "label": "Sukuna: Ryoiki Tenkai / Fukuma Mizushi",
+      "file": "Sukuna_RyoikiTenkai_FukumaMizushi_JP.wav",
+      "seconds": 17.554285714285715,
+      "source_page": "https://tuna.voicemod.net/sound/bc26da46-91f6-4a6a-8cc0-f21582ff6329",
+      "source_file": "sukuna_domain.mp3",
+      "source_sha256": "11b3c08f9301678d61375965d421eccdc0e4212f15c56eb110a0adc2a8948995",
+      "gain": 1.374319267002194,
+      "notes": "Community-uploaded scene excerpt with background sound; kept complete for review before splitting the two callouts.",
+      "runtime_seconds": 6.35,
+      "runtime_edit": "Approved excerpt kept from 0 to 6.35 seconds, with 40 ms fade on the background tail. Both callouts preserved at original speed/pitch. Remaining non-dialogue tail omitted.",
+      "shrine_reveal_at_seconds": 3.21,
+      "runtime_path": "Assets/Resources/Audio/Heroes/Sukuna/malevolent_shrine.wav",
+      "preserved_source": "Assets/DeadZone/Audio/HeroVoicesJP/Sources/sukuna_domain.mp3",
+      "runtime_sha256": "aa1454c560a755f1bb7c18cf9f2f54c6b8fc94abddb48e735b3d706c0ce940ba"
+    },
+    {
+      "label": "Subaru: Shini Modori",
+      "file": "Subaru_ShiniModori_JP.wav",
+      "seconds": 1.7419954648526077,
+      "source_page": "https://www.animecharactersdatabase.com/quotesbycharacter.php?line_id=71256",
+      "source_file": "subaru_return.mp4",
+      "source_sha256": "27119a6835cf49f3bf45940cc541506844d6bc154becef1228ebcc03d05843e2",
+      "gain": 2.164332892998679,
+      "notes": "Anime quote archive, episode 2 at 05:07, Yusuke Kobayashi.",
+      "runtime_seconds": 1.7419954648526077,
+      "runtime_edit": "Exact approved audition WAV.",
+      "runtime_path": "Assets/Resources/Audio/Heroes/Subaru/return_by_death.wav",
+      "preserved_source": "Assets/DeadZone/Audio/HeroVoicesJP/Sources/subaru_return.mp4.bytes",
+      "runtime_sha256": "320d67bc8b43d380e0cd65351888bc726699d1b522ed6221e3824bba935ab56c"
+    },
+    {
+      "label": "Rem A: Oni battle fury",
+      "file": "Rem_Oni_Fury_A_JP.wav",
+      "seconds": 3.1659410430839,
+      "source_page": "https://sounds.spriters-resource.com/mobile/rezerolostinmemories/asset/431382/",
+      "source_file": "rem_oni_fury.wav",
+      "source_sha256": "7fe77371c6b7a0db7124fb3d6700d9a0c784d43f822d0c0fa0d7962e58c4291a",
+      "gain": 0.9655560088852623,
+      "notes": "Original battle asset from Re:Zero Lost in Memories: Rem/Battle/vo_btl_rem004#4 (vo_start_cmn).wav. Inori Minase's game recording, distinct from an anime episode excerpt.",
+      "runtime_seconds": 3.1659410430839,
+      "runtime_edit": "Exact approved audition WAV.",
+      "runtime_path": "Assets/Resources/Audio/Heroes/Rem/oni_fury.wav",
+      "preserved_source": "Assets/DeadZone/Audio/HeroVoicesJP/Sources/rem_oni_fury.wav",
+      "runtime_sha256": "7cd86e3b837160ce6bb65d1dcce89dd19a8a2d813b3a46f60c4833bad876f490"
+    }
+  ],
+  "timing": "Local whisper.cpp tiny alignment used only to locate the two Sukuna speech segments (0-3.21 and 3.21-6 seconds); source speech was not generated or replaced. Shrine reveal and damage begin at 3.21 seconds; active duration stays 8 seconds."
+}

@@ -479,6 +479,10 @@ namespace DeadZone
         readonly int[] loaded = { 12, 30, 70, 6 };
         readonly int[] reserves = { 0, 90, 140, 24 };
         public int ShotsFired { get; private set; }
+        public int AbilitySequence { get; private set; }
+        public int AbilityKind { get; private set; }
+        float abilityAt;
+        public float AbilityAge => AbilitySequence > 0 ? Mathf.Max(0, Time.time - abilityAt) : 0;
         public int ActiveSlot=>slot;public int WeaponInSlot(int index)=>owned[Mathf.Clamp(index,0,1)];
         public int StoredAmmo(int kind) => kind == weapon ? ammo : loaded[kind];
         public int StoredReserve(int kind) => kind == weapon ? reserve : reserves[kind];
@@ -496,7 +500,7 @@ namespace DeadZone
             var magazine = new GameObject("Reload magazine"); magazine.transform.SetParent(gun, false); magazine.transform.localScale = Vector3.one * .3f;
             reloadMagazine = magazine.AddComponent<SpriteRenderer>(); reloadMagazine.sprite = ZoneArt.Item(3); reloadMagazine.sortingOrder = 101; reloadMagazine.sortingLayerID = sr.sortingLayerID; reloadMagazine.enabled = false;
         }
-        public void ResetHero(int index) { foreach(var shrine in FindObjectsByType<ZoneShrine>())if(shrine.Owner==this)Destroy(shrine.gameObject);shrineUntil=0;if(oni!=null)oni.Cancel(); PersonalKills=Revives=0;PersonalDamage=0;revived=false;CharacterIndex = index; hero = passive = index; maxHealth = index == 1 ? 120 : 100; if (game.roster != null && index < game.roster.characters.Length) { var definition = game.roster.characters[index]; hero = (int)definition.activeAbility; passive = (int)definition.passiveAbility; maxHealth = definition.maxHealth; } health = maxHealth; Downed = Dead = false; }
+        public void ResetHero(int index) { GetComponent<ZoneHeroVoice>()?.Stop();AbilitySequence=0; foreach(var shrine in FindObjectsByType<ZoneShrine>())if(shrine.Owner==this)Destroy(shrine.gameObject);shrineUntil=0;if(oni!=null)oni.Cancel(); PersonalKills=Revives=0;PersonalDamage=0;revived=false;CharacterIndex = index; hero = passive = index; maxHealth = index == 1 ? 120 : 100; if (game.roster != null && index < game.roster.characters.Length) { var definition = game.roster.characters[index]; hero = (int)definition.activeAbility; passive = (int)definition.passiveAbility; maxHealth = definition.maxHealth; } health = maxHealth; Downed = Dead = false; }
         public void ResetForMatch(int index)
         {
             StopAllCoroutines();ResetHero(index);charge=0;grenades=3;mines=2;owned[0]=0;owned[1]=-1;slot=weapon=0;
@@ -682,6 +686,8 @@ namespace DeadZone
             else if (hero == 1) { reloadUntil=0; Oni.Activate(); }
             else if(hero==3){CastKind=5;castUntil=Time.time+ZoneShrine.ChargeTime;shrineUntil=Time.time+ZoneShrine.ChargeTime+ZoneShrine.Duration;ZoneShrine.Spawn(this);}
             else { castUntil = Time.time + ZonePurple.ChargeTime; ZonePurple.Spawn(this, aimPoint - ((Vector2)transform.position + Vector2.up * .55f)); }
+            AbilitySequence++; AbilityKind = hero; abilityAt = Time.time;
+            ZoneHeroVoice.Play(this, AbilityKind);
         }
         public void Hit(float damage)
         {
@@ -706,6 +712,9 @@ namespace DeadZone
             if(state.shots<ShotsFired){visualShots=0;wasReloading=false;}if (state.shots > ShotsFired) flashUntil = Time.time + .06f; ShotsFired = state.shots;
             GetComponent<Rigidbody2D>().simulated = false;
             var sr = GetComponent<SpriteRenderer>(); sr.sprite = game.CharacterFrame(state.hero, state.moving ? 1 + (Mathf.FloorToInt(Time.time * 8) % 2) : 0); sr.color = Dead ? new Color(1, 1, 1, .2f) : Downed ? new Color(1, .5f, .5f) : Color.white;
+            bool newAbility = state.abilitySequence > 0 && state.abilitySequence != AbilitySequence;
+            AbilitySequence = state.abilitySequence; AbilityKind = state.abilityKind; abilityAt = Time.time - state.abilityAge;
+            if (newAbility) ZoneHeroVoice.Play(this, AbilityKind, state.abilityAge);
         }
     }
 

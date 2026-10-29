@@ -3,7 +3,7 @@ namespace DeadZone
 {
     public sealed class ZoneShrine : MonoBehaviour
     {
-        public const float ChargeTime=.8f,Duration=8,Radius=5.2f,Damage=40,Interval=.65f;
+        public const float ChargeTime=ZoneHeroVoice.ShrineRevealTime,Duration=8,Radius=5.2f,Damage=40,Interval=.65f;
         public ZonePlayer Owner {get;private set;}
         public int Floor {get;private set;}
         public float Age=>Time.time-started;

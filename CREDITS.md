@@ -1,5 +1,7 @@
 # Материалы
 
+Японские реплики Субару, Рем A и Сукуны — сторонние записи из **Re:ZERO / Lost in Memories / Jujutsu Kaisen**. [Происхождение и настройки](Docs/HERO_VOICES_JP.md); исходные материалы и хеши сохранены в `Assets/DeadZone/Audio/HeroVoicesJP`.
+
 Граната HE и мина на основе C4: **Valve Corporation, Counter-Strike 2** — одобренные чека, бросок, два взрыва HE, установка, сигнал готовности и взрыв мины. [Исходники и подключение](Docs/EXPLOSIVE_AUDIO.md).
 
 Glock-18, Negev и Nova: **Valve Corporation, Counter-Strike 2** — одобренные выстрелы, перезарядки и помпа. [Исходники и сведения об обработке](Docs/CS2_WEAPON_AUDIO.md).
