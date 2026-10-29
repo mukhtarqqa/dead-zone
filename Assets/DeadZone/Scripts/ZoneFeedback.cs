@@ -20,6 +20,8 @@ namespace DeadZone
         static ZoneFeedback instance;
         static AudioClip[] sounds;
         static AudioClip[] weaponShots;
+        static AudioClip[] ak47Shots;
+        static int lastAk47Shot = -1;
         static AudioClip[] weaponReloads;
         static AudioClip grenadePinClip, grenadeExplosionClip, mineArmClip, mineExplosionClip;
         readonly AudioSource[] voices=new AudioSource[12];int voice;
@@ -33,7 +35,7 @@ namespace DeadZone
             {
                 weaponShots = new AudioClip[4];
                 weaponShots[0] = Resources.Load<AudioClip>("Audio/sfx_pistol_shot");
-                weaponShots[1] = Resources.Load<AudioClip>("Audio/sfx_ak47_shot");
+                weaponShots[1] = Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_01") ?? Resources.Load<AudioClip>("Audio/sfx_ak47_shot");
                 weaponShots[2] = Resources.Load<AudioClip>("Audio/sfx_heavy_shot");
                 weaponShots[3] = Resources.Load<AudioClip>("Audio/sfx_shotgun_shot");
             }
@@ -49,6 +51,14 @@ namespace DeadZone
             if (grenadeExplosionClip == null) grenadeExplosionClip = Resources.Load<AudioClip>("Audio/sfx_grenade_explosion");
             if (mineArmClip == null) mineArmClip = Resources.Load<AudioClip>("Audio/sfx_mine_arm");
             if (mineExplosionClip == null) mineExplosionClip = Resources.Load<AudioClip>("Audio/sfx_mine_explosion");
+            if (ak47Shots == null)
+            {
+                ak47Shots = new[] {
+                    Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_01"),
+                    Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_02"),
+                    Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_04")
+                };
+            }
         }
 
         public static void PlayShot(int weaponKind)
@@ -57,6 +67,15 @@ namespace DeadZone
             EnsureInstance();
             EnsureClips();
             int index = Mathf.Clamp(weaponKind, 0, 3);
+            if (index == 1 && ak47Shots[0] != null && ak47Shots[1] != null && ak47Shots[2] != null)
+            {
+                int variant = lastAk47Shot < 0 ? audioRandom.Next(3) : (lastAk47Shot + 1 + audioRandom.Next(2)) % 3;
+                lastAk47Shot = variant;
+                var rifleVoice = instance.voices[instance.voice++ % instance.voices.Length];
+                rifleVoice.pitch = 1f;
+                rifleVoice.PlayOneShot(ak47Shots[variant], Volume * .82f);
+                return;
+            }
             if (weaponShots != null && weaponShots[index] != null)
             {
                 var voice = instance.voices[instance.voice++%instance.voices.Length];

@@ -1,5 +1,7 @@
 # Материалы
 
+Выстрелы AK-47: **Valve Corporation, Counter-Strike 2** (`ak47_01`, `ak47_02`, `ak47_04`), извлечены из установленной игры инструментом [Source 2 Viewer](https://s2v.app/ValveResourceFormat/guides/exporting-sounds.html). Оригинальные WAV и настройки: [Docs/AK47_AUDIO.md](Docs/AK47_AUDIO.md). Эти записи относятся к материалам Valve, отдельно от CC0-звуков зомби.
+
 Звуки зомби: **Darsycho — [Monster snarls](https://opengameart.org/content/monster-snarls)**, CC0 1.0. Использованы `monster-snarls_0.ogg` и `monster-snarl-attack.ogg`; производные WAV нарезаны по паузам и сведены в моно. Оригиналы, лицензия и описание обработки: `Assets/DeadZone/Audio/Zombies`.
 
 Городская арена, процедурные фасады, машины, деревья, оружие и эффекты создаются кодом проекта. Растровые материалы и спрайты в Resources подготовлены с помощью генерации изображений; доступны для редактирования в проекте. Промпты: [карта](Docs/ART_PROMPTS.md), [новые кварталы и враги](Docs/REWORK_ART_PROMPTS.md), [святилище](Docs/SUKUNA_REWORK_ART.md), [фон карантинного блокпоста](Docs/OUTBREAK_UI_ART.md).

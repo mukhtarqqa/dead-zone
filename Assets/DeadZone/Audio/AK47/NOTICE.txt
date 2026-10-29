@@ -1,0 +1,7 @@
+AK-47 recordings from Counter-Strike 2
+Rights holder: Valve Corporation
+Source: installed CS2 build 26281801, game/csgo/pak01_dir.vpk
+Original resources: sounds/weapons/ak47/ak47_01.vsnd_c, ak47_02.vsnd_c, ak47_04.vsnd_c
+Exported using Source 2 Viewer CLI 20.1.
+These recordings are Valve game assets, separate from the CC0 zombie recordings.
+See PROVENANCE.json for original hashes and playback settings.
