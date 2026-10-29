@@ -28,6 +28,7 @@ namespace DeadZone
     [Serializable] public sealed class ZoneObjectState
     {
         public int id, type, kind, floor,facing,animation; public Vector2 position, velocity, origin; public float age, endAge; public float scale, health, remaining,maxHealth; public bool boss, hostile;
+        public int explosionSound; // Optional cosmetic field; older protocol-9 peers default to 0.
     }
     [Serializable] public sealed class ZoneWorld
     {
@@ -473,11 +474,11 @@ namespace DeadZone
             foreach(var cache in ZoneSupplyCache.Active)if(cache!=null&&!cache.Opened(recipientActor))objects.Add(new ZoneObjectState{id=ObjectId(cache.gameObject),type=10,kind=cache.WeaponKind,position=cache.transform.position,scale=1.25f,floor=cache.gameObject.layer});
             foreach (var bullet in FindObjectsByType<ZoneBullet>()) objects.Add(new ZoneObjectState { id = ObjectId(bullet.gameObject), type = 2, position = bullet.transform.position, velocity = bullet.direction * bullet.speed, hostile = bullet.hostile, scale = .22f, floor = bullet.gameObject.layer });
             foreach (var pickup in FindObjectsByType<ZonePickup>()) if (pickup.Owner == recipient) objects.Add(new ZoneObjectState { id = ObjectId(pickup.gameObject), type = 3, kind = pickup.kind, position = pickup.transform.position, scale = .6f, floor = pickup.gameObject.layer });
-            foreach (var mine in FindObjectsByType<ZoneMine>()) objects.Add(new ZoneObjectState { id = ObjectId(mine.gameObject), type = 4, position = mine.transform.position, scale = .65f, floor = mine.gameObject.layer });
-            foreach (var grenade in FindObjectsByType<ZoneGrenade>()) objects.Add(new ZoneObjectState { id = ObjectId(grenade.gameObject), type = 5, position = grenade.transform.position, floor = grenade.gameObject.layer, scale = .45f });
+            foreach (var mine in FindObjectsByType<ZoneMine>()) objects.Add(new ZoneObjectState { id = ObjectId(mine.gameObject), type = 4, position = mine.transform.position, scale = .65f, floor = mine.gameObject.layer, age = mine.Age });
+            foreach (var grenade in FindObjectsByType<ZoneGrenade>()) objects.Add(new ZoneObjectState { id = ObjectId(grenade.gameObject), type = 5, position = grenade.transform.position, floor = grenade.gameObject.layer, scale = .45f, age = grenade.Age });
             foreach(var shrine in FindObjectsByType<ZoneShrine>())objects.Add(new ZoneObjectState{id=ObjectId(shrine.gameObject),type=8,floor=shrine.Floor,position=shrine.transform.position,age=shrine.Age});
             foreach (var purple in FindObjectsByType<ZonePurple>()) objects.Add(new ZoneObjectState { id=ObjectId(purple.gameObject), type=7, floor=purple.Floor, position=purple.transform.position, origin=purple.Origin, velocity=purple.Direction, age=purple.Age, endAge=purple.ImpactAge });
-            foreach (var pulse in FindObjectsByType<ZonePulse>()) if (pulse.Remaining > .05f) objects.Add(new ZoneObjectState { id = ObjectId(pulse.gameObject), type = 6, position = pulse.transform.position, floor = pulse.Floor, kind = pulse.Kind, scale = pulse.Radius, health = pulse.Duration, velocity = pulse.Direction, remaining = pulse.Remaining });
+            foreach (var pulse in FindObjectsByType<ZonePulse>()) if (pulse.Remaining > .05f) objects.Add(new ZoneObjectState { id = ObjectId(pulse.gameObject), type = 6, position = pulse.transform.position, floor = pulse.Floor, kind = pulse.Kind, scale = pulse.Radius, health = pulse.Duration, velocity = pulse.Direction, remaining = pulse.Remaining, explosionSound = pulse.ExplosionSound });
             return new ZoneWorld { sequence = sequence, running = game.running, ended = game.ended, victory = game.Victory, wave = game.wave, pending=game.PendingEnemies, alive=game.enemies.Count,elapsed=game.Elapsed, kills = game.kills, damage = game.damageDealt, boss = game.BossPhase, bossHealth = game.CurrentBossHealth, remaining = game.BreakRemaining, notice = game.message, players = actors.ToArray(), objects = objects.ToArray() };
         }
         public async void Leave()
@@ -540,10 +541,20 @@ namespace DeadZone
                 GetComponent<SpriteRenderer>().enabled = false; transform.position = state.position;
                 if (GetComponent<ZonePulse>() == null) { var effect = gameObject.AddComponent<ZonePulse>(); effect.Floor = state.floor; effect.Kind = state.kind; effect.Radius = state.scale; effect.Direction = state.velocity; effect.Duration = Mathf.Max(.1f, state.health); }
                 GetComponent<ZonePulse>().SetClock(Mathf.Max(.1f,state.health),state.remaining);
+                if (!initialized)
+                {
+                    initialized = true;
+                    if (state.explosionSound == 1 || state.explosionSound == 2)
+                        ZoneExplosiveAudio.Explode(state.position, state.floor, state.explosionSound == 2, Mathf.Max(0, state.health - state.remaining));
+                }
                 return;
             }
             target = state.position; velocity = state.velocity; receivedAt = Time.unscaledTime;
-            if (!initialized) { transform.position = target; initialized = true; }
+            if (!initialized)
+            {
+                transform.position = target; initialized = true;
+                if (state.type == 4 || state.type == 5) ZoneExplosiveAudio.Attach(gameObject, state.type == 4, state.age);
+            }
             bool firearm = state.type == 3 && state.kind >= 0 && state.kind < 4;
             var sr = GetComponent<SpriteRenderer>(); sr.sprite = state.type == 1 ? game.EnemyFrame(state.kind, state.boss) : firearm ? ZoneArsenal.Sprite(state.kind) : state.type == 4 || state.type == 3 && state.kind == 4 ? ZoneArt.Item(1) : state.type == 5 ? ZoneArt.Item(0) : state.type == 3 ? ZoneArt.Item(2) : game.marker;
             if(state.type==1)

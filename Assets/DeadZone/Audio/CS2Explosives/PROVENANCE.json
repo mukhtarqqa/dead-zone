@@ -1,0 +1,169 @@
+{
+  "approval": "approved by user, 2026-10-29: connect both HE grenade and C4-based mine sets",
+  "imported_into_unity": true,
+  "rights_holder": "Valve Corporation",
+  "source": "Installed Counter-Strike 2 build 26281801, game/csgo/pak01_dir.vpk",
+  "extractor": "Source 2 Viewer CLI 20.1",
+  "processing": "Exact recorded event samples and relative event volumes; category peaks levelled to 0.65 for audition. The mine proposal combines C4 physical placement, a single arming beep and modern close C4 explosion/shockwave/debris. No countdown loop. Timing is adapted for Dead Zone; mine explosion in preview is a demonstration, not an automatic detonation rule.",
+  "recordings": {
+    "HEGrenade.PullPin:0": {
+      "export": "sounds/weapons/hegrenade/hegrenade_pinpull_08.mp3",
+      "resource": "sounds/weapons/hegrenade/hegrenade_pinpull_08.vsnd_c",
+      "sha256": "ec9782a617c229acbb55f0edef4f88588a4284341103abc31eafa265b00110a2",
+      "event_volume": 0.2,
+      "seconds": 0.9235147392290249
+    },
+    "HEGrenade.Throw:0": {
+      "export": "sounds/items/weapon_hegrenade_throw.mp3",
+      "resource": "sounds/items/weapon_hegrenade_throw.vsnd_c",
+      "sha256": "64c3d595ff18634578b950753bcafc6685f135c3919c91adaa670a7f55701f50",
+      "event_volume": 1.0,
+      "seconds": 0.2683673469387755
+    },
+    "BaseGrenade.Explode:0": {
+      "export": "sounds/weapons/hegrenade/hegrenade_detonate_02.wav",
+      "resource": "sounds/weapons/hegrenade/hegrenade_detonate_02.vsnd_c",
+      "sha256": "774840d68641471d8fe21dfd37f49797689e0b96e067393f0c18d027bdb7c8b0",
+      "event_volume": 1.0,
+      "seconds": 4.863310657596372
+    },
+    "BaseGrenade.Explode:1": {
+      "export": "sounds/weapons/hegrenade/hegrenade_detonate_03.wav",
+      "resource": "sounds/weapons/hegrenade/hegrenade_detonate_03.vsnd_c",
+      "sha256": "ffe3ac56dd7f2687a95c8fe580447b3ee2954bd8b47448c454c21456f80fec33",
+      "event_volume": 1.0,
+      "seconds": 4.6270294784580495
+    },
+    "c4.plant:0": {
+      "export": "sounds/weapons/c4/c4_plant.wav",
+      "resource": "sounds/weapons/c4/c4_plant.vsnd_c",
+      "sha256": "03eca36e8e6c61e3145a0118c1b38f0601eae8829aebe1e9f8fc95196197f21b",
+      "event_volume": 0.599609,
+      "seconds": 0.5449659863945578
+    },
+    "C4.PlantSound:0": {
+      "export": "sounds/weapons/c4/c4_beep2.wav",
+      "resource": "sounds/weapons/c4/c4_beep2.vsnd_c",
+      "sha256": "c136ca6f2e169747cdc811c40eb4e0777bce2196c151a0cd74ea5025286c20e1",
+      "event_volume": 0.9,
+      "seconds": 0.1513832199546485
+    },
+    "c4.explode.close:0": {
+      "export": "sounds/weapons/c4/c4_explode_close_01.mp3",
+      "resource": "sounds/weapons/c4/c4_explode_close_01.vsnd_c",
+      "sha256": "4c50ec82b4bf8045a6e3c10b8b9c23a97e06779798ff06c9b2b9a7348039fc18",
+      "event_volume": 1.0,
+      "seconds": 5.98
+    },
+    "c4.shockwave.boom:0": {
+      "export": "sounds/weapons/c4/c4_thump_01.mp3",
+      "resource": "sounds/weapons/c4/c4_thump_01.vsnd_c",
+      "sha256": "479ec1c4c02544dc84280895e27406eaff590970124630c26a67515158ccac46",
+      "event_volume": 1.0,
+      "seconds": 2.5926303854875283
+    },
+    "c4.shockwave.debris:0": {
+      "export": "sounds/weapons/c4/c4_shockwave_debris_01.mp3",
+      "resource": "sounds/weapons/c4/c4_shockwave_debris_01.vsnd_c",
+      "sha256": "4f97c44c53204d54854771e5c78fef75436324eb29bf21e892f042a5a4341146",
+      "event_volume": 0.1,
+      "seconds": 7.2982086167800455
+    }
+  },
+  "candidates": [
+    {
+      "file": "Grenade_HE_Pin_Throw.wav",
+      "seconds": 0.9235147392290249,
+      "gain": 0.6046719225536638,
+      "timeline": [
+        {
+          "at": 0,
+          "event": "HEGrenade.PullPin"
+        },
+        {
+          "at": 0.2,
+          "event": "HEGrenade.Throw"
+        }
+      ],
+      "runtime_file": "Assets/Resources/Audio/Explosives/HE/he_pin_throw.wav",
+      "sha256": "23921985b29730c7e3cd648e40285b6b45596247a3367b31d65886153e4f5617"
+    },
+    {
+      "file": "Grenade_HE_Explosion_01.wav",
+      "seconds": 4.863310657596372,
+      "gain": 0.65,
+      "timeline": [
+        {
+          "at": 0,
+          "event": "BaseGrenade.Explode:0"
+        }
+      ],
+      "runtime_file": "Assets/Resources/Audio/Explosives/HE/he_explosion_01.wav",
+      "sha256": "680c0b2c20d4df70aef85186be4490bbdf79c0a596d9fe1e4ff1eefe6f6ede59"
+    },
+    {
+      "file": "Grenade_HE_Explosion_02.wav",
+      "seconds": 4.6270294784580495,
+      "gain": 0.65,
+      "timeline": [
+        {
+          "at": 0,
+          "event": "BaseGrenade.Explode:1"
+        }
+      ],
+      "runtime_file": "Assets/Resources/Audio/Explosives/HE/he_explosion_02.wav",
+      "sha256": "de1f17b8ba6cfbd50dea13264d10ed8c01c87d6ca07adeed586638e164f463e8"
+    },
+    {
+      "file": "Mine_C4_Place_Arm.wav",
+      "seconds": 1.0,
+      "gain": 1.0840397659141208,
+      "timeline": [
+        {
+          "at": 0,
+          "event": "c4.plant"
+        },
+        {
+          "at": 0.82,
+          "event": "C4.PlantSound: single arming beep"
+        }
+      ],
+      "runtime_file": "Assets/Resources/Audio/Explosives/C4/mine_place_arm.wav",
+      "sha256": "4c409ab5e4e652463d5a74ef5ac0cbcd43d8200a335afbdb4191f01f33fcd3df"
+    },
+    {
+      "file": "Mine_C4_Explosion.wav",
+      "seconds": 7.378208616780046,
+      "gain": 0.3320224443744591,
+      "timeline": [
+        {
+          "at": 0,
+          "event": "c4.explode.close"
+        },
+        {
+          "at": 0,
+          "event": "c4.shockwave.boom"
+        },
+        {
+          "at": 0.08,
+          "event": "c4.shockwave.debris:0"
+        }
+      ],
+      "runtime_file": "Assets/Resources/Audio/Explosives/C4/mine_explosion.wav",
+      "sha256": "8f8193df02d0de8a7d773b1f0f7ee38eb52cff233dfdbe3311e8e94af822e653"
+    }
+  ],
+  "previews": [
+    {
+      "file": "Grenade_HE_CS2_Preview.wav",
+      "seconds": 12.240340136054423,
+      "notes": "Two throw-plus-explosion sequences, using the two original HE variants."
+    },
+    {
+      "file": "Mine_C4_CS2_Preview.wav",
+      "seconds": 9.178208616780045,
+      "notes": "Placement, single ready beep, then example C4-based explosion."
+    }
+  ],
+  "runtime": "Original approved WAV files copied without further processing. Pitch 1. Grenade flight/fuse 0.8 seconds, mine arming 1 second, damage and radii unchanged. Snapshot age seeks into setup clips; explosionSound distinguishes HE and C4 pulses from silent ability pulses."
+}

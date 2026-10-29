@@ -1,5 +1,7 @@
 # Материалы
 
+Граната HE и мина на основе C4: **Valve Corporation, Counter-Strike 2** — одобренные чека, бросок, два взрыва HE, установка, сигнал готовности и взрыв мины. [Исходники и подключение](Docs/EXPLOSIVE_AUDIO.md).
+
 Glock-18, Negev и Nova: **Valve Corporation, Counter-Strike 2** — одобренные выстрелы, перезарядки и помпа. [Исходники и сведения об обработке](Docs/CS2_WEAPON_AUDIO.md).
 
 Перезарядка AK-47: **Valve Corporation, Counter-Strike 2** — `ak47_clipout_01`, `magazine_slide_01`, `ak47_boltpull_01`, собраны под 1.8 секунды Dead Zone. [Происхождение и настройки](Docs/AK47_RELOAD_AUDIO.md).

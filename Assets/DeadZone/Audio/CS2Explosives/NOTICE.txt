@@ -1,0 +1,4 @@
+Counter-Strike 2 sound recordings: Valve Corporation.
+Extracted from the user's installed CS2 build 26281801 with Source 2 Viewer CLI 20.1.
+Approved HE grenade and C4-based mine derivatives are recorded in PROVENANCE.json.
+These are Valve materials, separate from the project's CC0 zombie audio.
