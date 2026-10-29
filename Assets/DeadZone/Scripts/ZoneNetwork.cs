@@ -519,10 +519,13 @@ namespace DeadZone
         public int ObjectType { get; private set; }
         public int Kind { get; private set; }
         public bool IsBoss=>boss;public float MaxHealth=>maxHealth;
+        public bool BossAlive=>ObjectType==1&&boss&&health>0;
+        DeadZoneGame owner;
         Vector2 target, velocity;float receivedAt;bool initialized;int facing,animation;bool boss;float health,maxHealth,flashUntil;SpriteRenderer healthBar;
-        void OnEnable(){Active.Add(this);}void OnDestroy(){Active.Remove(this);}
+        void OnEnable(){Active.Add(this);}void OnDestroy(){Active.Remove(this);if(owner!=null)owner.RemoveBossAlert(transform);}
         public void Apply(DeadZoneGame game, ZoneObjectState state)
         {
+            owner=game;if(state.type!=1)game.RemoveBossAlert(transform);
             ObjectType = state.type; Kind = state.kind; gameObject.layer = state.floor;
             if(state.type==9){var corpse=GetComponent<ZoneCorpse>();if(corpse==null)corpse=gameObject.AddComponent<ZoneCorpse>();corpse.Apply(state);return;}
             if(state.type==8)
@@ -551,6 +554,7 @@ namespace DeadZone
                 facing=state.facing;animation=state.animation;boss=state.boss;health=state.health;maxHealth=state.maxHealth;flashUntil=Time.unscaledTime+state.age;sr.flipX=false;sr.sprite=ZoneEnemyArt.Frame(state.kind,facing,animation,boss);
                 if(healthBar==null){var bar=new GameObject("Enemy health");bar.transform.SetParent(transform,false);bar.transform.localPosition=new Vector3(0,boss?2:state.kind==3?2.05f:1.8f);healthBar=bar.AddComponent<SpriteRenderer>();healthBar.sprite=game.marker;healthBar.color=new Color(.94f,.38f,.24f);healthBar.sortingLayerID=ZoneMap.Sorting(state.floor);healthBar.sortingOrder=3100;}
                 healthBar.enabled=health>0&&maxHealth>0&&(boss||health<maxHealth);healthBar.transform.localScale=new Vector3(maxHealth>0?health/maxHealth:1,.065f,1);
+                if(BossAlive)game.NotifyBossSpawned(this);else game.RemoveBossAlert(transform);
             }
             sr.color = state.type == 1 ? (state.boss ? new Color(1, .65f, .85f) : Color.white) : state.type == 2 ? (state.hostile ? Color.red : Color.yellow) : state.type == 4 || state.type == 3 && state.kind == 4 ? Color.cyan : firearm ? Color.white : Color.green;
             sr.sortingLayerID = ZoneMap.Sorting(state.floor);sr.sortingOrder=state.type==2||state.type==5?3000:ZoneDepth.Order(state.position.y)-(state.type==1?0:3);

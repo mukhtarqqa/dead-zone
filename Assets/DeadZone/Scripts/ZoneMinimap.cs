@@ -16,7 +16,11 @@ namespace DeadZone
         }
         void Update()
         {
-            if(game==null||arena==null||Time.unscaledTime<next)return;next=Time.unscaledTime+.1f;area.text=ZoneL.Get(arena.AreaName(game.CameraActor.transform.position));float seconds=Mathf.Max(0,game.Elapsed);clock.text=$"{Mathf.FloorToInt(seconds/60):00}:{Mathf.FloorToInt(seconds%60):00}"+"  ·  "+ZoneL.Format("ИГРОКИ {0}/4",game.TeamSize);SetVerticesDirty();
+            if(game==null||arena==null)return;
+            if(Time.unscaledTime<next)return;
+            SetVerticesDirty();next=Time.unscaledTime+.1f;
+            if(game.CameraActor==null)return;
+            area.text=ZoneL.Get(arena.AreaName(game.CameraActor.transform.position));float seconds=Mathf.Max(0,game.Elapsed);clock.text=$"{Mathf.FloorToInt(seconds/60):00}:{Mathf.FloorToInt(seconds%60):00}"+"  ·  "+ZoneL.Format("ИГРОКИ {0}/4",game.TeamSize);
         }
         Vector2 Map(Vector2 world)
         {
@@ -31,9 +35,35 @@ namespace DeadZone
             else foreach(var ghost in ZoneGhost.Active)if(ghost!=null&&ghost.ObjectType==10)Dot(vh,ghost.transform.position,2,ZonePalette.Accent);
             foreach(var actor in game.players)
             {
-                bool connected=game.IsAuthority?game.network.IsParticipantConnected(actor.OwnerId):actor.Connected;Color c=actor.Dead||!connected?ZoneUi.Muted:actor.Downed?new Color(1,.4f,.3f):ZoneHeroCard.HeroColor(actor.CharacterIndex);Dot(vh,actor.transform.position,actor==game.player?4.2f:3.3f,c);
+                if(actor==null)continue;
+                bool connected=game.IsAuthority?game.network==null||game.network.IsParticipantConnected(actor.OwnerId):actor.Connected;Color c=actor.Dead||!connected?ZoneUi.Muted:actor.Downed?new Color(1,.4f,.3f):ZoneHeroCard.HeroColor(actor.CharacterIndex);Dot(vh,actor.transform.position,actor==game.player?4.2f:3.3f,c);
             }
+            if(game.running)foreach(var target in game.BossTargets)if(game.BossIsAlive(target))BossMarker(vh,target.position);
         }
+        public Vector2 BossMarkerPosition(Vector2 world,out bool edge)
+        {
+            if(arena==null){edge=false;return Vector2.zero;}
+            Vector2 min=Map(arena.Bounds.min)+Vector2.one*10,max=Map(arena.Bounds.max)-Vector2.one*10;
+            Vector2 center=(min+max)*.5f,half=(max-min)*.5f,delta=Map(world)-center;
+            float ratio=Mathf.Max(Mathf.Abs(delta.x)/Mathf.Max(1,half.x),Mathf.Abs(delta.y)/Mathf.Max(1,half.y));
+            edge=ratio>1;return center+delta/Mathf.Max(1,ratio);
+        }
+        void BossMarker(UnityEngine.UI.VertexHelper vh,Vector2 world)
+        {
+            var p=BossMarkerPosition(world,out bool edge);float pulse=.5f+.5f*Mathf.Sin(Time.unscaledTime*5);
+            Diamond(vh,p,8+pulse,new Color(1,.10f,.15f,.18f+pulse*.16f));
+            Diamond(vh,p,6,new Color(.10f,.02f,.03f));
+            if(edge)
+            {
+                Vector2 direction=(Map(world)-rectTransform.rect.center).normalized,normal=new Vector2(-direction.y,direction.x);
+                int start=vh.currentVertCount;var v=UnityEngine.UIVertex.simpleVert;v.color=new Color(1,.16f,.20f);
+                v.position=p+direction*6;vh.AddVert(v);v.position=p-direction*4+normal*4;vh.AddVert(v);v.position=p-direction*4-normal*4;vh.AddVert(v);vh.AddTriangle(start,start+1,start+2);
+            }
+            else Diamond(vh,p,4.5f,new Color(1,.16f,.20f));
+            Diamond(vh,p,1.4f,new Color(1,.88f,.84f));
+        }
+        void Diamond(UnityEngine.UI.VertexHelper vh,Vector2 p,float radius,Color c)
+        {Quad(vh,p+Vector2.up*radius,p+Vector2.right*radius,p+Vector2.down*radius,p+Vector2.left*radius,c);}
         void Box(UnityEngine.UI.VertexHelper vh,Rect world,Color c){Quad(vh,Map(world.min),Map(new Vector2(world.xMax,world.yMin)),Map(world.max),Map(new Vector2(world.xMin,world.yMax)),c);}
         void Dot(UnityEngine.UI.VertexHelper vh,Vector2 point,float radius,Color c){var p=Map(point);Quad(vh,p+new Vector2(-radius,-radius),p+new Vector2(radius,-radius),p+new Vector2(radius,radius),p+new Vector2(-radius,radius),c);}
         void Road(UnityEngine.UI.VertexHelper vh,Vector2[] points,float width)

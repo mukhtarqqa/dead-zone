@@ -9,6 +9,7 @@ namespace DeadZone
         {
             if(Application.isBatchMode)return;var game=DeadZoneGame.Instance;if(game==null)return;
             if(source==null){source=gameObject.AddComponent<AudioSource>();source.loop=true;source.playOnAwake=false;source.volume=0;}
+            if(game.IntroPlaying){source.volume=Mathf.MoveTowards(source.volume,0,Time.unscaledDeltaTime);return;}
             int desired=!game.running?0:game.BossPhase?2:1;
             if(current!=desired)
             {

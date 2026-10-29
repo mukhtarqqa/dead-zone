@@ -17,6 +17,7 @@ namespace DeadZone
         public int AnimationPose=>Time.time<attackPoseUntil||attackAt>0||boss&&brain!=null&&brain.Attacking?3:body!=null&&body.linearVelocity.sqrMagnitude>.12f?1+(Mathf.FloorToInt(Time.time*(kind==2?12:7)+(GetEntityId().GetHashCode()%97)*.13f)&1):0;
         public bool HasTarget=>target!=null;
         public Vector2 DamageCenter=>(Vector2)transform.position+Vector2.up*(ZoneEnemyArt.Role(kind,boss)==3?.95f:.78f)*(boss?1.6f:1);
+        void OnDestroy(){if(game!=null&&boss)game.RemoveBossAlert(transform);}
         void Start()
         {
             body=GetComponent<Rigidbody2D>();hitbox=GetComponent<Collider2D>();hitbox.offset=Vector2.zero;sprite=GetComponent<SpriteRenderer>();brain=GetComponent<ZoneBossBrain>();maxHealth=health;side=(GetEntityId().GetHashCode()&1)==0?1:-1;ZoneHurtbox.Add(this);

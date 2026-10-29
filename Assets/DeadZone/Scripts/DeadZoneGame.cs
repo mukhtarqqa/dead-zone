@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 namespace DeadZone
 {
     // Host owns combat and wave progression; clients render validated world snapshots.
-    public sealed class DeadZoneGame : MonoBehaviour
+    public sealed partial class DeadZoneGame : MonoBehaviour
     {
         public GameObject playerVisual;
         public Camera gameCamera;
@@ -40,7 +40,9 @@ namespace DeadZone
         public int RemainingEnemies => (IsAuthority?enemies.Count:RemoteEnemyCount)+pendingEnemies;
         public float CurrentBossHealth => IsAuthority?(enemies.Find(e=>e!=null&&e.boss)?.health??0):RemoteBossHealth;
         public bool OptionsVisible {get;set;}
-        public bool InputBlocked => paused||Restarting||OptionsVisible||(network!=null&&network.PanelVisible);
+        public bool IntroPlaying => intro!=null&&intro.Playing;
+        ZoneIntro intro;
+        public bool InputBlocked => IntroPlaying||paused||Restarting||OptionsVisible||(network!=null&&network.PanelVisible);
         CityArena arena;ZonePlayer spectated;ZoneRunFlow runFlow;
         public bool Restarting=>runFlow!=null&&runFlow.Restarting;
         public ZonePlayer CameraActor
@@ -120,6 +122,7 @@ namespace DeadZone
 
         void Update()
         {
+            if(IntroPlaying){menuRoot.SetActive(false);hudRoot.SetActive(intro.ShowingGame);return;}
             if(IsAuthority&&running&&!paused&&pendingEnemies>0&&Time.time>=nextSpawn&&enemies.Count<Balance.AliveCap(wave,TeamSize))
             {
                 if(groupRemaining<=0){groupRemaining=Mathf.Min(pendingEnemies,Balance.GroupSize(wave,TeamSize));spawnCluster=null;}
@@ -178,18 +181,36 @@ namespace DeadZone
 
         void LateUpdate()
         {
-            if (player == null) return;
-            var tracked=CameraActor;var offset=Vector2.ClampMagnitude(tracked.aimPoint-(Vector2)tracked.transform.position,4)*.22f;
-            var target=tracked.transform.position+(Vector3)offset;
-            target.z = -10;
+            PruneBossAlerts();
+            if (gameCamera == null) return;
+            var tracked=CameraActor;
+            var target=hasCameraFollowPoint?lastCameraFollowPoint:gameCamera.transform.position;
+            if(tracked!=null)
+            {
+                var offset=Vector2.ClampMagnitude(tracked.aimPoint-(Vector2)tracked.transform.position,4)*.22f;
+                target=tracked.transform.position+(Vector3)offset;
+                lastCameraFollowPoint=target;hasCameraFollowPoint=true;
+            }
+            target.z = gameCamera.transform.position.z;
             if (arena != null) target = arena.ClampCamera(target, gameCamera);
-            gameCamera.transform.position = Vector3.Lerp(gameCamera.transform.position, target, 1 - Mathf.Exp(-8 * Time.unscaledDeltaTime)) + ZoneFeedback.CameraOffset();
+            gameCamera.transform.position = AdvanceBossCamera(target, tracked, Time.unscaledDeltaTime) + ZoneFeedback.CameraOffset();
             if (arena != null) gameCamera.transform.position = arena.ClampCamera(gameCamera.transform.position, gameCamera);
         }
 
         public void Begin()
         {
+            if(IntroPlaying)return;
+            if(!running&&IsAuthority&&(network==null||!network.Active))
+            {
+                if(intro==null){intro=gameObject.AddComponent<ZoneIntro>();intro.Game=this;}
+                if(intro.Play(StartGameplay))return;
+            }
+            StartGameplay();
+        }
+        public void StartGameplay()
+        {
             if (!IsAuthority || running) return;
+            ResetBossAlerts();
             statisticsRecorded=false;running = true; ended=false; paused=false;OptionsVisible=false;Time.timeScale=1;wave = 1;kills=0;damageDealt=0; startedAt = Time.time;
             for(int i=0;i<players.Count;i++){var actor=players[i];if(network!=null&&!network.IsParticipantConnected(actor.OwnerId))continue;actor.ResetForMatch(actor.IsLocal?selected:actor.CharacterIndex);if(arena!=null){actor.transform.position=arena.TeamSpawn(i);actor.GetComponent<Rigidbody2D>().position=actor.transform.position;}}
             spectated=null;if(arena!=null)gameCamera.transform.position=arena.ClampCamera(new Vector3(player.transform.position.x,player.transform.position.y,-10),gameCamera);center.text = ""; network?.MatchStarted();
@@ -250,7 +271,7 @@ namespace DeadZone
             enemy.game = this; enemy.kind = kind; enemy.boss = boss; enemy.ReadyAt = Time.time + (boss ? 1.8f : .75f);
             ZonePulse.Spawn(position.Value, obj.layer, boss ? 1.3f : .5f, 1, boss ? 1.8f : .75f);
             enemy.health = boss ? Balance.BossHealth(wave,TeamSize) : Balance.EnemyHealth(wave,TeamSize,kind);
-            enemies.Add(enemy);if(boss){var brain=obj.AddComponent<ZoneBossBrain>();brain.Enemy=enemy;}
+            enemies.Add(enemy);if(boss){var brain=obj.AddComponent<ZoneBossBrain>();brain.Enemy=enemy;NotifyBossSpawned(enemy);}
         }
 
         Vector2? FindSpawn(bool boss)
@@ -280,6 +301,7 @@ namespace DeadZone
 
         public void EnemyKilled(ZoneEnemy enemy)
         {
+            if(enemy.boss)RemoveBossAlert(enemy.transform);
             if(enemy.boss){ZonePulse.Spawn(enemy.transform.position,enemy.gameObject.layer,3,5,1);ZoneFeedback.Play(11);}
             enemies.Remove(enemy); kills++;
             if (!enemy.boss && Random.value < Balance.lootChance) foreach (var actor in players) { int loot = Random.Range(0, 5); ZonePickup.Spawn(this, enemy.transform.position, loot == 0 ? -1 : loot, actor.OwnerId, floor: enemy.gameObject.layer); }
@@ -293,6 +315,7 @@ namespace DeadZone
 
         public void Finish(bool victory)
         {
+            ResetBossAlerts();
             finishedElapsed=Time.time-startedAt;running = false; ended = true;GetComponent<ZoneOptions>().Close();paused=false;Time.timeScale=1;
             Victory = victory;
             if(!statisticsRecorded&&player!=null){ZoneProfile.Record(player,victory,Elapsed);statisticsRecorded=true;}
@@ -401,6 +424,7 @@ namespace DeadZone
         public void CheckTeamDefeat() { foreach (var actor in players) if (!actor.Dead && !actor.Downed && (network == null || network.IsParticipantConnected(actor.OwnerId))) return; Finish(false); }
         public void ApplyRemoteMatch(bool active, bool finished, bool victory, int currentWave, int currentKills, float damage, bool boss, float bossHealth, float remaining, string notice, int pending=0,int alive=0,float elapsed=0)
         {
+            if(active&&!running)ResetBossAlerts();
             if(active)statisticsRecorded=false;pendingEnemies=pending;RemoteEnemyCount=alive;startedAt=Time.time-elapsed;wave = currentWave; kills = currentKills; damageDealt = damage; bossPhase = boss; RemoteBossHealth = bossHealth; breakUntil = Time.time + remaining; message = notice;
             running = active; if (finished && !ended) Finish(victory); ended = finished;
         }
@@ -421,7 +445,7 @@ namespace DeadZone
             ZoneL.Attach(text);text.enableAutoSizing=false;return text;
         }
 
-        void OnDestroy() { Time.timeScale = 1; if (Instance == this) Instance = null; }
+        void OnDestroy() { ResetBossAlerts();Time.timeScale = 1; if (Instance == this) Instance = null; }
     }
 
     public sealed class ZonePlayer : MonoBehaviour
