@@ -1,5 +1,5 @@
 {
-  "approval": "User approved Rem variant A, Sukuna and Subaru on 2026-10-29; Gojo rejected and excluded.",
+  "approval": "User approved Rem A, Subaru, Sukuna and Gojo Yowai mon on 2026-10-29. Earlier Gojo samples excluded.",
   "imported_into_unity": true,
   "processing": "Decoded to mono PCM WAV 44100 Hz; uniform peak 0.65 for audition. Original speed and pitch. No synthesis, voice cloning, denoising or edits to words. The complete Sukuna excerpt is retained so the user can review both phrases before synchronization.",
   "clips": [
@@ -48,6 +48,26 @@
       "runtime_path": "Assets/Resources/Audio/Heroes/Rem/oni_fury.wav",
       "preserved_source": "Assets/DeadZone/Audio/HeroVoicesJP/Sources/rem_oni_fury.wav",
       "runtime_sha256": "7cd86e3b837160ce6bb65d1dcce89dd19a8a2d813b3a46f60c4833bad876f490"
+    },
+    {
+      "approval": "User approved this exact Yowai mon recording on 2026-10-29",
+      "imported_into_unity": true,
+      "phrase": "弱いもん",
+      "romanization": "Yowai mon",
+      "file": "Gojo_YowaiMon_Episode7_JP.wav",
+      "seconds": 1.6021768707482993,
+      "source_page": "https://www.animecharactersdatabase.com/quotesbycharacter.php?line_id=217368",
+      "source_audio": "https://ami.animecharactersdatabase.com/audio/107306/7/107306-7-126.mp4",
+      "source_episode": "Jujutsu Kaisen episode 7 at 10:28",
+      "credited_voice_actor": "Yuichi Nakamura",
+      "source_file": "gojo_yowaimon_ep7.mp4",
+      "source_sha256": "d24a5d73aaa06f35d47b314531278fb4d2eda40d20e5b77084649fe82dcc6ee0",
+      "processing": "Decoded to mono 44100 Hz PCM WAV, peak 0.65 for audition. Original words, speed and pitch preserved.",
+      "gain": 1.2518631715058188,
+      "runtime_path": "Assets/Resources/Audio/Heroes/Gojo/yowai_mon.wav",
+      "preserved_source": "Assets/DeadZone/Audio/HeroVoicesJP/Sources/gojo_yowaimon_ep7.mp4.bytes",
+      "runtime_sha256": "99de3fd363b616f8974f0ff6974aa5189c00be739ba5bb67e96732caee4d2cb1",
+      "purple_release_at_seconds": 1.65
     }
   ],
   "timing": "Local whisper.cpp tiny alignment used only to locate the two Sukuna speech segments (0-3.21 and 3.21-6 seconds); source speech was not generated or replaced. Shrine reveal and damage begin at 3.21 seconds; active duration stays 8 seconds."

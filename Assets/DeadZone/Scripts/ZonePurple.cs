@@ -6,7 +6,7 @@ namespace DeadZone
     // The host sweeps the entire path; replicas render the same cast age and impact point.
     public sealed class ZonePurple : MonoBehaviour
     {
-        public const float ChargeTime=1.05f, Speed=14, Range=22, Radius=.8f, Damage=420, BurstDamage=210;
+        public const float ChargeTime=1.65f, Speed=14, Range=22, Radius=.8f, Damage=420, BurstDamage=210;
         public ZonePlayer Owner;
         public Vector2 Origin, Direction=Vector2.right;
         public float Age, ImpactAge=-1;

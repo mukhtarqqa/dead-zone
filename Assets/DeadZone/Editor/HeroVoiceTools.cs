@@ -27,9 +27,12 @@ namespace DeadZone.Editor
                     throw new InvalidOperationException("Invalid hero voice: " + path);
                 count++;
             }
-            if (count != 3 || ZoneHeroVoice.Clip(0) == null || ZoneHeroVoice.Clip(1) == null || ZoneHeroVoice.Clip(3) == null || ZoneHeroVoice.Clip(2) != null)
-                throw new InvalidOperationException("Expected only the approved Subaru, Rem A and Sukuna voices.");
-            Debug.Log("DZ_HERO_VOICE_IMPORT_PASS: Subaru, Rem A, Sukuna; Gojo excluded; mono PCM 44100.");
+            if (count != 4 || ZoneHeroVoice.Clip(0) == null || ZoneHeroVoice.Clip(1) == null || ZoneHeroVoice.Clip(3) == null || ZoneHeroVoice.Clip(2) == null)
+                throw new InvalidOperationException("Expected the four approved hero voices.");
+            var gojo = ZoneHeroVoice.Clip(2);
+            if (gojo.name != "yowai_mon" || Mathf.Abs(gojo.length - 1.602177f) > .001f || ZonePurple.ChargeTime < gojo.length)
+                throw new InvalidOperationException("Gojo must finish the approved Yowai mon line before releasing Purple.");
+            Debug.Log("DZ_HERO_VOICE_IMPORT_PASS: Subaru, Rem A, Sukuna, Gojo Yowai mon; mono PCM 44100; Purple release after the voice.");
         }
     }
 }

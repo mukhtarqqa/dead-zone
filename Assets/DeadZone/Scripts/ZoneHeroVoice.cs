@@ -8,7 +8,7 @@ namespace DeadZone
         public const float ShrineRevealTime = 3.21f;
         static readonly AudioClip[] clips = new AudioClip[4];
         static readonly string[] paths = {
-            "Audio/Heroes/Subaru/return_by_death", "Audio/Heroes/Rem/oni_fury", null,
+            "Audio/Heroes/Subaru/return_by_death", "Audio/Heroes/Rem/oni_fury", "Audio/Heroes/Gojo/yowai_mon",
             "Audio/Heroes/Sukuna/malevolent_shrine" };
         public ZonePlayer Actor;
         [field: SerializeField] public AudioSource Source { get; private set; }
