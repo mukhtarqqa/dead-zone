@@ -1,0 +1,4 @@
+AK47 reload Foley: Valve Corporation, Counter-Strike 2.
+Three source recordings selected from Weapon_AK47.Clipout, Weapon_AK47.Clipin and Weapon_AK47.BoltPull in the installed game.
+Assembled to match Dead Zone's existing 1.8-second reload; original pitch and playback speed.
+Separate from the CC0 zombie audio. See PROVENANCE.json for source hashes and event times.

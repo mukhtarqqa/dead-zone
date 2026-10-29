@@ -1,0 +1,9 @@
+Monster snarls by Darsycho
+https://opengameart.org/content/monster-snarls
+
+Creator-declared license: CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Approved for Dead Zone: monster-snarls_0.ogg and monster-snarl-attack.ogg.
+The original recordings remain unmodified in Sources/.
+Derived WAV slices and processing details are listed in PROVENANCE.json.

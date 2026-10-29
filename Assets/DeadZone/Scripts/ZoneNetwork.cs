@@ -22,12 +22,15 @@ namespace DeadZone
         // Optional cosmetic fields: older protocol-9 snapshots simply default to no dash.
         public float dashRemaining;
         public Vector2 dashDirection;
+        public int abilitySequence, abilityKind;
+        public float abilityAge;
         public Vector2 position, aim, maceDirection;
         public bool moving, downed, dead, connected, reloading;
     }
     [Serializable] public sealed class ZoneObjectState
     {
         public int id, type, kind, floor,facing,animation; public Vector2 position, velocity, origin; public float age, endAge; public float scale, health, remaining,maxHealth; public bool boss, hostile;
+        public int explosionSound; // Optional cosmetic field; older protocol-9 peers default to 0.
     }
     [Serializable] public sealed class ZoneWorld
     {
@@ -464,7 +467,7 @@ namespace DeadZone
             foreach (var peer in peers) if (peer.actor != null)
             {
                 var actor = peer.actor;
-                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, weaponA=actor.WeaponInSlot(0),weaponB=actor.WeaponInSlot(1),activeSlot=actor.ActiveSlot,ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer, dashRemaining = actor.DashRemaining, dashDirection = actor.DashFacing });
+                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, weaponA=actor.WeaponInSlot(0),weaponB=actor.WeaponInSlot(1),activeSlot=actor.ActiveSlot,ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer, dashRemaining = actor.DashRemaining, dashDirection = actor.DashFacing, abilitySequence = actor.AbilitySequence, abilityKind = actor.AbilityKind, abilityAge = actor.AbilityAge });
             }
             var objects = new List<ZoneObjectState>();
             foreach (var enemy in game.enemies) if (enemy != null) objects.Add(new ZoneObjectState { id = ObjectId(enemy.gameObject), type = 1, kind = enemy.kind, facing=enemy.Facing,animation=enemy.AnimationPose,maxHealth=enemy.MaxHealth,age=enemy.HitFlashRemaining, position = enemy.transform.position, velocity = enemy.GetComponent<Rigidbody2D>().linearVelocity, scale = enemy.transform.localScale.x, health = enemy.health, boss = enemy.boss, floor = enemy.gameObject.layer, remaining = Mathf.Max(0, enemy.ReadyAt - Time.time) });
@@ -473,11 +476,11 @@ namespace DeadZone
             foreach(var cache in ZoneSupplyCache.Active)if(cache!=null&&!cache.Opened(recipientActor))objects.Add(new ZoneObjectState{id=ObjectId(cache.gameObject),type=10,kind=cache.WeaponKind,position=cache.transform.position,scale=1.25f,floor=cache.gameObject.layer});
             foreach (var bullet in FindObjectsByType<ZoneBullet>()) objects.Add(new ZoneObjectState { id = ObjectId(bullet.gameObject), type = 2, position = bullet.transform.position, velocity = bullet.direction * bullet.speed, hostile = bullet.hostile, scale = .22f, floor = bullet.gameObject.layer });
             foreach (var pickup in FindObjectsByType<ZonePickup>()) if (pickup.Owner == recipient) objects.Add(new ZoneObjectState { id = ObjectId(pickup.gameObject), type = 3, kind = pickup.kind, position = pickup.transform.position, scale = .6f, floor = pickup.gameObject.layer });
-            foreach (var mine in FindObjectsByType<ZoneMine>()) objects.Add(new ZoneObjectState { id = ObjectId(mine.gameObject), type = 4, position = mine.transform.position, scale = .65f, floor = mine.gameObject.layer });
-            foreach (var grenade in FindObjectsByType<ZoneGrenade>()) objects.Add(new ZoneObjectState { id = ObjectId(grenade.gameObject), type = 5, position = grenade.transform.position, floor = grenade.gameObject.layer, scale = .45f });
+            foreach (var mine in FindObjectsByType<ZoneMine>()) objects.Add(new ZoneObjectState { id = ObjectId(mine.gameObject), type = 4, position = mine.transform.position, scale = .65f, floor = mine.gameObject.layer, age = mine.Age });
+            foreach (var grenade in FindObjectsByType<ZoneGrenade>()) objects.Add(new ZoneObjectState { id = ObjectId(grenade.gameObject), type = 5, position = grenade.transform.position, floor = grenade.gameObject.layer, scale = .45f, age = grenade.Age });
             foreach(var shrine in FindObjectsByType<ZoneShrine>())objects.Add(new ZoneObjectState{id=ObjectId(shrine.gameObject),type=8,floor=shrine.Floor,position=shrine.transform.position,age=shrine.Age});
             foreach (var purple in FindObjectsByType<ZonePurple>()) objects.Add(new ZoneObjectState { id=ObjectId(purple.gameObject), type=7, floor=purple.Floor, position=purple.transform.position, origin=purple.Origin, velocity=purple.Direction, age=purple.Age, endAge=purple.ImpactAge });
-            foreach (var pulse in FindObjectsByType<ZonePulse>()) if (pulse.Remaining > .05f) objects.Add(new ZoneObjectState { id = ObjectId(pulse.gameObject), type = 6, position = pulse.transform.position, floor = pulse.Floor, kind = pulse.Kind, scale = pulse.Radius, health = pulse.Duration, velocity = pulse.Direction, remaining = pulse.Remaining });
+            foreach (var pulse in FindObjectsByType<ZonePulse>()) if (pulse.Remaining > .05f) objects.Add(new ZoneObjectState { id = ObjectId(pulse.gameObject), type = 6, position = pulse.transform.position, floor = pulse.Floor, kind = pulse.Kind, scale = pulse.Radius, health = pulse.Duration, velocity = pulse.Direction, remaining = pulse.Remaining, explosionSound = pulse.ExplosionSound });
             return new ZoneWorld { sequence = sequence, running = game.running, ended = game.ended, victory = game.Victory, wave = game.wave, pending=game.PendingEnemies, alive=game.enemies.Count,elapsed=game.Elapsed, kills = game.kills, damage = game.damageDealt, boss = game.BossPhase, bossHealth = game.CurrentBossHealth, remaining = game.BreakRemaining, notice = game.message, players = actors.ToArray(), objects = objects.ToArray() };
         }
         public async void Leave()
@@ -521,6 +524,7 @@ namespace DeadZone
         public bool IsBoss=>boss;public float MaxHealth=>maxHealth;
         public bool BossAlive=>ObjectType==1&&boss&&health>0;
         DeadZoneGame owner;
+        ZoneZombieVoice zombieVoice;
         Vector2 target, velocity;float receivedAt;bool initialized;int facing,animation;bool boss;float health,maxHealth,flashUntil;SpriteRenderer healthBar;
         void OnEnable(){Active.Add(this);}void OnDestroy(){Active.Remove(this);if(owner!=null)owner.RemoveBossAlert(transform);}
         public void Apply(DeadZoneGame game, ZoneObjectState state)
@@ -542,14 +546,26 @@ namespace DeadZone
                 GetComponent<SpriteRenderer>().enabled = false; transform.position = state.position;
                 if (GetComponent<ZonePulse>() == null) { var effect = gameObject.AddComponent<ZonePulse>(); effect.Floor = state.floor; effect.Kind = state.kind; effect.Radius = state.scale; effect.Direction = state.velocity; effect.Duration = Mathf.Max(.1f, state.health); }
                 GetComponent<ZonePulse>().SetClock(Mathf.Max(.1f,state.health),state.remaining);
+                if (!initialized)
+                {
+                    initialized = true;
+                    if (state.explosionSound == 1 || state.explosionSound == 2)
+                        ZoneExplosiveAudio.Explode(state.position, state.floor, state.explosionSound == 2, Mathf.Max(0, state.health - state.remaining));
+                }
                 return;
             }
             target = state.position; velocity = state.velocity; receivedAt = Time.unscaledTime;
-            if (!initialized) { transform.position = target; initialized = true; }
+            if (!initialized)
+            {
+                transform.position = target; initialized = true;
+                if (state.type == 4 || state.type == 5) ZoneExplosiveAudio.Attach(gameObject, state.type == 4, state.age);
+            }
             bool firearm = state.type == 3 && state.kind >= 0 && state.kind < 4;
             var sr = GetComponent<SpriteRenderer>(); sr.sprite = state.type == 1 ? game.EnemyFrame(state.kind, state.boss) : firearm ? ZoneArsenal.Sprite(state.kind) : state.type == 4 || state.type == 3 && state.kind == 4 ? ZoneArt.Item(1) : state.type == 5 ? ZoneArt.Item(0) : state.type == 3 ? ZoneArt.Item(2) : game.marker;
             if(state.type==1)
             {
+                if(zombieVoice==null)zombieVoice=gameObject.AddComponent<ZoneZombieVoice>();
+                zombieVoice.ObserveSnapshot(game,state);
                 if(initialized&&health>0&&state.health<health)ZoneFeedback.Hit(state.position,health-state.health,state.floor);
                 facing=state.facing;animation=state.animation;boss=state.boss;health=state.health;maxHealth=state.maxHealth;flashUntil=Time.unscaledTime+state.age;sr.flipX=false;sr.sprite=ZoneEnemyArt.Frame(state.kind,facing,animation,boss);
                 if(healthBar==null){var bar=new GameObject("Enemy health");bar.transform.SetParent(transform,false);bar.transform.localPosition=new Vector3(0,boss?2:state.kind==3?2.05f:1.8f);healthBar=bar.AddComponent<SpriteRenderer>();healthBar.sprite=game.marker;healthBar.color=new Color(.94f,.38f,.24f);healthBar.sortingLayerID=ZoneMap.Sorting(state.floor);healthBar.sortingOrder=3100;}

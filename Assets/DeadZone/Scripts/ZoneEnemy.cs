@@ -22,6 +22,7 @@ namespace DeadZone
         {
             body=GetComponent<Rigidbody2D>();hitbox=GetComponent<Collider2D>();hitbox.offset=Vector2.zero;sprite=GetComponent<SpriteRenderer>();brain=GetComponent<ZoneBossBrain>();maxHealth=health;side=(GetEntityId().GetHashCode()&1)==0?1:-1;ZoneHurtbox.Add(this);
             lastPosition=body.position;checkProgressAt=Time.time+1.2f;nextAttack=ReadyAt+.2f;
+            gameObject.AddComponent<ZoneZombieVoice>().Bind(this);
             var bar=new GameObject("Health");bar.transform.SetParent(transform,false);bar.transform.localPosition=new Vector3(0,boss?2:kind==3?2.05f:1.8f);bar.transform.localScale=new Vector3(1,.065f,1);
             var sr=bar.AddComponent<SpriteRenderer>();sr.sprite=game.marker;sr.color=boss?new Color(1,.2f,.45f):new Color(.94f,.38f,.24f);sr.sortingOrder=3100;sr.sortingLayerID=sprite.sortingLayerID;healthBar=bar.transform;
         }

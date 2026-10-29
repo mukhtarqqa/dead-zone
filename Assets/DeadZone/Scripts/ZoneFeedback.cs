@@ -21,7 +21,6 @@ namespace DeadZone
         static AudioClip[] sounds;
         static AudioClip[] weaponShots;
         static AudioClip[] weaponReloads;
-        static AudioClip grenadePinClip, grenadeExplosionClip, mineArmClip, mineExplosionClip;
         readonly AudioSource[] voices=new AudioSource[12];int voice;
         static readonly System.Random audioRandom=new System.Random(73);
         public static float Volume {get=>PlayerPrefs.GetFloat("dz.volume",.5f);set{PlayerPrefs.SetFloat("dz.volume",Mathf.Clamp01(value));}}
@@ -32,31 +31,36 @@ namespace DeadZone
             if (weaponShots == null)
             {
                 weaponShots = new AudioClip[4];
-                weaponShots[0] = Resources.Load<AudioClip>("Audio/sfx_pistol_shot");
-                weaponShots[1] = Resources.Load<AudioClip>("Audio/sfx_ak47_shot");
-                weaponShots[2] = Resources.Load<AudioClip>("Audio/sfx_heavy_shot");
-                weaponShots[3] = Resources.Load<AudioClip>("Audio/sfx_shotgun_shot");
+                weaponShots[0] = Resources.Load<AudioClip>("Audio/Weapons/Glock18/glock18_shot") ?? Resources.Load<AudioClip>("Audio/sfx_pistol_shot");
+                weaponShots[1] = Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_01") ?? Resources.Load<AudioClip>("Audio/sfx_ak47_shot");
+                weaponShots[2] = Resources.Load<AudioClip>("Audio/Weapons/Negev/negev_shot_01") ?? Resources.Load<AudioClip>("Audio/sfx_heavy_shot");
+                weaponShots[3] = Resources.Load<AudioClip>("Audio/Weapons/Nova/nova_shot") ?? Resources.Load<AudioClip>("Audio/sfx_shotgun_shot");
             }
             if (weaponReloads == null)
             {
                 weaponReloads = new AudioClip[4];
-                weaponReloads[0] = Resources.Load<AudioClip>("Audio/sfx_pistol_reload");
-                weaponReloads[1] = Resources.Load<AudioClip>("Audio/sfx_ak47_reload");
-                weaponReloads[2] = Resources.Load<AudioClip>("Audio/sfx_heavy_reload");
-                weaponReloads[3] = Resources.Load<AudioClip>("Audio/sfx_shotgun_reload");
+                weaponReloads[0] = ZoneWeaponAudio.Reload(0) ?? Resources.Load<AudioClip>("Audio/sfx_pistol_reload");
+                weaponReloads[1] = Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_reload") ?? Resources.Load<AudioClip>("Audio/sfx_ak47_reload");
+                weaponReloads[2] = ZoneWeaponAudio.Reload(2) ?? Resources.Load<AudioClip>("Audio/sfx_heavy_reload");
+                weaponReloads[3] = ZoneWeaponAudio.Reload(3) ?? Resources.Load<AudioClip>("Audio/sfx_shotgun_reload");
             }
-            if (grenadePinClip == null) grenadePinClip = Resources.Load<AudioClip>("Audio/sfx_grenade_pin");
-            if (grenadeExplosionClip == null) grenadeExplosionClip = Resources.Load<AudioClip>("Audio/sfx_grenade_explosion");
-            if (mineArmClip == null) mineArmClip = Resources.Load<AudioClip>("Audio/sfx_mine_arm");
-            if (mineExplosionClip == null) mineExplosionClip = Resources.Load<AudioClip>("Audio/sfx_mine_explosion");
         }
 
-        public static void PlayShot(int weaponKind)
+        public static void PlayShot(int weaponKind, ZonePlayer owner = null)
         {
             if(Application.isBatchMode||Volume<=0)return;
             EnsureInstance();
             EnsureClips();
             int index = Mathf.Clamp(weaponKind, 0, 3);
+            var approved = ZoneWeaponAudio.NextShot(index);
+            if (approved != null)
+            {
+                var rifleVoice = instance.voices[instance.voice++ % instance.voices.Length];
+                rifleVoice.pitch = 1f;
+                rifleVoice.PlayOneShot(approved, Volume * (index == 1 ? .82f : 2));
+                if (index == 3 && owner != null) owner.GetComponent<ZoneWeaponReloadAudio>()?.QueuePump();
+                return;
+            }
             if (weaponShots != null && weaponShots[index] != null)
             {
                 var voice = instance.voices[instance.voice++%instance.voices.Length];
@@ -81,48 +85,6 @@ namespace DeadZone
                 return;
             }
             Play(8);
-        }
-
-        public static void PlayGrenadeThrow()
-        {
-            if(Application.isBatchMode||Volume<=0)return;
-            EnsureInstance();
-            EnsureClips();
-            if (grenadePinClip != null)
-            {
-                var voice = instance.voices[instance.voice++%instance.voices.Length];
-                voice.pitch = .98f + (float)audioRandom.NextDouble() * .04f;
-                voice.PlayOneShot(grenadePinClip, Volume * .95f);
-            }
-        }
-
-        public static void PlayMineArm()
-        {
-            if(Application.isBatchMode||Volume<=0)return;
-            EnsureInstance();
-            EnsureClips();
-            if (mineArmClip != null)
-            {
-                var voice = instance.voices[instance.voice++%instance.voices.Length];
-                voice.pitch = 1f;
-                voice.PlayOneShot(mineArmClip, Volume * .95f);
-            }
-        }
-
-        public static void PlayExplosion(bool isMine = false)
-        {
-            if(Application.isBatchMode||Volume<=0)return;
-            EnsureInstance();
-            EnsureClips();
-            var clip = isMine ? mineExplosionClip : grenadeExplosionClip;
-            if (clip != null)
-            {
-                var voice = instance.voices[instance.voice++%instance.voices.Length];
-                voice.pitch = .96f + (float)audioRandom.NextDouble() * .08f;
-                voice.PlayOneShot(clip, Volume);
-                return;
-            }
-            Play(5);
         }
 
         static void EnsureInstance()
@@ -152,12 +114,6 @@ namespace DeadZone
                 PlayShot(kind);
                 return;
             }
-            if (kind == 5 && grenadeExplosionClip != null)
-            {
-                PlayExplosion(false);
-                return;
-            }
-
             if(sounds==null)
             {
                 sounds=new AudioClip[14];var random=new System.Random(19);

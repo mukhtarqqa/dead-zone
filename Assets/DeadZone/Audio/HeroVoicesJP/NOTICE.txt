@@ -1,0 +1,6 @@
+Third-party character recordings from Re:ZERO and Jujutsu Kaisen remain the materials of their respective rights holders.
+Rem: Re:Zero Lost in Memories game battle recording, Japanese cast.
+Subaru: original anime quote, episode 2 at 05:07.
+Sukuna: the exact community-uploaded scene excerpt approved by the user, shortened after both callouts.
+The source AAC-only MP4 is preserved as .mp4.bytes to avoid importing it as a Unity video.
+Source URLs, archive members, hashes, and processing are recorded in PROVENANCE.json.

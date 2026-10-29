@@ -34,8 +34,14 @@
 - Арт карты: `Assets/DeadZone/CityV2`. Меню `Dead Zone/Rework/Build large district city` пересоздаёт сцену: сначала сохраните свою карту под другим именем.
 - Баланс: `Assets/Resources/DeadZoneBalance.asset` через Inspector.
 - Оружие: `Assets/DeadZone/Scripts/ZoneArsenal.cs`.
+- Выстрелы AK-47: `Assets/Resources/Audio/Weapons/AK47`; [записи и настройки](Docs/AK47_AUDIO.md).
+- Перезарядка AK-47: `ak47_reload.wav` в той же папке; [синхронизация и исходные звуки](Docs/AK47_RELOAD_AUDIO.md).
+- Glock-18, Negev и Nova: папки `Glock18`, `Negev`, `Nova` в `Assets/Resources/Audio/Weapons`; [звуки, перезарядки и помпа](Docs/CS2_WEAPON_AUDIO.md).
+- Граната HE и мина C4: `Assets/Resources/Audio/Explosives`; [одобренные записи и воспроизведение в кооперативе](Docs/EXPLOSIVE_AUDIO.md).
+- Реплики Субару, Рем A, Годжо и Сукуны: `Assets/Resources/Audio/Heroes`; [японские голоса и синхронизация способностей](Docs/HERO_VOICES_JP.md).
 - Перевод: `Assets/DeadZone/Localization/Translations.json`, затем меню `Dead Zone/Build Russian and Kazakh tables`. Таблицы можно редактировать через Unity Localization.
 - Герои: `Assets/DeadZone/Content`; игровой код: `Assets/DeadZone/Scripts`.
+- Звуки зомби: `Assets/Resources/ZombieAudioBank.asset` — клипы, громкость, дальность и интервалы в Inspector. [Исходники и настройка](Docs/ZOMBIE_AUDIO.md).
 - Цвета интерфейса: `Assets/DeadZone/Scripts/ZonePalette.cs`; меню и HUD: `DeadZoneGame.cs`, `ZoneCombatHud.cs`, `ZoneResultsPanel.cs`, `ZoneRecoveryHud.cs`. Интерфейс создаётся кодом при запуске.
 - Эффект Сукуны: `ZoneShrineView.cs`, `ZoneShrineArt.cs` и `Assets/Resources/SukunaShrineStages.png`.
 - Сборка: меню `Dead Zone/Build polished Windows game`, результат `Builds/Quality/DeadZone.exe`.

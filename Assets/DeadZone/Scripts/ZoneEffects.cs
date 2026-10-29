@@ -40,6 +40,7 @@ namespace DeadZone
     public sealed class ZonePulse : MonoBehaviour
     {
         public int Floor, Kind;
+        public int ExplosionSound; // 0: ability only, 1: HE, 2: mine; also sent to replicas.
         public float Radius = 1, Duration = .5f;
         public Vector2 Direction = Vector2.right;
         public float Age => Mathf.Max(0, Time.time - born);
@@ -49,10 +50,11 @@ namespace DeadZone
         LineRenderer detail;
         LineRenderer line;
         static Material material;
-        public static void Spawn(Vector2 point, int floor, float radius, int kind, float duration, Vector2 direction = default)
+        public static ZonePulse Spawn(Vector2 point, int floor, float radius, int kind, float duration, Vector2 direction = default)
         {
             var obj = new GameObject("Zone effect"); obj.transform.position = point;
             var pulse = obj.AddComponent<ZonePulse>(); pulse.Floor = floor; pulse.Radius = radius; pulse.Kind = kind; pulse.Duration = duration; pulse.Direction = direction == default ? Vector2.right : direction;
+            return pulse;
         }
         void Start()
         {
@@ -124,10 +126,12 @@ namespace DeadZone
         public ZonePlayer owner;
         public Vector2 origin, destination;
         float age;
+        public float Age => age;
         void Start()
         {
             var sr = gameObject.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(0); sr.sortingLayerID = ZoneMap.Sorting(gameObject.layer); sr.sortingOrder = 3000;
             transform.localScale = Vector3.one * .45f; transform.position = origin;
+            ZoneExplosiveAudio.Attach(gameObject, false);
         }
         void Update()
         {

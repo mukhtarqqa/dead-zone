@@ -1,0 +1,168 @@
+{
+  "author": "Darsycho",
+  "source": "https://opengameart.org/content/monster-snarls",
+  "license": "CC0-1.0",
+  "approved": [
+    "Growl_Darsycho.ogg",
+    "Attack_A_Darsycho.ogg"
+  ],
+  "processing": "Stereo averaged to mono. Split at recorded pauses (10 ms RMS windows, 0.004 threshold, 140 ms silence). 40 ms leading and 70 ms trailing padding, 8 ms fade-in, 20 ms fade-out, common peak ceiling 0.76 per source recording. Original pitch, speed and sample rate preserved.",
+  "clips": [
+    {
+      "path": "Assets/Resources/Audio/Zombies/Growls/zombie_growls_01.wav",
+      "original": "monster-snarls_0.ogg",
+      "original_sha256": "7401193d0cc5eb193379cf326c8868d6823a284ebc32ffaa298c1a94d2e25994",
+      "from_seconds": 0.12,
+      "to_seconds": 3.6,
+      "seconds": 3.48,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.74452,
+      "sha256": "0b816d313e75e77372ae3d06d80ae117067d4ed61da9253c44afc5044e5a731e"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Growls/zombie_growls_02.wav",
+      "original": "monster-snarls_0.ogg",
+      "original_sha256": "7401193d0cc5eb193379cf326c8868d6823a284ebc32ffaa298c1a94d2e25994",
+      "from_seconds": 4.91,
+      "to_seconds": 8.97,
+      "seconds": 4.06,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.76,
+      "sha256": "88a9c93ebedfe93788569f93d4e65f12f61b41705f5a0f698c09a9004b77816f"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Growls/zombie_growls_03.wav",
+      "original": "monster-snarls_0.ogg",
+      "original_sha256": "7401193d0cc5eb193379cf326c8868d6823a284ebc32ffaa298c1a94d2e25994",
+      "from_seconds": 9.53,
+      "to_seconds": 12.84,
+      "seconds": 3.31,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.75406,
+      "sha256": "2a66f432616be113d7a0c9fe0aa8787899c68013b73b70bbd7363076177fa8a0"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_01.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 0.01,
+      "to_seconds": 1.3,
+      "seconds": 1.29,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.76,
+      "sha256": "506de8443a43c9d9d82863577117c64cdb4ad83a86e9349cb881740896bb37f9"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_02.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 1.55,
+      "to_seconds": 2.99,
+      "seconds": 1.44,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.75368,
+      "sha256": "aed62d97a29c4405decb75d98d5a5252c7360b628defe5fb15da7d23e6354b8b"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_03.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 3.23,
+      "to_seconds": 4.29,
+      "seconds": 1.06,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.66632,
+      "sha256": "6d233fb04da8ae0a0ba1c5890d60f3c077108656eae25649c2ecc7f3206974f1"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_04.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 5.11,
+      "to_seconds": 6.13,
+      "seconds": 1.02,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.58831,
+      "sha256": "edf8028b0ef612fabb5713211a0b490434961534e01b9e1eb56f2c21882e955f"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_05.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 6.66,
+      "to_seconds": 7.92,
+      "seconds": 1.26,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.56366,
+      "sha256": "a69e8d4e120ab138f14ffb4319cc1458ef71e59d555fe71434ebbd5ed3a5561f"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_06.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 8.73,
+      "to_seconds": 9.9,
+      "seconds": 1.17,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.64968,
+      "sha256": "4a3ae5dca49d5999a0360643ed1de5c3d153b3c27ab239dcac1946ab48f491da"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_07.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 10.47,
+      "to_seconds": 11.87,
+      "seconds": 1.4,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.67129,
+      "sha256": "2c1dd240f1a94290a4bf2bdcdd6a69194d23fdb957271fe8f83d51f4093f1ae6"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_08.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 12.58,
+      "to_seconds": 13.97,
+      "seconds": 1.39,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.63465,
+      "sha256": "e1ada0cdae18b1b71dddb4ae19ff8f8b532d240053584483988fd760854f5ac4"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_09.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 14.14,
+      "to_seconds": 15.69,
+      "seconds": 1.55,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.64887,
+      "sha256": "55b07a3e910d8dc7781cd1522ae832fb00607344e74c165b5719bbb27ab91efa"
+    },
+    {
+      "path": "Assets/Resources/Audio/Zombies/Attacks/zombie_attacks_10.wav",
+      "original": "monster-snarl-attack.ogg",
+      "original_sha256": "34bf1ceef265725abf00ab3263bbbb492792e126bb1619addd4a5d3ad123347f",
+      "from_seconds": 16.41,
+      "to_seconds": 17.76,
+      "seconds": 1.35,
+      "sample_rate": 44100,
+      "channels": 1,
+      "peak": 0.74082,
+      "sha256": "47d271f76ef9d2090346fef882765dc68a92759c37aab50545bcf5d67a507730"
+    }
+  ]
+}

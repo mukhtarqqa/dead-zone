@@ -1,0 +1,4 @@
+Glock-18, Negev and Nova audio: Valve Corporation, Counter-Strike 2 build 26281801.
+Extracted with Source 2 Viewer CLI 20.1.
+Original recordings: Sources/. Derived event pitch, timing and gain: PROVENANCE.json.
+Separate from the CC0 zombie audio.
