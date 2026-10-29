@@ -317,12 +317,12 @@ namespace DeadZone
             var bullet = obj.AddComponent<ZoneBullet>(); bullet.direction = direction; bullet.damage = damage; bullet.hostile = hostile; bullet.speed = speed; bullet.owner = owner; bullet.range = range;
         }
 
-        public void Blast(Vector2 point, float radius, float damage, ZonePlayer owner = null, int floor = -1, int effect = 0)
+        public void Blast(Vector2 point, float radius, float damage, ZonePlayer owner = null, int floor = -1, int effect = 0, bool isMine = false)
         {
             floor = floor >= 20 ? floor : owner != null ? owner.gameObject.layer : player.gameObject.layer;
             foreach (var enemy in enemies.ToArray())
                 if (enemy != null && enemy.gameObject.layer == floor && Vector2.Distance(enemy.transform.position, point) < radius && ZoneCombat.Clear(point,enemy.transform.position,floor)) enemy.Hit(damage, owner);
-            ZoneFeedback.Play(5);ZoneFeedback.Kick(.15f);
+            ZoneFeedback.PlayExplosion(isMine);ZoneFeedback.Kick(.15f);
             ZonePulse.Spawn(point, floor, radius, effect, effect == 0 ? .5f : .85f);
         }
 
@@ -538,8 +538,8 @@ namespace DeadZone
                 ammo--; ShotsFired++; flashUntil = Time.time + .055f; nextShot = Time.time + stats.Interval;
             }
             if (command.interact) {var pickup=NearestPickup();if(pickup!=null)pickup.Take(this);else ZoneSupplyCache.Nearest(this)?.Open(this);}
-            if (command.grenade && CastRemaining <= 0 && grenades > 0) { castUntil = Time.time + .25f; CastKind = 3; grenades--; var obj = new GameObject("ThrownGrenade"); var grenade = obj.AddComponent<ZoneGrenade>(); grenade.owner = this; grenade.origin = transform.position; grenade.destination = Vector2.ClampMagnitude(aimPoint - (Vector2)transform.position, 6) + (Vector2)transform.position; ZoneMap.SetFloor(obj, gameObject.layer); }
-            if (command.mine && CastRemaining <= 0 && mines > 0) { castUntil = Time.time + .35f; CastKind = 4; mines--; var obj = new GameObject("Mine"); obj.layer = gameObject.layer; obj.transform.position = transform.position; var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(1); sr.sortingLayerID = ZoneMap.Sorting(obj.layer); sr.sortingOrder = ZoneDepth.Order(transform.position.y)-3; obj.transform.localScale = Vector3.one * .65f; obj.AddComponent<ZoneMine>().owner = this; }
+            if (command.grenade && CastRemaining <= 0 && grenades > 0) { castUntil = Time.time + .25f; CastKind = 3; grenades--; ZoneFeedback.PlayGrenadeThrow(); var obj = new GameObject("ThrownGrenade"); var grenade = obj.AddComponent<ZoneGrenade>(); grenade.owner = this; grenade.origin = transform.position; grenade.destination = Vector2.ClampMagnitude(aimPoint - (Vector2)transform.position, 6) + (Vector2)transform.position; ZoneMap.SetFloor(obj, gameObject.layer); }
+            if (command.mine && CastRemaining <= 0 && mines > 0) { castUntil = Time.time + .35f; CastKind = 4; mines--; ZoneFeedback.PlayMineArm(); var obj = new GameObject("Mine"); obj.layer = gameObject.layer; obj.transform.position = transform.position; var sr = obj.AddComponent<SpriteRenderer>(); sr.sprite = ZoneArt.Item(1); sr.sortingLayerID = ZoneMap.Sorting(obj.layer); sr.sortingOrder = ZoneDepth.Order(transform.position.y)-3; obj.transform.localScale = Vector3.one * .65f; obj.AddComponent<ZoneMine>().owner = this; }
             if (Time.time - hurtAt > 6) health = Mathf.Min(maxHealth, health + 4.5f * Time.deltaTime);
         }
         void LateUpdate()
@@ -593,8 +593,8 @@ namespace DeadZone
             float insert = weapon == 3 ? Mathf.Sin(Mathf.Repeat(progress * 6, 1) * Mathf.PI) : reload;
             reloadMagazine.transform.localPosition = new Vector3(weapon == 3 ? .25f + insert * .18f : .28f, (-.07f - insert * (weapon == 0 ? .3f : weapon == 1 ? .5f : weapon == 2 ? .35f : .17f)) * sign);
             reloadMagazine.transform.localRotation = Quaternion.Euler(0, 0, weapon == 1 ? reload * 25 * sign : weapon == 3 ? 90 : 0);
-            if (ShotsFired > visualShots) { ZoneDebris.Spawn(EjectionPosition, gameObject.layer, true); if(!game.IsAuthority)ZoneFeedback.Play(weapon); }
-            if(Reloading&&!wasReloading)ZoneFeedback.Play(8);if(!Reloading&&wasReloading)ZoneFeedback.Play(9);
+            if (ShotsFired > visualShots) { ZoneDebris.Spawn(EjectionPosition, gameObject.layer, true); if(!game.IsAuthority)ZoneFeedback.PlayShot(weapon); }
+            if(Reloading&&!wasReloading)ZoneFeedback.PlayReload(weapon);if(!Reloading&&wasReloading)ZoneFeedback.Play(9);
             if (Reloading && !wasReloading && weapon != 3) ZoneDebris.Spawn(gun.TransformPoint(new Vector3(.28f,-.1f*sign)), gameObject.layer, false, weapon);
             visualShots = ShotsFired; wasReloading = Reloading;
         }
@@ -728,7 +728,7 @@ namespace DeadZone
         public ZonePlayer owner;
         float armedAt;
         void Start() { armedAt = Time.time + 1; }
-        void Update() { var game = DeadZoneGame.Instance; if (game == null || !game.IsAuthority || !game.running || game.paused || Time.time < armedAt) return; GetComponent<SpriteRenderer>().color = Mathf.Sin(Time.time * 7) > 0 ? Color.white : new Color(.8f, 1, .8f); foreach (var enemy in game.enemies.ToArray()) if (enemy != null && enemy.gameObject.layer == gameObject.layer && Vector2.Distance(enemy.transform.position, transform.position) < 1) { game.Blast(transform.position, 2.5f, 150, owner, gameObject.layer); Destroy(gameObject); break; } }
+        void Update() { var game = DeadZoneGame.Instance; if (game == null || !game.IsAuthority || !game.running || game.paused || Time.time < armedAt) return; GetComponent<SpriteRenderer>().color = Mathf.Sin(Time.time * 7) > 0 ? Color.white : new Color(.8f, 1, .8f); foreach (var enemy in game.enemies.ToArray()) if (enemy != null && enemy.gameObject.layer == gameObject.layer && Vector2.Distance(enemy.transform.position, transform.position) < 1) { game.Blast(transform.position, 2.5f, 150, owner, gameObject.layer, 0, true); Destroy(gameObject); break; } }
     }
 }
 
