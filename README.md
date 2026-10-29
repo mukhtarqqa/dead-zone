@@ -35,6 +35,7 @@
 - Баланс: `Assets/Resources/DeadZoneBalance.asset` через Inspector.
 - Оружие: `Assets/DeadZone/Scripts/ZoneArsenal.cs`.
 - Выстрелы AK-47: `Assets/Resources/Audio/Weapons/AK47`; [записи и настройки](Docs/AK47_AUDIO.md).
+- Перезарядка AK-47: `ak47_reload.wav` в той же папке; [синхронизация и исходные звуки](Docs/AK47_RELOAD_AUDIO.md).
 - Перевод: `Assets/DeadZone/Localization/Translations.json`, затем меню `Dead Zone/Build Russian and Kazakh tables`. Таблицы можно редактировать через Unity Localization.
 - Герои: `Assets/DeadZone/Content`; игровой код: `Assets/DeadZone/Scripts`.
 - Звуки зомби: `Assets/Resources/ZombieAudioBank.asset` — клипы, громкость, дальность и интервалы в Inspector. [Исходники и настройка](Docs/ZOMBIE_AUDIO.md).

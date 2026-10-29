@@ -464,7 +464,7 @@ namespace DeadZone
         Rigidbody2D body; Animator animator; Vector2 move, dashDirection;
         Transform gun;
         SpriteRenderer reloadMagazine;
-        int visualShots;
+        int visualShots, visualReloadWeapon = -1;
         bool wasReloading, dropping;
         float nextDrop;
         SpriteRenderer muzzle, gunSprite;
@@ -485,6 +485,7 @@ namespace DeadZone
 
         void Start()
         {
+            gameObject.AddComponent<ZoneAk47ReloadAudio>().Actor = this;
             body = GetComponent<Rigidbody2D>(); body.gravityScale = 0; body.freezeRotation = true; body.collisionDetectionMode = CollisionDetectionMode2D.Continuous; body.interpolation = RigidbodyInterpolation2D.Interpolate; animator = GetComponent<Animator>();GetComponent<Collider2D>().offset=Vector2.zero;ZoneHurtbox.Add(this);
             foreach(var ally in game.players)if(ally!=this){var collider=ally.GetComponent<Collider2D>();if(collider!=null)Physics2D.IgnoreCollision(GetComponent<Collider2D>(),collider);}
             gun = new GameObject("WeaponAim").transform; gun.SetParent(transform, false);
@@ -591,10 +592,18 @@ namespace DeadZone
             reloadMagazine.sortingOrder = gunSprite.sortingOrder + 1;
             reloadMagazine.sprite = ZoneArt.Item(weapon == 3 ? 4 : weapon == 2 ? 2 : 3);
             float insert = weapon == 3 ? Mathf.Sin(Mathf.Repeat(progress * 6, 1) * Mathf.PI) : reload;
+            if (weapon == 1 && Reloading)
+            {
+                float elapsed = ZoneArsenal.Stats(1).Reload - ReloadRemaining;
+                insert = elapsed < .82f ? Mathf.SmoothStep(0, 1, Mathf.InverseLerp(.1f, .6f, elapsed))
+                    : 1 - Mathf.SmoothStep(0, 1, Mathf.InverseLerp(.82f, 1.15f, elapsed));
+                reloadMagazine.enabled = gunSprite.enabled && elapsed > .1f && elapsed < 1.16f;
+            }
             reloadMagazine.transform.localPosition = new Vector3(weapon == 3 ? .25f + insert * .18f : .28f, (-.07f - insert * (weapon == 0 ? .3f : weapon == 1 ? .5f : weapon == 2 ? .35f : .17f)) * sign);
             reloadMagazine.transform.localRotation = Quaternion.Euler(0, 0, weapon == 1 ? reload * 25 * sign : weapon == 3 ? 90 : 0);
             if (ShotsFired > visualShots) { ZoneDebris.Spawn(EjectionPosition, gameObject.layer, true); if(!game.IsAuthority)ZoneFeedback.PlayShot(weapon); }
-            if(Reloading&&!wasReloading)ZoneFeedback.PlayReload(weapon);if(!Reloading&&wasReloading)ZoneFeedback.Play(9);
+            if(Reloading&&(!wasReloading||visualReloadWeapon!=weapon)){visualReloadWeapon=weapon;if(weapon!=1)ZoneFeedback.PlayReload(weapon);}
+            if(!Reloading&&wasReloading&&visualReloadWeapon!=1)ZoneFeedback.Play(9);
             if (Reloading && !wasReloading && weapon != 3) ZoneDebris.Spawn(gun.TransformPoint(new Vector3(.28f,-.1f*sign)), gameObject.layer, false, weapon);
             visualShots = ShotsFired; wasReloading = Reloading;
         }

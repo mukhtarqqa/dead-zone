@@ -43,7 +43,7 @@ namespace DeadZone
             {
                 weaponReloads = new AudioClip[4];
                 weaponReloads[0] = Resources.Load<AudioClip>("Audio/sfx_pistol_reload");
-                weaponReloads[1] = Resources.Load<AudioClip>("Audio/sfx_ak47_reload");
+                weaponReloads[1] = Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_reload") ?? Resources.Load<AudioClip>("Audio/sfx_ak47_reload");
                 weaponReloads[2] = Resources.Load<AudioClip>("Audio/sfx_heavy_reload");
                 weaponReloads[3] = Resources.Load<AudioClip>("Audio/sfx_shotgun_reload");
             }

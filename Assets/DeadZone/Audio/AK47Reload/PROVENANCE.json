@@ -1,0 +1,47 @@
+{
+  "approval": "approved by user: Да, подключай",
+  "imported_into_unity": true,
+  "rights_holder": "Valve Corporation",
+  "source": "Installed Counter-Strike 2, build 26281801; game/csgo/pak01_dir.vpk",
+  "event_mapping_source": "soundevents/game_sounds_weapons.vsndevts_c",
+  "event_mapping_sha256": "4a7747f0be0ea7c991a17e98d3e34d40eccddbe165da268d8c3b87108e96b13e",
+  "extractor": "Source 2 Viewer CLI 20.1",
+  "runtime_candidate": "Assets/Resources/Audio/Weapons/AK47/ak47_reload.wav",
+  "seconds": 1.8,
+  "sample_rate": 44100,
+  "channels": 1,
+  "global_gain": 0.6500198370311594,
+  "peak": 0.65,
+  "processing": "Original pitch and speed; assemble the three exact CS2 event recordings with their relative event volumes. Offsets are adapted to Dead Zone's existing 1.8 s reload, rather than a reproduction of CS2 animation timing. Common gain for preview headroom. Preview repeats the candidate twice with a 0.65 s pause.",
+  "recordings": [
+    {
+      "event": "Weapon_AK47.Clipout",
+      "source": "sounds/weapons/ak47/ak47_clipout_01.wav",
+      "sha256": "6f1619befee9c86192fe99f96f9bad0f1b35074aeddc065db475c00fb3d78b56",
+      "original_sample_rate": 44100,
+      "original_seconds": 0.727415,
+      "starts_at": 0.1,
+      "event_volume": 1.0
+    },
+    {
+      "event": "Weapon_AK47.Clipin",
+      "source": "sounds/weapons/magazine_slide_01.mp3",
+      "sha256": "35ba947e463a69f402730f3e5889c79618d62ca83c14a9c237750b556b3e7441",
+      "original_sample_rate": 44100,
+      "original_seconds": 0.131769,
+      "starts_at": 1.02,
+      "event_volume": 0.3
+    },
+    {
+      "event": "Weapon_AK47.BoltPull",
+      "source": "sounds/weapons/ak47/ak47_boltpull_01.wav",
+      "sha256": "aca3335b34ad121970d54d4f04f8387f08547d45a50dca0ccd1ad9b7813e7c6a",
+      "original_sample_rate": 44100,
+      "original_seconds": 0.375147,
+      "starts_at": 1.41,
+      "event_volume": 1.0
+    }
+  ],
+  "runtime_sha256": "4afd2da744fbc9e2fc2f239b3a958f2719d964d671c5604cd8c4dcb8fb0d3332",
+  "runtime_volume": "0.9 times the existing SFX volume"
+}
