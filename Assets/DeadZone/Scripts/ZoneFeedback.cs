@@ -20,8 +20,6 @@ namespace DeadZone
         static ZoneFeedback instance;
         static AudioClip[] sounds;
         static AudioClip[] weaponShots;
-        static AudioClip[] ak47Shots;
-        static int lastAk47Shot = -1;
         static AudioClip[] weaponReloads;
         static AudioClip grenadePinClip, grenadeExplosionClip, mineArmClip, mineExplosionClip;
         readonly AudioSource[] voices=new AudioSource[12];int voice;
@@ -34,46 +32,38 @@ namespace DeadZone
             if (weaponShots == null)
             {
                 weaponShots = new AudioClip[4];
-                weaponShots[0] = Resources.Load<AudioClip>("Audio/sfx_pistol_shot");
+                weaponShots[0] = Resources.Load<AudioClip>("Audio/Weapons/Glock18/glock18_shot") ?? Resources.Load<AudioClip>("Audio/sfx_pistol_shot");
                 weaponShots[1] = Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_01") ?? Resources.Load<AudioClip>("Audio/sfx_ak47_shot");
-                weaponShots[2] = Resources.Load<AudioClip>("Audio/sfx_heavy_shot");
-                weaponShots[3] = Resources.Load<AudioClip>("Audio/sfx_shotgun_shot");
+                weaponShots[2] = Resources.Load<AudioClip>("Audio/Weapons/Negev/negev_shot_01") ?? Resources.Load<AudioClip>("Audio/sfx_heavy_shot");
+                weaponShots[3] = Resources.Load<AudioClip>("Audio/Weapons/Nova/nova_shot") ?? Resources.Load<AudioClip>("Audio/sfx_shotgun_shot");
             }
             if (weaponReloads == null)
             {
                 weaponReloads = new AudioClip[4];
-                weaponReloads[0] = Resources.Load<AudioClip>("Audio/sfx_pistol_reload");
+                weaponReloads[0] = ZoneWeaponAudio.Reload(0) ?? Resources.Load<AudioClip>("Audio/sfx_pistol_reload");
                 weaponReloads[1] = Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_reload") ?? Resources.Load<AudioClip>("Audio/sfx_ak47_reload");
-                weaponReloads[2] = Resources.Load<AudioClip>("Audio/sfx_heavy_reload");
-                weaponReloads[3] = Resources.Load<AudioClip>("Audio/sfx_shotgun_reload");
+                weaponReloads[2] = ZoneWeaponAudio.Reload(2) ?? Resources.Load<AudioClip>("Audio/sfx_heavy_reload");
+                weaponReloads[3] = ZoneWeaponAudio.Reload(3) ?? Resources.Load<AudioClip>("Audio/sfx_shotgun_reload");
             }
             if (grenadePinClip == null) grenadePinClip = Resources.Load<AudioClip>("Audio/sfx_grenade_pin");
             if (grenadeExplosionClip == null) grenadeExplosionClip = Resources.Load<AudioClip>("Audio/sfx_grenade_explosion");
             if (mineArmClip == null) mineArmClip = Resources.Load<AudioClip>("Audio/sfx_mine_arm");
             if (mineExplosionClip == null) mineExplosionClip = Resources.Load<AudioClip>("Audio/sfx_mine_explosion");
-            if (ak47Shots == null)
-            {
-                ak47Shots = new[] {
-                    Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_01"),
-                    Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_02"),
-                    Resources.Load<AudioClip>("Audio/Weapons/AK47/ak47_04")
-                };
-            }
         }
 
-        public static void PlayShot(int weaponKind)
+        public static void PlayShot(int weaponKind, ZonePlayer owner = null)
         {
             if(Application.isBatchMode||Volume<=0)return;
             EnsureInstance();
             EnsureClips();
             int index = Mathf.Clamp(weaponKind, 0, 3);
-            if (index == 1 && ak47Shots[0] != null && ak47Shots[1] != null && ak47Shots[2] != null)
+            var approved = ZoneWeaponAudio.NextShot(index);
+            if (approved != null)
             {
-                int variant = lastAk47Shot < 0 ? audioRandom.Next(3) : (lastAk47Shot + 1 + audioRandom.Next(2)) % 3;
-                lastAk47Shot = variant;
                 var rifleVoice = instance.voices[instance.voice++ % instance.voices.Length];
                 rifleVoice.pitch = 1f;
-                rifleVoice.PlayOneShot(ak47Shots[variant], Volume * .82f);
+                rifleVoice.PlayOneShot(approved, Volume * (index == 1 ? .82f : 2));
+                if (index == 3 && owner != null) owner.GetComponent<ZoneWeaponReloadAudio>()?.QueuePump();
                 return;
             }
             if (weaponShots != null && weaponShots[index] != null)

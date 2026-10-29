@@ -1,5 +1,7 @@
 # Материалы
 
+Glock-18, Negev и Nova: **Valve Corporation, Counter-Strike 2** — одобренные выстрелы, перезарядки и помпа. [Исходники и сведения об обработке](Docs/CS2_WEAPON_AUDIO.md).
+
 Перезарядка AK-47: **Valve Corporation, Counter-Strike 2** — `ak47_clipout_01`, `magazine_slide_01`, `ak47_boltpull_01`, собраны под 1.8 секунды Dead Zone. [Происхождение и настройки](Docs/AK47_RELOAD_AUDIO.md).
 
 Выстрелы AK-47: **Valve Corporation, Counter-Strike 2** (`ak47_01`, `ak47_02`, `ak47_04`), извлечены из установленной игры инструментом [Source 2 Viewer](https://s2v.app/ValveResourceFormat/guides/exporting-sounds.html). Оригинальные WAV и настройки: [Docs/AK47_AUDIO.md](Docs/AK47_AUDIO.md). Эти записи относятся к материалам Valve, отдельно от CC0-звуков зомби.

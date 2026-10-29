@@ -1,0 +1,459 @@
+{
+  "approval": "approved by user: Да, подключай все шесть звуков",
+  "imported_into_unity": true,
+  "rights_holder": "Valve Corporation",
+  "source": "Installed Counter-Strike 2, build 26281801; game/csgo/pak01_dir.vpk",
+  "source_events": "soundevents/game_sounds_weapons.vsndevts_c",
+  "extractor": "Source 2 Viewer CLI 20.1",
+  "sample_rate": 44100,
+  "processing": "Exact CS2 event samples, relative event volumes and base event pitches. Band-limited FFT resampling implements the original event pitch. Reload offsets are adapted to current Dead Zone durations; no gameplay changes. Shots and reloads are independently levelled to peak 0.65 for audition clarity. Nova includes the pump after each shot, plus six shell insertions and a pump for reload.",
+  "recordings": {
+    "Weapon_Glock.Single:0": {
+      "resource": "sounds/weapons/glock18/glock_02.vsnd_c",
+      "export": "sounds/weapons/glock18/glock_02.wav",
+      "sha256": "b753c5e3f1d301309057e91639493c4d227c417f43efd0aa9924f8faceb56313",
+      "event_volume": 1.0,
+      "event_pitch": 0.9,
+      "original_rate": 44100,
+      "original_seconds": 1.9105215419501134,
+      "rendered_seconds": 2.12281179138322
+    },
+    "Weapon_Glock.Clipout:0": {
+      "resource": "sounds/weapons/glock18/glock_clipout.vsnd_c",
+      "export": "sounds/weapons/glock18/glock_clipout.wav",
+      "sha256": "092f655ba5f88d52da4195458ad6778952184c8a1d328582c1ff02043300e72e",
+      "event_volume": 0.599976,
+      "event_pitch": 0.93,
+      "original_rate": 44100,
+      "original_seconds": 0.30126984126984124,
+      "rendered_seconds": 0.3239455782312925
+    },
+    "Weapon_Glock.Clipin:0": {
+      "resource": "sounds/weapons/glock18/glock_clipin.vsnd_c",
+      "export": "sounds/weapons/glock18/glock_clipin.wav",
+      "sha256": "c92fb13e153ea91594fc63733c5d2950da45021d7eff609da6ac3e32ef9bca51",
+      "event_volume": 0.599976,
+      "event_pitch": 0.93,
+      "original_rate": 44100,
+      "original_seconds": 0.30126984126984124,
+      "rendered_seconds": 0.3239455782312925
+    },
+    "Weapon_Glock.Sliderelease:0": {
+      "resource": "sounds/weapons/glock18/glock_sliderelease.vsnd_c",
+      "export": "sounds/weapons/glock18/glock_sliderelease.wav",
+      "sha256": "a9f315e9e41226cc2b1a34238ff77f2e114861a5126a1452dc59b33095e599e7",
+      "event_volume": 0.7,
+      "event_pitch": 0.93,
+      "original_rate": 44100,
+      "original_seconds": 0.33564625850340135,
+      "rendered_seconds": 0.36090702947845804
+    },
+    "Weapon_Negev.Single:0": {
+      "resource": "sounds/weapons/negev/negev_01.vsnd_c",
+      "export": "sounds/weapons/negev/negev_01.wav",
+      "sha256": "f0244b788985a6fd5d16bef6050e20dda9fa06160d0ab55a8ce31281b5cbc982",
+      "event_volume": 1.0,
+      "event_pitch": 1.0,
+      "original_rate": 44100,
+      "original_seconds": 4.214512471655329,
+      "rendered_seconds": 4.214512471655329
+    },
+    "Weapon_Negev.Single:1": {
+      "resource": "sounds/weapons/negev/negev_02.vsnd_c",
+      "export": "sounds/weapons/negev/negev_02.wav",
+      "sha256": "b4f5a59a30d67936ddceccf1a1a714742fe9b74951b17e0cefef0a9103a7f4fe",
+      "event_volume": 1.0,
+      "event_pitch": 1.0,
+      "original_rate": 44100,
+      "original_seconds": 3.7175056689342405,
+      "rendered_seconds": 3.7175056689342405
+    },
+    "Weapon_Negev.Coverup:0": {
+      "resource": "sounds/weapons/negev/negev_coverup.vsnd_c",
+      "export": "sounds/weapons/negev/negev_coverup.wav",
+      "sha256": "6c4020a8bb09c2bd6bb6fdf72c2a0764e44e5752cae9838b00f71b41d7636ea2",
+      "event_volume": 0.75,
+      "event_pitch": 1.01,
+      "original_rate": 44100,
+      "original_seconds": 0.2677551020408163,
+      "rendered_seconds": 0.26510204081632655
+    },
+    "Weapon_Negev.Boxout:0": {
+      "resource": "sounds/weapons/negev/negev_boxout.vsnd_c",
+      "export": "sounds/weapons/negev/negev_boxout.wav",
+      "sha256": "654f7d813a84a302587fbaf9bc87ca503814d81c80291d8f4dfcae2d4fcf2f80",
+      "event_volume": 0.75,
+      "event_pitch": 1.01,
+      "original_rate": 44100,
+      "original_seconds": 0.20253968253968255,
+      "rendered_seconds": 0.20054421768707484
+    },
+    "Weapon_Negev.Boxin:0": {
+      "resource": "sounds/weapons/negev/negev_boxin.vsnd_c",
+      "export": "sounds/weapons/negev/negev_boxin.wav",
+      "sha256": "f79eeb3780afc8d812f3592e2815a16fdd746119ef372c20d99721704673e4ab",
+      "event_volume": 0.75,
+      "event_pitch": 1.01,
+      "original_rate": 44100,
+      "original_seconds": 0.7891156462585034,
+      "rendered_seconds": 0.7812925170068027
+    },
+    "Weapon_Negev.Chain:0": {
+      "resource": "sounds/weapons/negev/negev_chain.vsnd_c",
+      "export": "sounds/weapons/negev/negev_chain.wav",
+      "sha256": "75dcbf3ee2605b336cb74cc106c75a2ac8ef182b070a26ee11320776eb22135e",
+      "event_volume": 0.75,
+      "event_pitch": 1.01,
+      "original_rate": 44100,
+      "original_seconds": 0.6292063492063492,
+      "rendered_seconds": 0.6229705215419501
+    },
+    "Weapon_Negev.Coverdown:0": {
+      "resource": "sounds/weapons/negev/negev_coverdown.vsnd_c",
+      "export": "sounds/weapons/negev/negev_coverdown.wav",
+      "sha256": "5891d26ce1148e8816f46b627e41ef1fdfae60d6ee9b4d2b9bd5ba2682324b97",
+      "event_volume": 0.75,
+      "event_pitch": 1.01,
+      "original_rate": 44100,
+      "original_seconds": 0.23253968253968255,
+      "rendered_seconds": 0.2302267573696145
+    },
+    "Weapon_Negev.Pump:0": {
+      "resource": "sounds/weapons/negev/negev_pump.vsnd_c",
+      "export": "sounds/weapons/negev/negev_pump.wav",
+      "sha256": "8517f774f0864849e2e6a6a6fdb467d508dad7fde34d9729f8a314de3c0d6183",
+      "event_volume": 1.0,
+      "event_pitch": 1.01,
+      "original_rate": 44100,
+      "original_seconds": 0.42435374149659866,
+      "rendered_seconds": 0.4201587301587302
+    },
+    "Weapon_Nova.Single:0": {
+      "resource": "sounds/weapons/nova/nova-1.vsnd_c",
+      "export": "sounds/weapons/nova/nova-1.wav",
+      "sha256": "5dfa59602551cf7ad1540a1d08a13744a0b1683b093de6001553fcdc6b5acdd3",
+      "event_volume": 0.9,
+      "event_pitch": 1.0,
+      "original_rate": 44100,
+      "original_seconds": 2.8526984126984125,
+      "rendered_seconds": 2.8526984126984125
+    },
+    "Weapon_Nova.Pump:0": {
+      "resource": "sounds/weapons/nova/nova_pump.vsnd_c",
+      "export": "sounds/weapons/nova/nova_pump.mp3",
+      "sha256": "73d2732c83a7fd82b74bab4293e59d906e30c8c15f564d60c50c9dc40833758b",
+      "event_volume": 1.0,
+      "event_pitch": 1.01,
+      "original_rate": 44100,
+      "original_seconds": 0.40668934240362814,
+      "rendered_seconds": 0.4026530612244898
+    },
+    "Weapon_Nova.Insertshell:0": {
+      "resource": "sounds/weapons/nova/nova_insertshell_01.vsnd_c",
+      "export": "sounds/weapons/nova/nova_insertshell_01.mp3",
+      "sha256": "657e2ce9f7cf131ad7c611894faaaf62e8b937182bb77c231b22ff6d4e2fd2fc",
+      "event_volume": 0.3,
+      "event_pitch": 1.0,
+      "original_rate": 44100,
+      "original_seconds": 0.33979591836734696,
+      "rendered_seconds": 0.33979591836734696
+    },
+    "Weapon_Nova.Insertshell:1": {
+      "resource": "sounds/weapons/nova/nova_insertshell_02.vsnd_c",
+      "export": "sounds/weapons/nova/nova_insertshell_02.mp3",
+      "sha256": "17589b2f79a3d175d393c33f3051bfd71ad6a0ba656e78deb53ff499577658fc",
+      "event_volume": 0.3,
+      "event_pitch": 1.0,
+      "original_rate": 44100,
+      "original_seconds": 0.28208616780045354,
+      "rendered_seconds": 0.28208616780045354
+    },
+    "Weapon_Nova.Insertshell:2": {
+      "resource": "sounds/weapons/nova/nova_insertshell_03.vsnd_c",
+      "export": "sounds/weapons/nova/nova_insertshell_03.mp3",
+      "sha256": "1c44edbf4b2e7df324944807a405ecd19caf31a9d581fe57aaa63a23773f76ac",
+      "event_volume": 0.3,
+      "event_pitch": 1.0,
+      "original_rate": 44100,
+      "original_seconds": 0.2890929705215419,
+      "rendered_seconds": 0.2890929705215419
+    }
+  },
+  "auditions": [
+    {
+      "weapon": "Glock18",
+      "preview": "Glock18_CS2_Preview.wav",
+      "seconds": 5.973,
+      "reload_starts_at": 4.523,
+      "reload_seconds": 1.25,
+      "shot_gain": 0.5710935722804525,
+      "reload_gain": 0.9840924638275513,
+      "shots": [
+        {
+          "at": 0.15,
+          "event": "Weapon_Glock.Single:0",
+          "seconds": 2.1228
+        },
+        {
+          "at": 1.0,
+          "event": "Weapon_Glock.Single:0",
+          "seconds": 2.1228
+        },
+        {
+          "at": 1.25,
+          "event": "Weapon_Glock.Single:0",
+          "seconds": 2.1228
+        },
+        {
+          "at": 1.5,
+          "event": "Weapon_Glock.Single:0",
+          "seconds": 2.1228
+        },
+        {
+          "at": 1.75,
+          "event": "Weapon_Glock.Single:0",
+          "seconds": 2.1228
+        }
+      ],
+      "reload_events": [
+        {
+          "at": 0.04,
+          "event": "Weapon_Glock.Clipout:0",
+          "seconds": 0.3239
+        },
+        {
+          "at": 0.5,
+          "event": "Weapon_Glock.Clipin:0",
+          "seconds": 0.3239
+        },
+        {
+          "at": 0.88,
+          "event": "Weapon_Glock.Sliderelease:0",
+          "seconds": 0.3609
+        }
+      ]
+    },
+    {
+      "weapon": "Negev",
+      "preview": "Negev_CS2_Preview.wav",
+      "seconds": 10.015,
+      "reload_starts_at": 6.815,
+      "reload_seconds": 3.0,
+      "shot_gain": 0.5395480798459824,
+      "reload_gain": 0.6600905925442687,
+      "shots": [
+        {
+          "at": 0.15,
+          "event": "Weapon_Negev.Single:0",
+          "seconds": 4.2145
+        },
+        {
+          "at": 1.2,
+          "event": "Weapon_Negev.Single:0",
+          "seconds": 4.2145
+        },
+        {
+          "at": 1.275,
+          "event": "Weapon_Negev.Single:1",
+          "seconds": 3.7175
+        },
+        {
+          "at": 1.35,
+          "event": "Weapon_Negev.Single:0",
+          "seconds": 4.2145
+        },
+        {
+          "at": 1.425,
+          "event": "Weapon_Negev.Single:1",
+          "seconds": 3.7175
+        },
+        {
+          "at": 1.5,
+          "event": "Weapon_Negev.Single:0",
+          "seconds": 4.2145
+        },
+        {
+          "at": 1.575,
+          "event": "Weapon_Negev.Single:1",
+          "seconds": 3.7175
+        },
+        {
+          "at": 1.65,
+          "event": "Weapon_Negev.Single:0",
+          "seconds": 4.2145
+        },
+        {
+          "at": 1.725,
+          "event": "Weapon_Negev.Single:1",
+          "seconds": 3.7175
+        },
+        {
+          "at": 1.8,
+          "event": "Weapon_Negev.Single:0",
+          "seconds": 4.2145
+        },
+        {
+          "at": 1.875,
+          "event": "Weapon_Negev.Single:1",
+          "seconds": 3.7175
+        },
+        {
+          "at": 1.95,
+          "event": "Weapon_Negev.Single:0",
+          "seconds": 4.2145
+        },
+        {
+          "at": 2.025,
+          "event": "Weapon_Negev.Single:1",
+          "seconds": 3.7175
+        }
+      ],
+      "reload_events": [
+        {
+          "at": 0.04,
+          "event": "Weapon_Negev.Coverup:0",
+          "seconds": 0.2651
+        },
+        {
+          "at": 0.35,
+          "event": "Weapon_Negev.Boxout:0",
+          "seconds": 0.2005
+        },
+        {
+          "at": 0.64,
+          "event": "Weapon_Negev.Boxin:0",
+          "seconds": 0.7813
+        },
+        {
+          "at": 1.45,
+          "event": "Weapon_Negev.Chain:0",
+          "seconds": 0.623
+        },
+        {
+          "at": 2.12,
+          "event": "Weapon_Negev.Coverdown:0",
+          "seconds": 0.2302
+        },
+        {
+          "at": 2.48,
+          "event": "Weapon_Negev.Pump:0",
+          "seconds": 0.4202
+        }
+      ]
+    },
+    {
+      "weapon": "Nova",
+      "preview": "Nova_CS2_Preview.wav",
+      "seconds": 7.153,
+      "reload_starts_at": 4.753,
+      "reload_seconds": 2.2,
+      "shot_gain": 0.6827782746538698,
+      "reload_gain": 0.6330481691151735,
+      "shots": [
+        {
+          "at": 0.15,
+          "event": "Weapon_Nova.Single:0",
+          "seconds": 2.8527
+        },
+        {
+          "at": 1.25,
+          "event": "Weapon_Nova.Single:0",
+          "seconds": 2.8527
+        },
+        {
+          "at": 0.57,
+          "event": "Weapon_Nova.Pump:0",
+          "seconds": 0.4027
+        },
+        {
+          "at": 1.67,
+          "event": "Weapon_Nova.Pump:0",
+          "seconds": 0.4027
+        }
+      ],
+      "reload_events": [
+        {
+          "at": 0.1,
+          "event": "Weapon_Nova.Insertshell:0",
+          "seconds": 0.3398
+        },
+        {
+          "at": 0.37,
+          "event": "Weapon_Nova.Insertshell:1",
+          "seconds": 0.2821
+        },
+        {
+          "at": 0.64,
+          "event": "Weapon_Nova.Insertshell:2",
+          "seconds": 0.2891
+        },
+        {
+          "at": 0.91,
+          "event": "Weapon_Nova.Insertshell:0",
+          "seconds": 0.3398
+        },
+        {
+          "at": 1.18,
+          "event": "Weapon_Nova.Insertshell:1",
+          "seconds": 0.2821
+        },
+        {
+          "at": 1.45,
+          "event": "Weapon_Nova.Insertshell:2",
+          "seconds": 0.2891
+        },
+        {
+          "at": 1.77,
+          "event": "Weapon_Nova.Pump:0",
+          "seconds": 0.4027
+        }
+      ]
+    }
+  ],
+  "runtime": [
+    {
+      "path": "Assets/Resources/Audio/Weapons/Glock18/glock18_shot.wav",
+      "role": "shot",
+      "sha256": "acf53b7605ae1093a0b4d299337a5d73e93f051391bb51b9137a8e3809db39c5"
+    },
+    {
+      "path": "Assets/Resources/Audio/Weapons/Glock18/glock18_reload.wav",
+      "role": "reload",
+      "sha256": "f1a74122b01e0360d1ac9b03bbeadaa0f6c9cb6c169370ec4b56d9938da57f67",
+      "seconds": 1.25
+    },
+    {
+      "path": "Assets/Resources/Audio/Weapons/Negev/negev_shot_01.wav",
+      "role": "shot",
+      "sha256": "5fb390f2fae669b1c687532cfae9d0cf905d14f65ea72aa818f92792fceb1f40"
+    },
+    {
+      "path": "Assets/Resources/Audio/Weapons/Negev/negev_shot_02.wav",
+      "role": "shot",
+      "sha256": "dc5a8a1f25a03188b989197a0a2634e02f51d1e07a6dd9f9444a90a6bb1a03f0"
+    },
+    {
+      "path": "Assets/Resources/Audio/Weapons/Negev/negev_reload.wav",
+      "role": "reload",
+      "sha256": "5bd0c1896eb0aa245a8bbfc740cc27a95cc8e0f9051e304503b846fb8afd3b30",
+      "seconds": 3.0
+    },
+    {
+      "path": "Assets/Resources/Audio/Weapons/Nova/nova_shot.wav",
+      "role": "shot",
+      "sha256": "18f0e509e9fbac8c0db016dce131e57126238798d97f9b204dc6a23266a99b3b"
+    },
+    {
+      "path": "Assets/Resources/Audio/Weapons/Nova/nova_reload.wav",
+      "role": "reload",
+      "sha256": "b398a553d58a4f8d92e304eeb31e33cef11e5d4e17565c65e514b9f3a42e116f",
+      "seconds": 2.2
+    },
+    {
+      "path": "Assets/Resources/Audio/Weapons/Nova/nova_pump.wav",
+      "role": "pump at shot +0.42 s",
+      "sha256": "74f50041dc62e871f7bf3ae2f1eda5655278243d7bb3b8fc7f8230a84e971278"
+    }
+  ],
+  "runtime_levels": "New shots and pump: SFX volume x2, so default 0.5 matches the audition. Reloads: SFX volume x0.9. CS2 base event pitch is baked into new WAV files; runtime pitch 1.0. Nova pump is separate for cancellation."
+}
