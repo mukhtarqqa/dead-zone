@@ -76,7 +76,8 @@ namespace DeadZone.Editor
                 for(int i=1;i<count;i++){var p=Vector2.Lerp(segment[s-1],segment[s],(float)i/count);if((p-new Vector2(2,0)).sqrMagnitude<100)continue;var mark=Block("Road marking",p,new Vector2(1.5f,.09f),new Color(.75f,.65f,.39f),false,-984);mark.transform.rotation=Quaternion.Euler(0,0,Mathf.Atan2(delta.y,delta.x)*Mathf.Rad2Deg);}
             }
             foreach(int side in new[]{-1,1})for(int i=-3;i<=3;i++)Block("Crosswalk",new Vector2(i*.7f+2,side*8),new Vector2(.35f,1.7f),new Color(.69f,.7f,.64f),false,-984);
-            Prop("Dry plaza fountain",3,new Vector2(2,-1.3f),new Vector2(2.9f,1.6f),new Vector2(0,1));
+            // Decorative fountain: keep the evacuation plaza free of a detached rectangle.
+            Prop("Dry plaza fountain",3,new Vector2(2,-1.3f),Vector2.zero,new Vector2(0,.2f));
             foreach(var p in new[]{new Vector2(-4,-5),new Vector2(8,-5),new Vector2(-4,5),new Vector2(8,5)})Prop("Plaza planter",6,p-Vector2.up*.4f,new Vector2(2.15f,.8f),new Vector2(0,.4f));
             Sign("Residential sign",new Vector2(-30,31.2f),"NORTH · RESIDENCES",new Color(.62f,.77f,.83f));Sign("Industrial sign",new Vector2(28,28.2f),"EAST · WORKS",new Color(.88f,.63f,.35f));Sign("Market sign",new Vector2(42,-10.8f),"SOUTH · MARKET",new Color(.95f,.65f,.45f));Sign("Clinic sign",new Vector2(18,-33.8f),"+ CLINIC",new Color(.5f,.95f,.81f));
             Prop("South gate bus shelter",2,new Vector2(-52,-38),new Vector2(4.3f,.85f),new Vector2(0,.45f));Prop("Checkpoint planter",6,new Vector2(-43,-36.5f),new Vector2(2.15f,.8f),new Vector2(0,.4f));

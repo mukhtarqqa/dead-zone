@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 
 namespace DeadZone
 {
-    [Serializable] public sealed class ZoneHello { public int protocol = 9; public string token; public int hero; }
+    [Serializable] public sealed class ZoneHello { public int protocol = 10; public string token; public int hero; }
     [Serializable] public sealed class ZonePlayerState
     {
         public ulong id;
@@ -25,7 +25,7 @@ namespace DeadZone
         public int abilitySequence, abilityKind;
         public float abilityAge;
         public Vector2 position, aim, maceDirection;
-        public bool moving, downed, dead, connected, reloading;
+        public bool moving, downed, dead, connected, reloading, boarded;
     }
     [Serializable] public sealed class ZoneObjectState
     {
@@ -35,6 +35,9 @@ namespace DeadZone
     [Serializable] public sealed class ZoneWorld
     {
         public uint sequence;
+        public int bossesDefeated, extractionPhase;
+        public float extractionAge;
+        public Vector2 extractionLanding, extractionEntry, extractionExit;
         public bool running, ended, victory, boss;
         public int wave, kills, pending, alive;
         public float damage, bossHealth, remaining, elapsed;
@@ -277,7 +280,7 @@ namespace DeadZone
             {
                 if (request.Payload.Length > 512) throw new Exception("Некорректные данные подключения.");
                 var hello = JsonUtility.FromJson<ZoneHello>(Encoding.UTF8.GetString(request.Payload));
-                if (hello == null || hello.protocol != 9 || hello.hero < 0 || hello.hero >= game.HeroCount || hello.token == null || hello.token.Length != 32) throw new Exception("Версии игры не совпадают.");
+                if (hello == null || hello.protocol != 10 || hello.hero < 0 || hello.hero >= game.HeroCount || hello.token == null || hello.token.Length != 32) throw new Exception("Версии игры не совпадают.");
                 var returning = peers.Find(p => p.token == hello.token);
                 if (returning != null)
                 {
@@ -376,6 +379,7 @@ namespace DeadZone
                 if (smokeClient && state.id == manager.LocalClientId) { smokeSawReload |= state.reloading; sawPersonalStats|=state.kills==3&&state.damage>=75&&state.revives==1;sawOni |= state.oniRemaining>38; sawMaceSwing |= state.maceSwings>0 && state.maceRemaining>0; sawOniRestore |= sawOni && state.oniRemaining<=0 && state.shots>0; smokeSawFloor |= state.floor >= 20 && state.floor <= 22; }
             }
             game.ApplyRemoteMatch(world.running, world.ended, world.victory, world.wave, world.kills, world.damage, world.boss, world.bossHealth, world.remaining, world.notice, world.pending,world.alive,world.elapsed);
+            game.ApplyExtraction(world);
             foreach (var id in new List<ulong>(clientActors.Keys)) if (!seen.Contains(id)) { var actor = clientActors[id]; if (actor != game.player) { game.players.Remove(actor); Destroy(actor.gameObject); } clientActors.Remove(id); }
             var objectIds = new HashSet<int>();
             foreach (var state in world.objects)
@@ -467,7 +471,7 @@ namespace DeadZone
             foreach (var peer in peers) if (peer.actor != null)
             {
                 var actor = peer.actor;
-                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, weaponA=actor.WeaponInSlot(0),weaponB=actor.WeaponInSlot(1),activeSlot=actor.ActiveSlot,ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer, dashRemaining = actor.DashRemaining, dashDirection = actor.DashFacing, abilitySequence = actor.AbilitySequence, abilityKind = actor.AbilityKind, abilityAge = actor.AbilityAge });
+                actors.Add(new ZonePlayerState { id = peer.id, hero = peer.hero,kills=actor.PersonalKills,revives=actor.Revives,damage=actor.PersonalDamage,reviveProgress=actor.ReviveProgress,downRemaining=actor.DownRemaining, position = actor.transform.position, aim = actor.aimPoint, health = actor.health, maxHealth = actor.maxHealth, charge = actor.charge, weapon = actor.weapon, weaponA=actor.WeaponInSlot(0),weaponB=actor.WeaponInSlot(1),activeSlot=actor.ActiveSlot,ammo = actor.ammo, reserve = actor.reserve, grenades = actor.grenades, mines = actor.mines, shots = actor.ShotsFired, moving = actor.GetComponent<Rigidbody2D>().linearVelocity.sqrMagnitude > .01f, downed = actor.Downed, dead = actor.Dead, connected = peer.connected, boarded=actor.Boarded, reloading = actor.Reloading, reloadRemaining = actor.ReloadRemaining, castRemaining = actor.CastRemaining, castKind = actor.CastKind, oniRemaining = actor.Oni.Remaining,shrineRemaining=actor.ShrineRemaining, maceRemaining=actor.Oni.SwingRemaining, maceSwings=actor.Oni.Swings, maceDirection=actor.Oni.SwingDirection, floor = actor.gameObject.layer, dashRemaining = actor.DashRemaining, dashDirection = actor.DashFacing, abilitySequence = actor.AbilitySequence, abilityKind = actor.AbilityKind, abilityAge = actor.AbilityAge });
             }
             var objects = new List<ZoneObjectState>();
             foreach (var enemy in game.enemies) if (enemy != null) objects.Add(new ZoneObjectState { id = ObjectId(enemy.gameObject), type = 1, kind = enemy.kind, facing=enemy.Facing,animation=enemy.AnimationPose,maxHealth=enemy.MaxHealth,age=enemy.HitFlashRemaining, position = enemy.transform.position, velocity = enemy.GetComponent<Rigidbody2D>().linearVelocity, scale = enemy.transform.localScale.x, health = enemy.health, boss = enemy.boss, floor = enemy.gameObject.layer, remaining = Mathf.Max(0, enemy.ReadyAt - Time.time) });
@@ -481,7 +485,7 @@ namespace DeadZone
             foreach(var shrine in FindObjectsByType<ZoneShrine>())objects.Add(new ZoneObjectState{id=ObjectId(shrine.gameObject),type=8,floor=shrine.Floor,position=shrine.transform.position,age=shrine.Age});
             foreach (var purple in FindObjectsByType<ZonePurple>()) objects.Add(new ZoneObjectState { id=ObjectId(purple.gameObject), type=7, floor=purple.Floor, position=purple.transform.position, origin=purple.Origin, velocity=purple.Direction, age=purple.Age, endAge=purple.ImpactAge });
             foreach (var pulse in FindObjectsByType<ZonePulse>()) if (pulse.Remaining > .05f) objects.Add(new ZoneObjectState { id = ObjectId(pulse.gameObject), type = 6, position = pulse.transform.position, floor = pulse.Floor, kind = pulse.Kind, scale = pulse.Radius, health = pulse.Duration, velocity = pulse.Direction, remaining = pulse.Remaining, explosionSound = pulse.ExplosionSound });
-            return new ZoneWorld { sequence = sequence, running = game.running, ended = game.ended, victory = game.Victory, wave = game.wave, pending=game.PendingEnemies, alive=game.enemies.Count,elapsed=game.Elapsed, kills = game.kills, damage = game.damageDealt, boss = game.BossPhase, bossHealth = game.CurrentBossHealth, remaining = game.BreakRemaining, notice = game.message, players = actors.ToArray(), objects = objects.ToArray() };
+            return new ZoneWorld { bossesDefeated=game.BossesDefeated,extractionPhase=(int)game.ExtractionPhase,extractionAge=game.ExtractionAge,extractionLanding=game.ExtractionLanding,extractionEntry=game.ExtractionEntry,extractionExit=game.ExtractionExit,sequence = sequence, running = game.running, ended = game.ended, victory = game.Victory, wave = game.wave, pending=game.PendingEnemies, alive=game.enemies.Count,elapsed=game.Elapsed, kills = game.kills, damage = game.damageDealt, boss = game.BossPhase, bossHealth = game.CurrentBossHealth, remaining = game.BreakRemaining, notice = game.message, players = actors.ToArray(), objects = objects.ToArray() };
         }
         public async void Leave()
         {

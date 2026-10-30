@@ -27,7 +27,7 @@ namespace DeadZone
                 if(actor==game.player||index>=3)continue;
                 bool connected=game.IsAuthority?game.network.IsParticipantConnected(actor.OwnerId):actor.Connected;
                 var label=names[index];label.transform.parent.gameObject.SetActive(game.running);
-                string state=!connected?ZoneL.Get("НЕТ СВЯЗИ"):actor.Dead?ZoneL.Get("НАБЛЮДАЕТ"):actor.Downed?ZoneL.Format("ПОДНЯТЬ · {0} с",Mathf.CeilToInt(actor.DownRemaining)):$"HP {Mathf.CeilToInt(actor.health)}/{actor.maxHealth}";
+                string state=!connected?ZoneL.Get("НЕТ СВЯЗИ"):actor.Boarded?ZoneL.Get("НА БОРТУ"):actor.Dead?ZoneL.Get("НАБЛЮДАЕТ"):actor.Downed?ZoneL.Format("ПОДНЯТЬ · {0} с",Mathf.CeilToInt(actor.DownRemaining)):$"HP {Mathf.CeilToInt(actor.health)}/{actor.maxHealth}";
                 label.text=game.HeroName(actor.CharacterIndex)+" · "+state;label.color=actor.Downed?new Color(1,.55f,.3f):ZonePalette.Text;
                 health[index].localScale=new Vector3(Mathf.Clamp01(actor.health/actor.maxHealth),1,1);
                 revive[index].gameObject.SetActive(actor.Downed);revive[index].localScale=new Vector3(actor.ReviveProgress,1,1);

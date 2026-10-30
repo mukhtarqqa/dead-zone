@@ -48,6 +48,14 @@ namespace DeadZone.Editor
             try
             {
                 ZoneProfile.SuppressRecording=true;
+                game.ApplyExtraction(new ZoneWorld
+                {
+                    bossesDefeated=DeadZoneGame.BossGoal,
+                    extractionPhase=(int)ZoneExtractionPhase.Complete,
+                    extractionLanding=game.ExtractionLanding,
+                    extractionEntry=game.ExtractionEntry,
+                    extractionExit=game.ExtractionExit
+                });
                 game.wave=5;game.ended=false;game.Finish(true);
                 Debug.Log("Finish Game: victory cinematic started (test win is not saved).");
             }

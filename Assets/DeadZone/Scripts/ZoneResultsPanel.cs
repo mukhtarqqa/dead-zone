@@ -43,7 +43,7 @@ namespace DeadZone
         }
         void Refresh()
         {
-            brand.text="DEAD ZONE  /  "+ZoneL.Get("ИТОГИ ВЫЛАЗКИ");title.text=ZoneL.Get(game.Victory?"ЗОНА ЗАЧИЩЕНА":"ПОРАЖЕНИЕ");title.color=game.Victory?ZonePalette.Accent:ZonePalette.Crimson;subtitle.text=game.Victory?ZoneL.Get("Пять волн пройдены. Вылазка завершена."):ZoneL.Format("Волна {0}/5 · Соберите команду и попробуйте снова.",game.wave);
+            brand.text="DEAD ZONE  /  "+ZoneL.Get("ИТОГИ ВЫЛАЗКИ");title.text=ZoneL.Get(game.Victory?"ЗОНА ЗАЧИЩЕНА":"ПОРАЖЕНИЕ");title.color=game.Victory?ZonePalette.Accent:ZonePalette.Crimson;subtitle.text=game.Victory?ZoneL.Get("Пять боссов уничтожены. Команда эвакуирована."):ZoneL.Format("Волна {0}/5 · Соберите команду и попробуйте снова.",game.wave);
             var actor=game.player;portrait.sprite=ZoneActorArt.Frame(game,actor.CharacterIndex,Vector2.down,false);heroName.text=game.HeroName(actor.CharacterIndex);role.text=ZoneL.Get(actor.CharacterIndex==0?"ВЫЖИВАНИЕ":actor.CharacterIndex==1?"БЛИЖНИЙ БОЙ":actor.CharacterIndex==2?"КОНТРОЛЬ":"ПРОКЛЯТИЕ");wave.text=ZoneL.Format("ВОЛНА {0:00} / 05",game.wave);
             string[] labels={"УБИЙСТВА","НАНЕСЁННЫЙ УРОН","ПОДНЯТЫЕ СОЮЗНИКИ","ВРЕМЯ ВЫЛАЗКИ"};string[] values={actor.PersonalKills.ToString(),Mathf.RoundToInt(actor.PersonalDamage).ToString(),actor.Revives.ToString(),$"{Mathf.FloorToInt(game.Elapsed/60):00}:{Mathf.FloorToInt(game.Elapsed%60):00}"};
             for(int i=0;i<4;i++){statNames[i].text=ZoneL.Get(labels[i]);statValues[i].text=values[i];}
