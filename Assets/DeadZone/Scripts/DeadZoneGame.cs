@@ -42,7 +42,9 @@ namespace DeadZone
         public bool OptionsVisible {get;set;}
         public bool IntroPlaying => intro!=null&&intro.Playing;
         ZoneIntro intro;
-        public bool InputBlocked => IntroPlaying||paused||Restarting||OptionsVisible||(network!=null&&network.PanelVisible);
+        ZoneFinale finale;
+        public bool FinalePlaying=>finale!=null&&finale.Playing;
+        public bool InputBlocked => IntroPlaying||FinalePlaying||paused||Restarting||OptionsVisible||(network!=null&&network.PanelVisible);
         CityArena arena;ZonePlayer spectated;ZoneRunFlow runFlow;
         public bool Restarting=>runFlow!=null&&runFlow.Restarting;
         public ZonePlayer CameraActor
@@ -116,12 +118,14 @@ namespace DeadZone
             network = gameObject.AddComponent<ZoneNetwork>();
             network.Initialize(this, menuRoot.transform.parent, font);
             gameObject.AddComponent<ZoneOptions>().Initialize(this,menuRoot.transform.parent,font);
+            finale=gameObject.AddComponent<ZoneFinale>();finale.Initialize(this,font);
             gameObject.AddComponent<ZoneCombatHud>().Initialize(this,hudRoot.transform,font);
             gameObject.AddComponent<ZoneAllyHud>().Initialize(this,hudRoot.transform,font);gameObject.AddComponent<ZoneMusic>();gameObject.AddComponent<ZoneLanguageStartup>();gameObject.AddComponent<ZoneStatisticsPanel>().Initialize(this,menuRoot.transform.parent,font);gameObject.AddComponent<ZoneResultsPanel>().Initialize(this,menuRoot.transform.parent,font);gameObject.AddComponent<ZoneRecoveryHud>().Initialize(this,hudRoot.transform,font);
         }
 
         void Update()
         {
+            if(FinalePlaying){menuRoot.SetActive(false);hudRoot.SetActive(false);return;}
             if(IntroPlaying){menuRoot.SetActive(false);hudRoot.SetActive(intro.ShowingGame);return;}
             if(IsAuthority&&running&&!paused&&pendingEnemies>0&&Time.time>=nextSpawn&&enemies.Count<Balance.AliveCap(wave,TeamSize))
             {
@@ -210,6 +214,7 @@ namespace DeadZone
         public void StartGameplay()
         {
             if (!IsAuthority || running) return;
+            finale?.Stop();
             ResetBossAlerts();
             statisticsRecorded=false;running = true; ended=false; paused=false;OptionsVisible=false;Time.timeScale=1;wave = 1;kills=0;damageDealt=0; startedAt = Time.time;
             for(int i=0;i<players.Count;i++){var actor=players[i];if(network!=null&&!network.IsParticipantConnected(actor.OwnerId))continue;actor.ResetForMatch(actor.IsLocal?selected:actor.CharacterIndex);if(arena!=null){actor.transform.position=arena.TeamSpawn(i);actor.GetComponent<Rigidbody2D>().position=actor.transform.position;}}
@@ -315,11 +320,13 @@ namespace DeadZone
 
         public void Finish(bool victory)
         {
+            if(ended)return;
             ResetBossAlerts();
             finishedElapsed=Time.time-startedAt;running = false; ended = true;GetComponent<ZoneOptions>().Close();paused=false;Time.timeScale=1;
             Victory = victory;
             if(!statisticsRecorded&&player!=null){ZoneProfile.Record(player,victory,Elapsed);statisticsRecorded=true;}
             center.text = "";
+            if(victory)finale.Play();
         }
 
         public string ResultText(bool victory)
@@ -424,6 +431,7 @@ namespace DeadZone
         public void CheckTeamDefeat() { foreach (var actor in players) if (!actor.Dead && !actor.Downed && (network == null || network.IsParticipantConnected(actor.OwnerId))) return; Finish(false); }
         public void ApplyRemoteMatch(bool active, bool finished, bool victory, int currentWave, int currentKills, float damage, bool boss, float bossHealth, float remaining, string notice, int pending=0,int alive=0,float elapsed=0)
         {
+            if(active)finale?.Stop();
             if(active&&!running)ResetBossAlerts();
             if(active)statisticsRecorded=false;pendingEnemies=pending;RemoteEnemyCount=alive;startedAt=Time.time-elapsed;wave = currentWave; kills = currentKills; damageDealt = damage; bossPhase = boss; RemoteBossHealth = bossHealth; breakUntil = Time.time + remaining; message = notice;
             running = active; if (finished && !ended) Finish(victory); ended = finished;

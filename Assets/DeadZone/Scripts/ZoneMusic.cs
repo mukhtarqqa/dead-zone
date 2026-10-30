@@ -4,19 +4,28 @@ namespace DeadZone
     public sealed class ZoneMusic : MonoBehaviour
     {
         public static float Volume {get=>PlayerPrefs.GetFloat("dz.music",.25f);set=>PlayerPrefs.SetFloat("dz.music",Mathf.Clamp01(value));}
-        readonly AudioClip[] clips=new AudioClip[3];AudioSource source;int current=-1;
+        readonly AudioClip[] clips=new AudioClip[4];AudioSource source;int current=-1;
+        public AudioClip CurrentClip=>source!=null?source.clip:null;
         void Update()
         {
             if(Application.isBatchMode)return;var game=DeadZoneGame.Instance;if(game==null)return;
             if(source==null){source=gameObject.AddComponent<AudioSource>();source.loop=true;source.playOnAwake=false;source.volume=0;}
             if(game.IntroPlaying){source.volume=Mathf.MoveTowards(source.volume,0,Time.unscaledDeltaTime);return;}
-            int desired=!game.running?0:game.BossPhase?2:1;
+            int desired=game.ended?3:!game.running?0:game.BossPhase&&game.CurrentBossHealth>0?2:1;
             if(current!=desired)
             {
                 source.volume=Mathf.MoveTowards(source.volume,0,Time.unscaledDeltaTime*.7f);
-                if(source.volume<=.001f){if(clips[desired]==null)clips[desired]=Compose(desired);source.clip=clips[desired];current=desired;source.Play();}
+                if(source.volume<=.001f){if(clips[desired]==null)clips[desired]=LoadTrack(desired);source.clip=clips[desired];current=desired;source.Play();}
             }
             else source.volume=Mathf.MoveTowards(source.volume,Volume*(game.paused?.25f:1),Time.unscaledDeltaTime*.5f);
+        }
+        static AudioClip LoadTrack(int mood)
+        {
+            if(mood==0)return Compose(0);
+            string name=mood==1?"Hollow_Iron_Halls":mood==2?"The_Last_Gate":"Silhouette_Against_Orange";
+            var clip=Resources.Load<AudioClip>("Music/"+name);
+            if(clip!=null)return clip;
+            Debug.LogWarning("Missing music: "+name);return Compose(mood==3?0:mood);
         }
         static AudioClip Compose(int mood)
         {
@@ -34,6 +43,6 @@ namespace DeadZone
             }
             var clip=AudioClip.Create("Dead Zone original loop "+mood,count,1,rate,false);clip.SetData(data,0);return clip;
         }
-        void OnDestroy(){foreach(var clip in clips)if(clip!=null)Destroy(clip);}
+        void OnDestroy(){foreach(var clip in clips)if(clip!=null&&clip.name.StartsWith("Dead Zone original loop"))Destroy(clip);}
     }
 }

@@ -8,7 +8,7 @@ namespace DeadZone
         public DeadZoneGame Game;public bool Restarting{get;private set;}
         public void Restart()
         {
-            if(Restarting||Game==null||!Game.ended||!Game.IsAuthority)return;StartCoroutine(Prepare());
+            if(Restarting||Game==null||!Game.ended||Game.FinalePlaying||!Game.IsAuthority)return;StartCoroutine(Prepare());
         }
         IEnumerator Prepare()
         {

@@ -34,12 +34,12 @@ namespace DeadZone
         }
         void Update()
         {
-            if(!game.ended){if(shown){root.SetActive(false);shown=false;}return;}
+            if(!game.ended||game.FinalePlaying){if(shown){root.SetActive(false);shown=false;}return;}
             if(!shown){shown=true;shownAt=Time.unscaledTime;root.transform.SetAsLastSibling();root.SetActive(true);language="";}
             fade.alpha=Mathf.SmoothStep(0,1,(Time.unscaledTime-shownAt)/.45f);fade.interactable=fade.alpha>.8f;
             string locale=PlayerPrefs.GetString("dz.language","ru");if(locale!=language||Time.unscaledTime>=nextRefresh){language=locale;nextRefresh=Time.unscaledTime+.5f;Refresh();}
             retry.interactable=game.IsAuthority&&!game.Restarting;retryLabel.text=ZoneL.Get(game.Restarting?"ПОДГОТОВКА...":game.IsAuthority?"ИГРАТЬ СНОВА":"ОЖИДАНИЕ ВЕДУЩЕГО");
-            if(Application.isFocused&&!game.OptionsVisible&&Input.GetKeyDown(KeyCode.Escape))game.ReturnToMenu();
+            if(Application.isFocused&&!game.OptionsVisible&&Time.unscaledTime-shownAt>.5f&&Input.GetKeyDown(KeyCode.Escape))game.ReturnToMenu();
         }
         void Refresh()
         {
