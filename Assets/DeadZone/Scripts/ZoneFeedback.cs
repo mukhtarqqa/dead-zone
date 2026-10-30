@@ -22,6 +22,10 @@ namespace DeadZone
         static AudioClip[] weaponShots;
         static AudioClip[] weaponReloads;
         readonly AudioSource[] voices=new AudioSource[12];int voice;
+        // PlayOneShot creates an extra mixer voice on every call, even on a reused
+        // AudioSource. Long Negev tails otherwise exhaust the 32 real voices.
+        public const int ShotVoiceLimit=12;
+        readonly AudioSource[] shotVoices=new AudioSource[ShotVoiceLimit];int shotVoice;
         static readonly System.Random audioRandom=new System.Random(73);
         public static float Volume {get=>PlayerPrefs.GetFloat("dz.volume",.5f);set{PlayerPrefs.SetFloat("dz.volume",Mathf.Clamp01(value));}}
         public static bool Shake {get=>PlayerPrefs.GetInt("dz.shake",1)!=0;set{PlayerPrefs.SetInt("dz.shake",value?1:0);PlayerPrefs.Save();}}
@@ -55,20 +59,24 @@ namespace DeadZone
             var approved = ZoneWeaponAudio.NextShot(index);
             if (approved != null)
             {
-                var rifleVoice = instance.voices[instance.voice++ % instance.voices.Length];
-                rifleVoice.pitch = 1f;
-                rifleVoice.PlayOneShot(approved, Volume * (index == 1 ? .82f : 2));
+                PlayShotClip(approved,Volume * (index == 1 ? .82f : 2),1);
                 if (index == 3 && owner != null) owner.GetComponent<ZoneWeaponReloadAudio>()?.QueuePump();
                 return;
             }
             if (weaponShots != null && weaponShots[index] != null)
             {
-                var voice = instance.voices[instance.voice++%instance.voices.Length];
-                voice.pitch = .98f + (float)audioRandom.NextDouble() * .04f;
-                voice.PlayOneShot(weaponShots[index], Volume);
+                PlayShotClip(weaponShots[index],Volume,.98f + (float)audioRandom.NextDouble() * .04f);
                 return;
             }
             Play(weaponKind);
+        }
+
+        static void PlayShotClip(AudioClip clip,float gain,float pitch)
+        {
+            var source=instance.shotVoices[instance.shotVoice];
+            instance.shotVoice=(instance.shotVoice+1)%instance.shotVoices.Length;
+            source.Stop();source.clip=clip;source.pitch=pitch;source.volume=1;
+            source.PlayOneShot(clip,gain);
         }
 
         public static void PlayReload(int weaponKind)
@@ -99,6 +107,13 @@ namespace DeadZone
                     source.spatialBlend=0;
                     source.playOnAwake=false;
                     instance.voices[i]=source;
+                }
+                var shots=new GameObject("Weapon shot channels");shots.transform.SetParent(obj.transform,false);
+                for(int i=0;i<instance.shotVoices.Length;i++)
+                {
+                    var source=shots.AddComponent<AudioSource>();source.playOnAwake=false;
+                    source.spatialBlend=0;source.dopplerLevel=0;source.loop=false;source.priority=80;
+                    instance.shotVoices[i]=source;
                 }
             }
         }
@@ -135,6 +150,7 @@ namespace DeadZone
                     sounds[k]=AudioClip.Create("Dead Zone effect "+k,count,1,22050,false);sounds[k].SetData(data,0);
                 }
             }
+            if(kind>=0&&kind<=3){PlayShotClip(sounds[kind],Volume,.96f+(float)audioRandom.NextDouble()*.08f);return;}
             var selected=instance.voices[instance.voice++%instance.voices.Length];selected.pitch=.96f+(float)audioRandom.NextDouble()*.08f;
             selected.PlayOneShot(sounds[Mathf.Clamp(kind,0,sounds.Length-1)],Volume);
         }
