@@ -35,10 +35,20 @@ namespace DeadZone
             else foreach(var ghost in ZoneGhost.Active)if(ghost!=null&&ghost.ObjectType==10)Dot(vh,ghost.transform.position,2,ZonePalette.Accent);
             foreach(var actor in game.players)
             {
-                if(actor==null)continue;
+                if(actor==null||actor.Boarded)continue;
                 bool connected=game.IsAuthority?game.network==null||game.network.IsParticipantConnected(actor.OwnerId):actor.Connected;Color c=actor.Dead||!connected?ZoneUi.Muted:actor.Downed?new Color(1,.4f,.3f):ZoneHeroCard.HeroColor(actor.CharacterIndex);Dot(vh,actor.transform.position,actor==game.player?4.2f:3.3f,c);
             }
             if(game.running)foreach(var target in game.BossTargets)if(game.BossIsAlive(target))BossMarker(vh,target.position);
+            if(game.running&&game.Extracting)HelicopterMarker(vh,game.Helicopter!=null?(Vector2)game.Helicopter.transform.position:game.ExtractionLanding);
+        }
+        void HelicopterMarker(UnityEngine.UI.VertexHelper vh,Vector2 world)
+        {
+            var p=BossMarkerPosition(world,out _);
+            Diamond(vh,p,10,new Color(.04f,.11f,.06f,.95f));
+            Color c=ZonePalette.Sage;
+            Quad(vh,p+new Vector2(-5,-6),p+new Vector2(-2,-6),p+new Vector2(-2,6),p+new Vector2(-5,6),c);
+            Quad(vh,p+new Vector2(2,-6),p+new Vector2(5,-6),p+new Vector2(5,6),p+new Vector2(2,6),c);
+            Quad(vh,p+new Vector2(-2,-1.5f),p+new Vector2(2,-1.5f),p+new Vector2(2,1.5f),p+new Vector2(-2,1.5f),c);
         }
         public Vector2 BossMarkerPosition(Vector2 world,out bool edge)
         {

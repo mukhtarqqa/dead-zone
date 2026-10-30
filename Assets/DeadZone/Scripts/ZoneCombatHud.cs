@@ -26,7 +26,7 @@ namespace DeadZone
         }
         void LateUpdate()
         {
-            if(game==null||game.player==null)return;var p=game.player;bool aiming=Application.isFocused&&game.running&&!game.InputBlocked&&!p.Dead;crosshair.gameObject.SetActive(aiming);Cursor.visible=!aiming;
+            if(game==null||game.player==null)return;var p=game.player;bool aiming=Application.isFocused&&game.running&&!game.InputBlocked&&!p.Dead&&!p.Boarded;crosshair.gameObject.SetActive(aiming);Cursor.visible=!aiming;
             if(aiming)
             {
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas,Input.mousePosition,null,out var point);crosshair.anchoredPosition=point;bool target=false;
